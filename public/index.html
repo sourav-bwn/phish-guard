@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PhishGuard - check a suspicious link</title>
+<meta name="description" content="Paste a link you got on WhatsApp or SMS. PhishGuard tells you if it looks like phishing, and why. Free, English and Bengali.">
+<meta name="theme-color" content="#0b0f14">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="PhishGuard">
+    <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 7v8c0 7.5 5 13.3 12 15 7-1.7 12-7.5 12-15V7L16 2z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="m11 16 4 4 7-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>PhishGuard</span>
+  </a>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" data-lang="bn" aria-pressed="false">বাং</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1 data-i18n="title">Got a link you don't trust?</h1>
+    <p class="sub" data-i18n="sub">Paste it here before you tap it. We never open the link.</p>
+    <form id="form" autocomplete="off" novalidate>
+      <label class="sr" for="url" data-i18n="label">Link to check</label>
+      <div class="field">
+        <input id="url" name="url" type="text" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="https://..." data-i18n-ph="ph">
+        <button id="go" type="submit"><span data-i18n="check">Check link</span></button>
+      </div>
+      <p class="err" id="err" role="alert" hidden></p>
+    </form>
+    <div class="chips" aria-label="Examples">
+      <span data-i18n="try">Try:</span>
+      <button type="button" class="chip" data-example="http://sbi-kyc-update.xyz/login">sbi-kyc-update.xyz</button>
+      <button type="button" class="chip" data-example="http://paypa1.com/signin">paypa1.com</button>
+      <button type="button" class="chip" data-example="https://www.google.com">google.com</button>
+    </div>
+  </section>
+
+  <section id="result" class="card result" hidden aria-live="polite">
+    <div class="verdict-row">
+      <div id="badge" class="badge"></div>
+      <div class="vtext">
+        <h2 id="vtitle"></h2>
+        <p id="vdesc"></p>
+      </div>
+    </div>
+    <div class="meter" aria-hidden="true"><div id="meterfill"></div></div>
+    <p class="host" id="hostline"></p>
+    <h3 data-i18n="why">Why</h3>
+    <ul id="reasons" class="reasons"></ul>
+    <h3 data-i18n="dbs">Scam databases</h3>
+    <ul id="ext" class="ext"></ul>
+    <p class="fine" data-i18n="fine">No tool can promise a link is safe. If a message is rushing you about money, a bank, KYC or a prize, stop and call the company on its official number.</p>
+  </section>
+
+  <section class="block">
+    <h2 data-i18n="pat">Scams going around in India</h2>
+    <div class="grid" id="patterns"></div>
+  </section>
+
+  <section class="block help card">
+    <h2 data-i18n="help">Already clicked or paid?</h2>
+    <ol>
+      <li data-i18n="h1">Call <a href="tel:1930">1930</a> (National Cyber Crime Helpline) right away. The first hour matters most for stopping a transfer.</li>
+      <li data-i18n="h2">Report at <a href="https://cybercrime.gov.in" rel="noopener" target="_blank">cybercrime.gov.in</a>.</li>
+      <li data-i18n="h3">Call your bank, block the card or UPI, and change passwords you typed on that page.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <p data-i18n="foot">Free and open source. Built for Hack for Social Cause - Digital Safety &amp; Cyber Fraud Awareness.</p>
+  <p><a href="https://github.com/sourav-bwn/phish-guard" rel="noopener" target="_blank">GitHub</a></p>
+</footer>
+
+<script src="heuristics.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

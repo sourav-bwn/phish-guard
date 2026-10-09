@@ -1,0 +1,208 @@
+/* PhishGuard heuristics - runs in the browser and in Node. No dependencies. */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory();
+  else root.PhishHeuristics = factory();
+})(typeof self !== 'undefined' ? self : this, function () {
+  const SHORTENERS = new Set(['bit.ly','bitly.com','tinyurl.com','t.co','goo.gl','is.gd','cutt.ly','rb.gy','shorturl.at','tiny.cc','ow.ly','rebrand.ly','s.id','t.ly','lnkd.in','buff.ly','v.gd','shorte.st','bl.ink','clck.ru','qr.ae','tr.im','soo.gd','x.co']);
+  const RISKY_TLDS = new Set(['tk','ml','ga','cf','gq','xyz','top','click','link','icu','buzz','rest','cyou','sbs','cfd','work','support','zip','mov','vip','monster','quest','fit','loan','win','bid','men','date','party','review','country','stream','download','racing','cam','surf','uno']);
+  const FREE_HOSTS = ['pages.dev','web.app','firebaseapp.com','blogspot.com','weebly.com','wixsite.com','netlify.app','vercel.app','github.io','glitch.me','000webhostapp.com','ngrok.io','ngrok-free.app','workers.dev','herokuapp.com','onrender.com','repl.co','godaddysites.com','webflow.io','framer.app','carrd.co'];
+  const MULTI_SUFFIX = new Set(['co.in','org.in','net.in','gov.in','nic.in','ac.in','edu.in','res.in','gen.in','firm.in','ind.in','co.uk','org.uk','ac.uk','gov.uk','com.au','net.au','org.au','co.nz','co.za','com.br','com.bd','com.pk','com.np','co.jp','com.sg','com.my','com.cn','com.hk','com.tr','co.id']);
+  // brand -> official registrable domains
+  const BRANDS = {
+    sbi: ['sbi.co.in','onlinesbi.sbi','onlinesbi.com','sbicard.com','sbilife.co.in','sbi.bank.in','yonosbi.com'],
+    hdfc: ['hdfcbank.com','hdfc.com','hdfclife.com','hdfcergo.com','hdfcsec.com'],
+    icici: ['icicibank.com','icicidirect.com','iciciprulife.com','icicilombard.com'],
+    axis: ['axisbank.com','axismf.com'],
+    kotak: ['kotak.com','kotak811.com'],
+    pnb: ['pnbindia.in','netpnb.com'],
+    paytm: ['paytm.com','paytmbank.com','paytm.in'],
+    phonepe: ['phonepe.com'],
+    googlepay: ['pay.google.com','gpay.app.goo.gl'],
+    paypal: ['paypal.com','paypal.me'],
+    amazon: ['amazon.in','amazon.com','amazon.co.uk','amazon.de','amazonaws.com','amzn.in','amzn.to'],
+    flipkart: ['flipkart.com','fkrt.it','fkrt.cc'],
+    google: ['google.com','google.co.in','goo.gl','gstatic.com','googleapis.com','youtube.com','gmail.com'],
+    facebook: ['facebook.com','fb.com','fb.me','facebook.net'],
+    instagram: ['instagram.com'],
+    whatsapp: ['whatsapp.com','whatsapp.net','wa.me'],
+    netflix: ['netflix.com'],
+    microsoft: ['microsoft.com','live.com','office.com','microsoftonline.com','outlook.com','windows.com'],
+    apple: ['apple.com','icloud.com'],
+    irctc: ['irctc.co.in','irctc.com'],
+    aadhaar: ['uidai.gov.in','aadhaar.gov.in'],
+    uidai: ['uidai.gov.in'],
+    incometax: ['incometax.gov.in','incometaxindia.gov.in'],
+    epfo: ['epfindia.gov.in','epfo.gov.in'],
+    jio: ['jio.com','ril.com'],
+    airtel: ['airtel.in','airtel.com'],
+    indiapost: ['indiapost.gov.in'],
+    bsnl: ['bsnl.co.in'],
+    swiggy: ['swiggy.com'],
+    zomato: ['zomato.com'],
+    myntra: ['myntra.com'],
+    meesho: ['meesho.com']
+  };
+  const KEYWORDS = [
+    ['kyc','KYC'],['otp','OTP'],['verify','verify'],['verification','verification'],['lucky','lucky'],['winner','winner'],['prize','prize'],['reward','reward'],['claim','claim'],['refund','refund'],['suspend','suspend'],['blocked','blocked'],['expire','expire'],['urgent','urgent'],['cashback','cashback'],['giftcard','gift card'],['freegift','free gift'],['bonus','bonus'],['aadhaar','aadhaar'],['aadhar','aadhar'],['pancard','PAN card'],['upi','UPI'],['netbanking','net banking'],['signin','sign in'],['login','login'],['secure','secure'],['update','update'],['account','account'],['wallet','wallet'],['kbc','KBC'],['lottery','lottery'],['loan','loan'],['recharge','recharge'],['electricitybill','electricity bill'],['billpay','bill pay'],['customercare','customer care'],['helpline','helpline'],['support','support']
+  ];
+  const STRONG_KW = new Set(['kyc','otp','lucky','winner','prize','lottery','kbc','claim','refund','suspend','blocked','cashback','giftcard','freegift','aadhaar','aadhar','pancard','electricitybill','customercare','helpline']);
+
+  const BN = {
+    no_https: 'লিংকটি HTTPS ব্যবহার করে না - তথ্য সুরক্ষিত নয়।',
+    ip_host: 'ডোমেইনের বদলে সরাসরি IP ঠিকানা ব্যবহার করা হয়েছে - আসল ব্যাংক বা কোম্পানি এটা করে না।',
+    at_sign: 'লিংকে "@" চিহ্ন আছে - আসল ঠিকানা লুকানোর কৌশল হতে পারে।',
+    punycode: 'ডোমেইনে বিশেষ (punycode) অক্ষর আছে - দেখতে আসল ডোমেইনের মতো, কিন্তু আলাদা হতে পারে।',
+    shortener: 'এটি একটি শর্ট লিংক - ক্লিক না করা পর্যন্ত আসল গন্তব্য বোঝা যায় না।',
+    risky_tld: 'এই ডোমেইন-শেষাংশ (TLD) প্রতারণায় বেশি দেখা যায়।',
+    many_subdomains: 'ডোমেইনে অনেকগুলো সাবডোমেইন আছে - আসল নামটি মাঝখানে লুকানো থাকতে পারে।',
+    long_url: 'লিংকটি অস্বাভাবিক রকম লম্বা।',
+    many_hyphens: 'ডোমেইনে অনেক হাইফেন (-) আছে - নকল সাইটে এটা দেখা যায়।',
+    odd_port: 'লিংকে অস্বাভাবিক পোর্ট নম্বর আছে।',
+    free_host: 'সাইটটি বিনামূল্যের হোস্টিং সার্ভিসে তৈরি - প্রতারকরা প্রায়ই এগুলো ব্যবহার করে।',
+    apk: 'লিংকটি একটি APK অ্যাপ ডাউনলোড করায় - প্লে স্টোরের বাইরের অ্যাপ ফোনের ক্ষতি করতে পারে।',
+    redirect_param: 'লিংকের ভেতরে আরেকটি লিংক লুকানো আছে (রিডাইরেক্ট)।',
+    bad_scheme: 'এই লিংক ব্রাউজারে কোড চালাতে চায় - খুবই বিপজ্জনক।',
+    digits_in_label: 'ডোমেইনের নামে অনেক সংখ্যা মেশানো আছে।'
+  };
+
+  function levenshtein(a, b) {
+    const m = a.length, n = b.length;
+    if (!m) return n; if (!n) return m;
+    let prev = Array.from({ length: n + 1 }, (_, i) => i);
+    for (let i = 1; i <= m; i++) {
+      const cur = [i];
+      for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = cur;
+    }
+    return prev[n];
+  }
+  function deLeet(s) {
+    return s.replace(/rn/g, 'm').replace(/vv/g, 'w').replace(/0/g, 'o').replace(/1/g, 'l').replace(/3/g, 'e').replace(/5/g, 's').replace(/\$/g, 's').replace(/4/g, 'a');
+  }
+  function registrable(host) {
+    const parts = host.split('.');
+    if (parts.length <= 2) return host;
+    const last2 = parts.slice(-2).join('.');
+    if (MULTI_SUFFIX.has(last2)) return parts.slice(-3).join('.');
+    return last2;
+  }
+  function isOfficial(reg, host) {
+    for (const k in BRANDS) for (const d of BRANDS[k]) {
+      if (host === d || host.endsWith('.' + d) || reg === d) return k;
+    }
+    return null;
+  }
+  function isIPv4Like(h) {
+    return /^\d{1,3}(\.\d{1,3}){3}$/.test(h) || /^0x[0-9a-f]+$/i.test(h) || /^\d{8,10}$/.test(h);
+  }
+
+  function parse(input) {
+    let s = String(input || '').trim();
+    if (!s) return null;
+    if (/^(javascript|data|vbscript):/i.test(s)) return { bad: true, raw: s };
+    if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(s)) s = 'http://' + s.replace(/^\/+/, '');
+    s = s.replace(/\s+/g, '');
+    let u;
+    try { u = new URL(s); } catch (e) { return null; }
+    if (!u.hostname) return null;
+    return { url: u, raw: input.trim(), assumedScheme: !/^[a-z][a-z0-9+.-]*:\/\//i.test(String(input).trim()) };
+  }
+
+  function analyze(input) {
+    const p = parse(input);
+    if (!p) return { ok: false, error: 'invalid' };
+    const flags = [];
+    const add = (id, weight, en, bn, extra) => flags.push(Object.assign({ id, weight, en, bn }, extra || {}));
+    if (p.bad) {
+      add('bad_scheme', 90, 'This link tries to run code in your browser instead of opening a website. Never open it.', BN.bad_scheme);
+      return finish({ host: '', flags });
+    }
+    const u = p.url;
+    const host = u.hostname.toLowerCase().replace(/\.$/, '');
+    const reg = registrable(host);
+    const labels = host.split('.');
+    const tld = labels[labels.length - 1];
+    const fullLower = (u.pathname + u.search + u.hash).toLowerCase();
+    const hostFlat = host.replace(/[.-]/g, '');
+    const official = isOfficial(reg, host);
+
+    if (u.protocol === 'http:' && !p.assumedScheme) add('no_https', 12, 'The link does not use HTTPS, so anything you type can be intercepted.', BN.no_https);
+    if (u.protocol === 'http:' && p.assumedScheme) { /* user typed no scheme; do not penalise */ }
+    if (isIPv4Like(host) || host.startsWith('[')) add('ip_host', 35, 'The link uses a raw IP address instead of a website name. Real banks and shops do not do this.', BN.ip_host);
+    if (u.username || u.password || /@/.test(String(input).split('?')[0].replace(/^[a-z]+:\/\//i, '').split('/')[0])) add('at_sign', 30, 'The link contains an "@" sign, a trick to hide the real destination.', BN.at_sign);
+    if (labels.some(l => l.startsWith('xn--'))) add('punycode', 50, 'The domain uses special look-alike characters (punycode). It may look like a real site but is a different one.', BN.punycode);
+    if (SHORTENERS.has(host) || SHORTENERS.has(reg)) add('shortener', 25, 'This is a shortened link. You cannot tell where it leads until you click, so scammers love them.', BN.shortener);
+    if (RISKY_TLDS.has(tld) && !isIPv4Like(host)) add('risky_tld', 18, 'The ".' + tld + '" ending is very common on scam and throwaway websites.', BN.risky_tld);
+    const subCount = labels.length - registrable(host).split('.').length;
+    if (subCount >= 3) add('many_subdomains', 20, 'The address has many sub-parts (' + labels.length + ' levels). The real site name is the part just before the ending, and it may be hidden.', BN.many_subdomains);
+    if ((host.replace(/xn--/g, '').match(/-/g) || []).length >= 3) add('many_hyphens', 14, 'The domain has lots of hyphens, a common pattern in fake sites.', BN.many_hyphens);
+    const regLabel = reg.split('.')[0];
+    if ((regLabel.match(/\d/g) || []).length >= 3 && !isIPv4Like(host)) add('digits_in_label', 10, 'The site name is mixed with many digits.', BN.digits_in_label);
+    if (u.port && !['80', '443'].includes(u.port)) add('odd_port', 12, 'The link uses an unusual port number (' + u.port + ').', BN.odd_port);
+    if ((u.href.length > 120)) add('long_url', 8, 'The link is unusually long.', BN.long_url);
+    if (/\.apk(\?|$)/.test(u.pathname.toLowerCase())) add('apk', 40, 'The link downloads an APK app file. Fake "bank" or "KYC" apps sideloaded this way can read your SMS and empty your account.', BN.apk);
+    if (/(^|[?&=])(https?%3a%2f%2f|https?:\/\/)/i.test(u.search) || /url=|redirect=|redir=|next=|dest=/i.test(u.search) && /https?(%3a|:)/i.test(u.search)) add('redirect_param', 15, 'Another link is hidden inside this one (a redirect). Scammers use this to borrow a trusted name.', BN.redirect_param);
+    const onFree = FREE_HOSTS.find(d => host === d || host.endsWith('.' + d));
+    if (onFree) add('free_host', 12, 'The page is on a free hosting service (' + onFree + '). Anyone can publish a page there, including scammers.', BN.free_host, { extra: onFree });
+
+    // Brand impersonation
+    let brandHit = null;
+    if (!official) {
+      const flat = deLeet(hostFlat);
+      for (const b in BRANDS) {
+        if (b.length < 4) {
+          if (host.split(/[.-]/).includes(b)) { brandHit = { brand: b, kind: 'contains' }; break; }
+          continue;
+        }
+        if (hostFlat.includes(b)) { brandHit = { brand: b, kind: 'contains' }; break; }
+        if (flat.includes(b)) { brandHit = { brand: b, kind: 'typo' }; break; }
+      }
+      if (!brandHit) {
+        const cleanLabel = deLeet(regLabel.replace(/-/g, ''));
+        for (const b in BRANDS) {
+          if (b.length < 4) continue;
+          const d = levenshtein(cleanLabel, b);
+          if (d > 0 && d <= (b.length >= 7 ? 2 : 1)) { brandHit = { brand: b, kind: 'typo' }; break; }
+        }
+      }
+      if (!brandHit && regLabel !== regLabel.replace(/[01345$]/g, '') && false) {}
+    }
+    if (brandHit) {
+      const nice = brandHit.brand.toUpperCase();
+      const official1 = BRANDS[brandHit.brand][0];
+      if (brandHit.kind === 'typo') add('lookalike', 45, 'The domain "' + reg + '" looks like ' + nice + ' (' + official1 + ') with small spelling changes. This is a classic look-alike trick.', 'ডোমেইন "' + reg + '" দেখতে ' + nice + ' (' + official1 + ')-এর মতো, কিন্তু বানানে সামান্য বদল - এটা নকল সাইটের পরিচিত কৌশল।', { brand: nice });
+      else add('brand_abuse', 38, 'The address mentions "' + nice + '" but the site is not run by ' + nice + '. The real one is ' + official1 + '.', 'ঠিকানায় "' + nice + '" নাম আছে, কিন্তু সাইটটি ' + nice + '-এর নয়। আসল সাইট: ' + official1 + '।', { brand: nice });
+    }
+    // Keywords in host and path
+    const hostKw = [], pathKw = [];
+    for (const [k, label] of KEYWORDS) {
+      if (hostFlat.includes(k)) hostKw.push([k, label]);
+      else if (fullLower.replace(/[^a-z0-9]/g, '').includes(k)) pathKw.push([k, label]);
+    }
+    const kwAll = hostKw.concat(pathKw);
+    if (kwAll.length && !official) {
+      const strong = kwAll.filter(([k]) => STRONG_KW.has(k)).length;
+      const weight = Math.min(30, strong * 12 + (kwAll.length - strong) * 5 + (hostKw.length ? 4 : 0));
+      const names = kwAll.slice(0, 4).map(x => '"' + x[1] + '"').join(', ');
+      add('keywords', weight, 'The link uses pressure or account words like ' + names + '. Scam messages lean on these.', 'লিংকে ' + names + ' জাতীয় শব্দ আছে - প্রতারণার মেসেজে এগুলো খুব দেখা যায়।');
+    }
+    // Combination boosts
+    if (brandHit && flags.some(f => ['keywords', 'risky_tld', 'free_host', 'no_https'].includes(f.id))) add('combo', 12, 'A brand name together with other warning signs makes impersonation very likely.', 'ব্র্যান্ডের নামের সাথে আরও সন্দেহজনক লক্ষণ থাকায় নকল হওয়ার সম্ভাবনা অনেক বেশি।');
+    if (official) {
+      for (const f of flags) if (['keywords','brand_abuse'].includes(f.id)) f.weight = 0;
+    }
+    return finish({ host, registrable: reg, officialBrand: official, flags });
+  }
+
+  function finish(r) {
+    const flags = r.flags.filter(f => f.weight > 0);
+    const score = Math.min(100, flags.reduce((s, f) => s + f.weight, 0));
+    let verdict = 'safe';
+    if (score >= 55) verdict = 'phishing';
+    else if (score >= 22) verdict = 'suspicious';
+    flags.sort((a, b) => b.weight - a.weight);
+    return Object.assign({}, r, { ok: true, flags, score, verdict });
+  }
+
+  return { analyze, parse, registrable, levenshtein, BRANDS, SHORTENERS };
+});
