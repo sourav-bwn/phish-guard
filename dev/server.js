@@ -6,8 +6,13 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '
 http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://x');
   if (u.pathname === '/api/check') {
-    const out = await handleCheck(u.searchParams.get('url'), process.env);
-    res.writeHead(out.status, { 'content-type': 'application/json', 'cache-control': 'no-store' });
+    let input = u.searchParams.get('url');
+    if (req.method === 'POST') {
+      let b = ''; for await (const c of req) b += c;
+      try { input = JSON.parse(b); } catch (e) { input = null; }
+    }
+    const out = await handleCheck(input, process.env);
+    res.writeHead(out.status, { 'content-type': 'application/json', 'cache-control': 'no-store', 'access-control-allow-origin': '*' });
     return res.end(JSON.stringify(out.body));
   }
   let f = path.normalize(path.join(PUB, u.pathname === '/' ? 'index.html' : u.pathname));
