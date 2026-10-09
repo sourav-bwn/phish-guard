@@ -11,6 +11,8 @@ Built for **Hack for Social Cause** (MY Bharat, theme: Digital Safety & Cyber Fr
 - scam words in the address: kyc, otp, verify, lucky winner, refund, cashback...
 - risky endings (.xyz, .top, .click...), URL shorteners, raw IP hosts, `@` tricks, punycode, many subdomains, odd ports, free hosting, hidden redirects, direct `.apk` downloads, no HTTPS
 
+**Also in the UI:** whole-message paste (finds every link and scam wording, English/Bengali/Hinglish), bulk scan of up to 50 links with CSV export and a print view, and QR image scan (native BarcodeDetector, falls back to jsQR).
+
 **Optional reputation lookups** (`lib/external.js`, run on the server, each degrades gracefully):
 
 | Service | Key | Env var |
@@ -21,6 +23,23 @@ Built for **Hack for Social Cause** (MY Bharat, theme: Digital Safety & Cyber Fr
 | URLhaus (abuse.ch) | free Auth-Key | `URLHAUS_AUTH_KEY` |
 
 If a key is missing the row shows "not configured" and the heuristic verdict still works. A database hit upgrades the verdict to phishing.
+
+## API
+
+Free, no key, CORS open. Base: `https://phish-guard-seven-pi.vercel.app/api/check`
+
+```
+GET  /api/check?url=http://sbi-kyc-update.xyz/login
+POST /api/check   {"url": "paypa1.com"}
+POST /api/check   {"text": "Dear customer, your SBI account will be blocked... http://..."}
+POST /api/check   {"urls": ["a.com", "b.xyz/login"]}      # up to 50
+```
+
+Single link returns `verdict` (`safe|suspicious|phishing`), `score` 0-100, `reasons[]` (English and Bengali), and `external[]` (database checks plus domain age from RDAP). `text` extracts every link, scores them and adds scam-wording cues (English, Bengali, Hinglish).
+
+```
+curl -s https://phish-guard-seven-pi.vercel.app/api/check -d '{"url":"http://paypa1.com/signin"}' -H 'content-type: application/json'
+```
 
 ## Run it
 
