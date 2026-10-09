@@ -50,6 +50,10 @@ npm test         # heuristics unit tests
 
 Deploy free on Vercel: import the repo, no build step. `public/` is the site, `api/check.js` is the serverless function. Add the env vars above in Project Settings if you want them.
 
+## Roadmap
+
+Parked on purpose, because they need stored user data or a labelled dataset: opt-in anonymous scam reporting, a stats dashboard, a trained model with a measured evaluation, page-content and screenshot analysis, a WhatsApp bot. See [docs/RESEARCH.md](docs/RESEARCH.md) for the reasoning and sources, and [docs/HSC_PACK.md](docs/HSC_PACK.md) for the hackathon deck outline, demo script and checklist.
+
 ## Notes
 
 - The suspicious URL is never fetched by the server, so a malicious page cannot attack it.
