@@ -154,15 +154,16 @@
           if (host.split(/[.-]/).includes(b)) { brandHit = { brand: b, kind: 'contains' }; break; }
           continue;
         }
-        if (hostFlat.includes(b)) { brandHit = { brand: b, kind: 'contains' }; break; }
-        if (flat.includes(b)) { brandHit = { brand: b, kind: 'typo' }; break; }
+        if (b.length >= 6 ? hostFlat.includes(b) : host.split(/[.-]/).includes(b)) { brandHit = { brand: b, kind: 'contains' }; break; }
+        if (b.length >= 6 && flat.includes(b)) { brandHit = { brand: b, kind: 'typo' }; break; }
       }
       if (!brandHit) {
         const cleanLabel = deLeet(regLabel.replace(/-/g, ''));
         for (const b in BRANDS) {
           if (b.length < 4) continue;
           const d = levenshtein(cleanLabel, b);
-          if (d > 0 && d <= (b.length >= 7 ? 2 : 1)) { brandHit = { brand: b, kind: 'typo' }; break; }
+          const hasLeet = /[0-9$]|rn|vv/.test(regLabel);
+          if (d > 0 && d <= (b.length >= 7 ? 2 : 1) && (b.length >= 6 || hasLeet)) { brandHit = { brand: b, kind: 'typo' }; break; }
         }
       }
       if (!brandHit && regLabel !== regLabel.replace(/[01345$]/g, '') && false) {}
@@ -170,7 +171,7 @@
     if (brandHit) {
       const nice = brandHit.brand.toUpperCase();
       const official1 = BRANDS[brandHit.brand][0];
-      if (brandHit.kind === 'typo') add('lookalike', 45, 'The domain "' + reg + '" looks like ' + nice + ' (' + official1 + ') with small spelling changes. This is a classic look-alike trick.', 'ডোমেইন "' + reg + '" দেখতে ' + nice + ' (' + official1 + ')-এর মতো, কিন্তু বানানে সামান্য বদল - এটা নকল সাইটের পরিচিত কৌশল।', { brand: nice });
+      if (brandHit.kind === 'typo') add('lookalike', 56, 'The domain "' + reg + '" looks like ' + nice + ' (' + official1 + ') with small spelling changes. This is a classic look-alike trick.', 'ডোমেইন "' + reg + '" দেখতে ' + nice + ' (' + official1 + ')-এর মতো, কিন্তু বানানে সামান্য বদল - এটা নকল সাইটের পরিচিত কৌশল।', { brand: nice });
       else add('brand_abuse', 38, 'The address mentions "' + nice + '" but the site is not run by ' + nice + '. The real one is ' + official1 + '.', 'ঠিকানায় "' + nice + '" নাম আছে, কিন্তু সাইটটি ' + nice + '-এর নয়। আসল সাইট: ' + official1 + '।', { brand: nice });
     }
     // Keywords in host and path
@@ -204,5 +205,58 @@
     return Object.assign({}, r, { ok: true, flags, score, verdict });
   }
 
-  return { analyze, parse, registrable, levenshtein, BRANDS, SHORTENERS };
+
+  // ---- Whole-message analysis ----
+  const CUES = [
+    [/(account|a\/c|card|sim|number).{0,40}(block|blocked|suspend|suspended|deactivat|closed|freeze|frozen|expire)/i, 22, 'Threatens to block or close your account', 'অ্যাকাউন্ট বা কার্ড বন্ধ করে দেওয়ার হুমকি'],
+    [/(update|complete|verify|re-?verify).{0,25}\bkyc\b|\bkyc\b.{0,30}(update|expire|pending|incomplete|verify)/i, 28, 'Asks you to update or verify KYC', 'KYC আপডেট বা যাচাই করতে বলছে'],
+    [/(share|send|tell|enter|give).{0,20}(otp|pin|cvv|password|passcode)/i, 30, 'Asks for your OTP, PIN, CVV or password. No bank ever does.', 'OTP, PIN, CVV বা পাসওয়ার্ড চাইছে। কোনো ব্যাংক এটা চায় না।'],
+    [/(won|win|winner|lucky|selected|prize|lottery|jackpot|kbc)/i, 18, 'Claims you won a prize or were selected', 'আপনি পুরস্কার জিতেছেন বলে দাবি করছে'],
+    [/(refund|cashback|reward|bonus).{0,40}(claim|click|link|credit|receive)|claim.{0,20}(refund|reward|cashback|bonus)/i, 18, 'Offers a refund, cashback or reward if you click', 'ক্লিক করলে রিফান্ড, ক্যাশব্যাক বা রিওয়ার্ডের লোভ দেখাচ্ছে'],
+    [/(power|electricity|connection|supply).{0,40}(disconnect|cut|off|tonight|today)|(disconnect|cut).{0,40}(power|electricity)/i, 24, 'Electricity disconnection threat', 'বিদ্যুৎ সংযোগ কেটে দেওয়ার হুমকি'],
+    [/(urgent|immediately|within\s+\d+\s*(hour|hr|min)|today\s+only|last\s+date|act\s+now|expires?\s+(today|soon|in))/i, 12, 'Creates urgency', 'তাড়াহুড়ো করানোর চেষ্টা'],
+    [/(pay|deposit|send).{0,25}(small|nominal|registration|processing|redelivery|customs)\s*(fee|charge|amount)/i, 22, 'Asks for a small fee before you get something', 'কিছু পাওয়ার আগে সামান্য ফি চাইছে'],
+    [/(download|install).{0,30}(apk|app).{0,30}(claim|reward|kyc|verify|update)|\.apk/i, 25, 'Pushes you to install an app outside Play Store', 'প্লে স্টোরের বাইরের অ্যাপ ইনস্টল করতে বলছে'],
+    [/(part[- ]?time|work from home|earn).{0,40}(₹|rs\.?|inr)?\s*\d{3,6}.{0,20}(per|daily|day|hour)/i, 20, 'Too-good-to-be-true job offer', 'অবিশ্বাস্য আয়ের চাকরির প্রস্তাব'],
+    [/(aapka|apka|aapke).{0,30}(account|khata|card).{0,20}(band|block)|turant|abhi\s+click|inaam|lottery\s+lagi/i, 20, 'Hinglish pressure phrases typical of scam SMS', 'হিন্দি-ইংরেজি মেশানো প্রতারণা-মেসেজের ধাঁচ'],
+    [/(আপনার|আপনি).{0,40}(অ্যাকাউন্ট|একাউন্ট|কার্ড|সংযোগ).{0,40}(বন্ধ|ব্লক|কেটে)|কেওয়াইসি|কে ?ওয়াই ?সি|পুরস্কার|লটারি|বিদ্যুৎ.{0,30}(কেটে|বিচ্ছিন্ন)/, 24, 'Bengali scam wording (account block, KYC, prize, power cut)', 'বাংলায় প্রতারণার ভাষা (অ্যাকাউন্ট বন্ধ, KYC, পুরস্কার, বিদ্যুৎ কাটা)'],
+    [/(?:dear|respected)\s+(customer|user|sir|madam|account\s*holder)|প্রিয় গ্রাহক/i, 8, 'Generic greeting instead of your name', 'আপনার নাম নয়, সাধারণ সম্বোধন'],
+    [/(?:call|whatsapp|contact).{0,25}(\+?91[\s-]?)?[6-9]\d{9}/i, 10, 'Asks you to call or WhatsApp a mobile number', 'একটি মোবাইল নম্বরে ফোন বা WhatsApp করতে বলছে']
+  ];
+  const URL_RE = /(?:https?:\/\/|www\.)[^\s<>"'()]+|(?<![@\w.-])[a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)*\.(?:com|in|co\.in|net|org|xyz|top|click|link|icu|buzz|cyou|sbs|cfd|vip|work|live|info|site|online|shop|store|app|apk|me|ly|gl|co|io|tk|ml|ga|cf|gq|zip|mov)\b(?:\/[^\s<>"'()]*)?/gi;
+  const UPI_RE = /\b[a-z0-9._-]{2,}@(?:ok(?:axis|hdfcbank|icici|sbi)|ybl|ibl|axl|paytm|upi|apl|sbi|icici|hdfcbank|pnb|barodampay|fbl|aubank)\b/gi;
+
+  function extractLinks(text) {
+    const out = [];
+    const seen = new Set();
+    const t = String(text || '');
+    const upis = new Set((t.match(UPI_RE) || []).map(x => x.toLowerCase()));
+    for (let m of (t.match(URL_RE) || [])) {
+      m = m.replace(/[.,;:!?)\]}>]+$/, '');
+      if (upis.has(m.toLowerCase())) continue;
+      if (/^[^/]*@/.test(m) && !/^https?:/i.test(m)) continue; // email address
+      const k = m.toLowerCase();
+      if (!seen.has(k)) { seen.add(k); out.push(m); }
+    }
+    return out.slice(0, 50);
+  }
+
+  function analyzeMessage(text) {
+    const t = String(text || '').trim();
+    if (!t) return { ok: false, error: 'empty' };
+    const links = extractLinks(t).map(l => Object.assign({ input: l }, analyze(l))).filter(r => r.ok);
+    const cues = [];
+    for (const [re, w, en, bn] of CUES) if (re.test(t)) cues.push({ id: 'cue', weight: w, en, bn });
+    const upis = Array.from(new Set((t.match(UPI_RE) || []).map(x => x.toLowerCase())));
+    if (upis.length) cues.push({ id: 'upi', weight: 10, en: 'Contains a UPI ID (' + upis.slice(0, 2).join(', ') + '). Never pay someone just because a message told you to.', bn: 'UPI আইডি আছে (' + upis.slice(0, 2).join(', ') + ')। মেসেজে বলা হয়েছে বলেই কাউকে টাকা পাঠাবেন না।' });
+    const cueScore = cues.reduce((s, c) => s + c.weight, 0);
+    const worstLink = links.reduce((m, l) => Math.max(m, l.score), 0);
+    let score = Math.min(100, Math.round(worstLink * 0.8 + cueScore * (links.length ? 1 : 0.9)));
+    if (cues.length >= 3 && links.length) score = Math.max(score, 60);
+    cues.sort((a, b) => b.weight - a.weight);
+    const verdict = score >= 55 ? 'phishing' : score >= 22 ? 'suspicious' : 'safe';
+    return { ok: true, score, verdict, cues, links, upis };
+  }
+
+  return { analyze, analyzeMessage, extractLinks, parse, registrable, levenshtein, BRANDS, SHORTENERS };
 });

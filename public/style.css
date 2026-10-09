@@ -55,3 +55,28 @@ h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)
 .help ol{margin:0;padding-left:20px}.help li{margin:6px 0}
 footer{border-top:1px solid var(--line);color:var(--mut);font-size:13.5px;text-align:center;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
 footer p{margin:4px 0}
+
+.tabs{display:flex;gap:4px;margin:0 0 14px;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel);width:max-content;max-width:100%}
+.tabs button{border:0;background:none;color:var(--mut);padding:8px 18px;border-radius:999px;font:inherit;font-size:14.5px;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--accent);color:#06210f;font-weight:600}
+textarea{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;font:inherit;outline:none;resize:vertical;margin-bottom:8px}
+textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #4ade8026}
+.primary{background:var(--accent);color:#06210f;border:0;border-radius:var(--r);padding:13px 22px;font:inherit;font-weight:650;cursor:pointer}
+.primary[disabled]{opacity:.7;cursor:progress}
+.filebtn{display:inline-flex;align-items:center}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.bulkhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bulkhead h2{margin:0;font-size:20px}
+.bulkhead .actions{margin:0}
+.tablewrap{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-weight:500;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;border-top:0}
+td.l{word-break:break-all;max-width:260px}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:600}
+.pill.safe{background:#4ade8022;color:var(--safe)}.pill.suspicious{background:#fbbf2422;color:var(--warn)}.pill.phishing{background:#f8717122;color:var(--bad)}
+.ext .lk{word-break:break-all;flex:1}
+@media print{body{background:#fff;color:#000}.top,.hero form,.hero .tabs,.hero .chips,#msgpanel,#bulkpanel,.hero h1,.hero .sub,.block,footer,.actions,.bulkhead .actions{display:none!important}.card{background:#fff;border-color:#999;color:#000}.vtext p,.fine,.host,h3{color:#333}}
+table{min-width:560px}
+td.l{min-width:150px}
+.ext .pill{flex:none;align-self:flex-start;white-space:nowrap}
