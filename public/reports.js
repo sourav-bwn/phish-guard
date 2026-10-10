@@ -56,7 +56,12 @@
     } catch (e) { m.textContent = t.fail; m.hidden = false; }
     g.disabled = false; g.firstChild.textContent = t.send;
   }
-  btn.addEventListener('click', () => { if (!loaded) { loaded = true; load(); } });
+  btn.addEventListener('click', () => {
+    tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', String(b === btn)));
+    document.querySelectorAll('[data-panel]').forEach(el => { el.hidden = el.dataset.panel !== 'rep'; });
+    ['result', 'bulkresult'].forEach(i => { const e = document.getElementById(i); if (e) e.hidden = true; });
+    if (!loaded) { loaded = true; load(); } });
+  tabs.querySelectorAll('button:not([data-tab=rep])').forEach(b => b.addEventListener('click', () => { panel.hidden = true; }));
   document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setTimeout(build, 0)));
   build();
 })();
