@@ -50,9 +50,22 @@ npm test         # heuristics unit tests
 
 Deploy free on Vercel: import the repo, no build step. `public/` is the site, `api/check.js` is the serverless function. Add the env vars above in Project Settings if you want them.
 
-## Roadmap
+## More features
 
-Parked on purpose, because they need stored user data or a labelled dataset: opt-in anonymous scam reporting, a stats dashboard, a trained model with a measured evaluation, page-content and screenshot analysis, a WhatsApp bot. See [docs/RESEARCH.md](docs/RESEARCH.md) for the reasoning and sources, and [docs/HSC_PACK.md](docs/HSC_PACK.md) for the hackathon deck outline, demo script and checklist.
+- **Screenshot OCR** (Tesseract.js, English/Bengali/Hindi). Runs in the browser, the image is never uploaded.
+- **Number / UPI checker**: format and warning-sign checks only. India has no public list of scam numbers or UPI IDs (Chakshu has no public API), so "no red flags" is not "trusted".
+- **Email header analyzer**: SPF/DKIM/DMARC results, From/Reply-To/Return-Path mismatch.
+- **Bulk check**, **QR scan**, **shareable verdict card** (PNG), **Hindi/Hinglish scam cues**.
+- **Community reports + stats** (Supabase free tier). Anonymous: only scam type, channel and state are stored. No link, number, name or IP. Writes go through one rate-limited function (5 per hour per network); the table cannot be read or written directly. Schema: [docs/schema.sql](docs/schema.sql).
+- **ML advisory row**: logistic regression on host features, held-out accuracy 84.6%, precision 89.6%, recall 76.6%. Benign data is top-ranked sites only, so it is advisory and never changes the verdict.
+- **Chrome extension** (MV3) in `extension/`. Load unpacked. Not yet tested in a real browser.
+
+## Parked
+
+- **WhatsApp bot**: reply-only replies inside the 24-hour window are free under Meta's current pricing, but it needs a Meta developer app, a business portfolio and a dedicated phone number not already on WhatsApp, and Meta can ask for business verification. Not done because it needs the team's own Meta account and number. Sources: https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing
+- Page-content analysis (needs fetching the suspicious URL server-side, which is unsafe).
+
+See [docs/RESEARCH.md](docs/RESEARCH.md) for reasoning and sources, and [docs/HSC_PACK.md](docs/HSC_PACK.md) for the deck outline, demo script and checklist.
 
 ## Notes
 
