@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "PhishGuard link checker",
+  "version": "1.0.0",
+  "description": "Right-click any link and check it for phishing. Free, nothing stored.",
+  "permissions": ["contextMenus", "notifications", "activeTab"],
+  "host_permissions": ["https://phish-guard-seven-pi.vercel.app/*"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_icon": "icon128.png" },
+  "icons": { "128": "icon128.png" }
+}
