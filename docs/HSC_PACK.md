@@ -40,3 +40,11 @@ Recording tips: record on the phone at normal speed, 1080p, voiceover in his own
 - [ ] Test the live site on a phone one last time, in both languages.
 - [ ] Confirm the college Google Form (for Ministry reporting) was submitted from the college mail ID. Reported as done on 8 Oct.
 - [ ] Submit at least a day before 15 Oct and keep the confirmation screenshot.
+
+## Feature list for the deck and demo (all live)
+
+Link, message, screenshot (OCR), number/UPI, email headers, bulk, QR, shareable verdict card, Bengali + English, Hindi cues, community reports with stats, ML advisory row, open API at /api/check, Chrome extension.
+
+Demo add-ons: (1) upload a scam SMS screenshot, (2) open Community, submit a report and watch the chart update, (3) paste headers of a spam mail.
+
+Honest caveats to say out loud: the extension is untested in a real browser; the ML model is advisory (84.6% accuracy on a held-out split of public phishing lists vs top-ranked sites); no public database of scam numbers or UPI IDs exists in India; Community numbers start at zero and are only real reports; the WhatsApp bot is parked (needs a Meta account and dedicated number).
