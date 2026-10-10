@@ -11,8 +11,8 @@ http.createServer(async (req, res) => {
       let b = ''; for await (const c of req) b += c;
       try { input = JSON.parse(b); } catch (e) { input = null; }
     }
-    const out = await handleCheck(input, process.env);
-    res.writeHead(out.status, { 'content-type': 'application/json', 'cache-control': 'no-store', 'access-control-allow-origin': '*' });
+    const out = await handleCheck(input, process.env, { ip: req.socket.remoteAddress });
+    res.writeHead(out.status, Object.assign({ 'content-type': 'application/json', 'cache-control': 'no-store', 'access-control-allow-origin': '*' }, out.headers || {}));
     return res.end(JSON.stringify(out.body));
   }
   let f = path.normalize(path.join(PUB, u.pathname === '/' ? 'index.html' : u.pathname));
