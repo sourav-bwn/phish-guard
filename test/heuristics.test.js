@@ -80,3 +80,37 @@ test('headers: failures and reply-to mismatch', () => {
 test('hindi cues', () => {
   assert.notStrictEqual(H2.analyzeMessage('आपका खाता आज बंद हो जाएगा, केवाईसी अपडेट करें').verdict, 'safe');
 });
+
+const { secretInUrl } = require('../public/heuristics.js');
+test('secretInUrl: flags token-bearing links', () => {
+  for (const u of [
+    'https://app.example.com/reset-password?token=9f8a7c6b5d4e3f2a1b0c',
+    'https://example.com/verify?code=482913&email=a@b.com',
+    'https://example.com/cb#access_token=abcdef123456',
+    'https://example.com/x?session=abc12345',
+    'https://user:pass@example.com/',
+    'https://example.com/path?ref=Ab12Cd34Ef56Gh78Ij90Kl12Mn34',
+    'https://example.com/reset/aB3dE5gH7jK9mN1pQ3sT5vX7zA9cE1',
+  ]) assert.strictEqual(secretInUrl(u).risky, true, u);
+});
+test('secretInUrl: leaves ordinary links alone', () => {
+  for (const u of ['https://www.google.com/search?q=hello+world', 'https://en.wikipedia.org/wiki/Phishing', 'sbi-kyc-update.xyz/login', 'https://example.com/?page=2&sort=asc', 'https://youtu.be/dQw4w9WgXcQ', '']) assert.strictEqual(secretInUrl(u).risky, false, u);
+});
+
+const { createLimiter } = require('../lib/ratelimit.js');
+test('rate limiter: blocks after the limit, separates callers, recovers after the window', () => {
+  let t = 1000; const l = createLimiter({ limit: 3, windowMs: 60000, now: () => t });
+  for (let i = 0; i < 3; i++) assert.strictEqual(l.take('a').ok, true);
+  const r = l.take('a'); assert.strictEqual(r.ok, false); assert.ok(r.retryAfter >= 1 && r.retryAfter <= 60);
+  assert.strictEqual(l.take('b').ok, true);
+  t += 60001; assert.strictEqual(l.take('a').ok, true);
+});
+test('handler: 429 with retry-after once a caller passes the cap, no ip means no limit', async () => {
+  const { handleCheck, LIMITS } = require('../lib/handler.js');
+  let last;
+  for (let i = 0; i < 25; i++) last = await handleCheck({ urls: ['http://paypa1.com'] }, {}, { ip: '203.0.113.9' });
+  for (let i = 0; i < 40 && last.status !== 429; i++) last = await handleCheck({ urls: ['http://paypa1.com'] }, {}, { ip: '203.0.113.9' });
+  assert.strictEqual(last.status, 429); assert.ok(Number(last.headers['retry-after']) >= 1);
+  const ok = await handleCheck({ urls: ['http://paypa1.com'] }, {}, { ip: '203.0.113.10' }); assert.strictEqual(ok.status, 200);
+  const none = await handleCheck({ urls: ['http://paypa1.com'] }, {}); assert.strictEqual(none.status, 200);
+});
