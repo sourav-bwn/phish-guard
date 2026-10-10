@@ -1,10 +1,10 @@
 (function () {
   const SB = 'https://btjwtngzanfxewslgqna.supabase.co', KEY = 'sb_publishable_2-Wf9sX11j9fY1t8LoLdgw_ASbcwHmo';
   const L = {
-    en: { tab: 'Community', h: 'Report a scam', p: 'Anonymous. We store only the type, category and state. No link, number, name or IP address is saved.', kind: 'What was it?', scam: 'Scam type', region: 'Your state', send: 'Submit report', sending: 'Sending...', thanks: 'Thank you. Your report is counted.', limit: 'Too many reports from your network in the last hour. Try later.', fail: 'Could not send. Check your connection and try again.', stats: 'Reports from this community', total: 'Total reports', last7: 'Last 7 days', empty: 'No reports yet. Be the first.', bs: 'By scam type', br: 'Top states', bk: 'By channel', bd: 'Last 14 days', pick: 'Choose',
+    en: { tab: 'Community', h: 'Report a scam', p: 'Anonymous. We store only the type, category and state. No link, number, name or IP address is saved.', kind: 'What was it?', scam: 'Scam type', region: 'Your state', send: 'Submit report', sending: 'Sending...', thanks: 'Thank you. Your report is counted.', limit: 'Too many reports from your network in the last hour. Try later.', fail: 'Could not send. Check your connection and try again.', stats: 'Reports from this community', loading: 'Loading reports...', total: 'Total reports', last7: 'Last 7 days', empty: 'No reports yet, so you could be the first. Reports from people across India show up here as charts. The form above takes about 10 seconds.', bs: 'By scam type', br: 'Top states', bk: 'By channel', bd: 'Last 14 days', pick: 'Choose',
       kinds: { link: 'Link', message: 'SMS / WhatsApp message', phone: 'Phone call or number', upi: 'UPI request or ID', email: 'Email', qr: 'QR code' },
       scams: { bank_kyc: 'Bank / KYC update', upi_refund: 'UPI refund or collect request', lottery_prize: 'Lottery or prize', job_offer: 'Fake job offer', parcel_delivery: 'Parcel / delivery fee', investment: 'Investment or trading', impersonation: 'Officer / relative impersonation', loan_app: 'Loan app', other: 'Other' } },
-    bn: { tab: 'কমিউনিটি', h: 'প্রতারণার রিপোর্ট করুন', p: 'নাম প্রকাশ হয় না। শুধু ধরন, বিভাগ আর রাজ্য জমা হয়। লিংক, নম্বর, নাম বা IP ঠিকানা রাখা হয় না।', kind: 'এটা কী ছিল?', scam: 'প্রতারণার ধরন', region: 'আপনার রাজ্য', send: 'রিপোর্ট জমা দিন', sending: 'পাঠানো হচ্ছে...', thanks: 'ধন্যবাদ। আপনার রিপোর্ট গোনা হয়েছে।', limit: 'গত এক ঘণ্টায় আপনার নেটওয়ার্ক থেকে অনেক রিপোর্ট এসেছে। পরে চেষ্টা করুন।', fail: 'পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।', stats: 'এই কমিউনিটির রিপোর্ট', total: 'মোট রিপোর্ট', last7: 'গত ৭ দিন', empty: 'এখনও কোনো রিপোর্ট নেই। প্রথম হোন।', bs: 'ধরন অনুযায়ী', br: 'শীর্ষ রাজ্য', bk: 'মাধ্যম অনুযায়ী', bd: 'গত ১৪ দিন', pick: 'বাছুন',
+    bn: { tab: 'কমিউনিটি', h: 'প্রতারণার রিপোর্ট করুন', p: 'নাম প্রকাশ হয় না। শুধু ধরন, বিভাগ আর রাজ্য জমা হয়। লিংক, নম্বর, নাম বা IP ঠিকানা রাখা হয় না।', kind: 'এটা কী ছিল?', scam: 'প্রতারণার ধরন', region: 'আপনার রাজ্য', send: 'রিপোর্ট জমা দিন', sending: 'পাঠানো হচ্ছে...', thanks: 'ধন্যবাদ। আপনার রিপোর্ট গোনা হয়েছে।', limit: 'গত এক ঘণ্টায় আপনার নেটওয়ার্ক থেকে অনেক রিপোর্ট এসেছে। পরে চেষ্টা করুন।', fail: 'পাঠানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।', stats: 'এই কমিউনিটির রিপোর্ট', loading: 'রিপোর্ট লোড হচ্ছে...', total: 'মোট রিপোর্ট', last7: 'গত ৭ দিন', empty: 'এখনও কোনো রিপোর্ট নেই, আপনিই প্রথম হতে পারেন। সারা ভারতের মানুষের রিপোর্ট এখানে চার্ট হয়ে দেখা যাবে। ওপরের ফর্ম ভরতে ১০ সেকেন্ড লাগে।', bs: 'ধরন অনুযায়ী', br: 'শীর্ষ রাজ্য', bk: 'মাধ্যম অনুযায়ী', bd: 'গত ১৪ দিন', pick: 'বাছুন',
       kinds: { link: 'লিংক', message: 'SMS / WhatsApp মেসেজ', phone: 'ফোন কল বা নম্বর', upi: 'UPI অনুরোধ বা ID', email: 'ইমেল', qr: 'QR কোড' },
       scams: { bank_kyc: 'ব্যাংক / KYC আপডেট', upi_refund: 'UPI রিফান্ড বা কালেক্ট রিকোয়েস্ট', lottery_prize: 'লটারি বা পুরস্কার', job_offer: 'ভুয়া চাকরির অফার', parcel_delivery: 'পার্সেল / ডেলিভারি ফি', investment: 'বিনিয়োগ বা ট্রেডিং', impersonation: 'অফিসার / আত্মীয় সেজে', loan_app: 'লোন অ্যাপ', other: 'অন্যান্য' } }
   };
@@ -23,7 +23,7 @@
     const t = T();
     const bars = (rows, map) => rows.length ? '<div class="bars">' + rows.map(r => { const max = rows[0].n || 1; return '<div class="bar"><span class="bl">' + esc(map ? (map[r.k] || r.k) : r.k) + '</span><span class="bt"><i style="width:' + Math.max(4, Math.round(r.n / max * 100)) + '%"></i></span><b>' + r.n + '</b></div>'; }).join('') + '</div>' : '';
     let s = '<h3>' + t.stats + '</h3>';
-    if (!stats) s += '<p class="hint">…</p>';
+    if (!stats) s += '<p class="hint">' + t.loading + '</p>';
     else if (!stats.total) s += '<p class="hint">' + t.empty + '</p>';
     else s += '<div class="kpis"><div><b>' + stats.total + '</b><span>' + t.total + '</span></div><div><b>' + stats.last7 + '</b><span>' + t.last7 + '</span></div></div><h4>' + t.bs + '</h4>' + bars(stats.by_scam, t.scams) + '<h4>' + t.br + '</h4>' + bars(stats.by_region) + '<h4>' + t.bk + '</h4>' + bars(stats.by_kind, t.kinds) + '<h4>' + t.bd + '</h4>' + bars(stats.by_day);
     panel.querySelector('#repstats').innerHTML = s;
@@ -64,4 +64,6 @@
   tabs.querySelectorAll('button:not([data-tab=rep])').forEach(b => b.addEventListener('click', () => { panel.hidden = true; }));
   document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setTimeout(build, 0)));
   build();
+  const rb = document.getElementById('reportbtn');
+  if (rb) rb.addEventListener('click', () => { btn.click(); panel.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
 })();

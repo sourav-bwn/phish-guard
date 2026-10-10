@@ -7,6 +7,8 @@
 <meta name="description" content="Paste a link you got on WhatsApp or SMS. PhishGuard tells you if it looks like phishing, and why. Free, English and Bengali.">
 <meta name="theme-color" content="#0b0f14">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -101,7 +103,9 @@
     <ul id="reasons" class="reasons"></ul>
     <h3 data-i18n="dbs">Scam databases</h3>
     <ul id="ext" class="ext"></ul>
-    <p class="actions"><button type="button" class="chip" id="sharebtn" data-i18n="share">Share verdict card</button><button type="button" class="chip" id="printone" data-i18n="print">Print report</button></p>
+    <p class="fine mlacc" data-i18n="mlacc"></p>
+    <p class="fine" data-i18n="how"></p>
+    <p class="actions"><button type="button" class="chip" id="sharebtn" data-i18n="share">Share verdict card</button><button type="button" class="chip" id="printone" data-i18n="print">Print report</button><button type="button" class="chip" id="reportbtn" data-i18n="rep_btn">Report this scam</button></p>
     <p class="fine" data-i18n="fine">No tool can promise a link is safe. If a message is rushing you about money, a bank, KYC or a prize, stop and call the company on its official number.</p>
   </section>
 
@@ -113,7 +117,7 @@
 
   <section class="block">
     <h2 data-i18n="pat">Scams going around in India</h2>
-    <div class="grid" id="patterns"></div>
+    <div class="grid" id="patterns"><article class="pat"><h4>&quot;Your KYC has expired&quot;</h4><p>SMS or WhatsApp says your bank account will be blocked today unless you update KYC through a link or app.</p><p class="tip">Banks never ask you to update KYC through a link in a message. Visit the branch or the official app.</p></article><article class="pat"><h4>UPI &quot;collect&quot; request</h4><p>Someone says they sent you money by mistake or you won a refund, then asks you to approve a request or enter your PIN.</p><p class="tip">You never enter a PIN to receive money. A PIN is only for sending.</p></article><article class="pat"><h4>Electricity bill disconnection</h4><p>A message says your power will be cut tonight unless you pay or call a number. The &quot;officer&quot; then makes you install a screen-sharing app.</p><p class="tip">Check your bill on the official supplier website or app. Never install an app a caller asks for.</p></article><article class="pat"><h4>Fake bank APK</h4><p>A WhatsApp message sends a file like &quot;SBI_Reward.apk&quot; to claim points or cashback.</p><p class="tip">Install apps only from Google Play. These files can read your SMS and OTPs.</p></article><article class="pat"><h4>Lottery and &quot;KBC&quot; prizes</h4><p>You &quot;won&quot; a prize, car or lakhs of rupees, and must pay a small fee first.</p><p class="tip">Real prizes do not ask for money in advance. If you did not enter, you did not win.</p></article><article class="pat"><h4>Part-time job and task scams</h4><p>A WhatsApp or Telegram &quot;recruiter&quot; offers easy money for liking videos or rating products, then asks you to deposit money to continue.</p><p class="tip">A real job never asks you to pay to work.</p></article><article class="pat"><h4>Fake courier or India Post notice</h4><p>Your parcel is &quot;held&quot; and you must pay a small redelivery fee on a link.</p><p class="tip">Check tracking on the courier's own app or site. A small fee is a way to get your card details.</p></article><article class="pat"><h4>QR code to &quot;receive&quot; money</h4><p>A buyer on a marketplace asks you to scan a QR code to receive payment.</p><p class="tip">Scanning a QR always sends money out. Receiving never needs a scan.</p></article></div>
   </section>
 
   <section class="block help card">
@@ -135,5 +139,6 @@
 <script src="ml.js"></script>
 <script src="app.js"></script>
 <script src="reports.js"></script>
+<script>if("serviceWorker"in navigator)addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")})</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 (function () {
   const I18N = {
     en: {
+      mlacc: 'Pattern model: 84.6% accurate on a held-out test of 24,000 hosts (precision 89.6%, recall 76.6%). It learned from public phishing lists vs top-ranked sites, so it can over-flag small legitimate sites. It never changes the verdict.', how: 'How this verdict was reached: warning signs add up to a score (55 or more is likely phishing, 22 or more is suspicious), and any scam-database hit also counts. "No red flags" means we found nothing, not that it is safe.', rep_btn: 'Report this scam',
       title: "Got a link you don't trust?", sub: "Paste it here before you tap it. We never open the link.", label: 'Link to check',
       ph: 'Paste the link here', check: 'Check link', try: 'Try:', why: 'Why', dbs: 'Scam databases',
       fine: "No tool can promise a link is safe. If a message is rushing you about money, a bank, KYC or a prize, stop and call the company on its official number.",
@@ -27,6 +28,7 @@
       db_override: 'A scam database lists this link, so treat it as dangerous.'
     },
     bn: {
+      mlacc: 'প্যাটার্ন মডেল: ২৪,০০০ হোস্টের আলাদা পরীক্ষায় ৮৪.৬% সঠিক (precision ৮৯.৬%, recall ৭৬.৬%)। এটি শিখেছে প্রকাশ্য ফিশিং তালিকা আর শীর্ষ ওয়েবসাইট থেকে, তাই ছোট বৈধ সাইটকেও সন্দেহ করতে পারে। এটি রায় বদলায় না।', how: 'রায় কীভাবে এল: সতর্কতার চিহ্নগুলো মিলে একটি স্কোর হয় (৫৫ বা বেশি হলে সম্ভবত ফিশিং, ২২ বা বেশি হলে সন্দেহজনক), আর স্ক্যাম ডেটাবেসে মিললেও গোনা হয়। "কোনো লাল সংকেত নেই" মানে কিছু পাইনি, নিরাপদ বলছি না।', rep_btn: 'এই প্রতারণা রিপোর্ট করুন',
       title: 'সন্দেহজনক লিংক পেয়েছেন?', sub: 'ক্লিক করার আগে এখানে পেস্ট করুন। আমরা লিংকটি খুলি না।', label: 'যাচাই করার লিংক',
       ph: 'লিংকটি এখানে পেস্ট করুন', check: 'লিংক যাচাই করুন', try: 'চেষ্টা করুন:', why: 'কারণ', dbs: 'প্রতারণার ডেটাবেস',
       fine: 'কোনো টুলই লিংক নিরাপদ বলে গ্যারান্টি দিতে পারে না। টাকা, ব্যাংক, KYC বা পুরস্কারের কথা বলে তাড়া দিলে থামুন, এবং কোম্পানির সরকারি নম্বরে ফোন করে জেনে নিন।',
