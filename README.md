@@ -58,6 +58,7 @@ Deploy free on Vercel: import the repo, no build step. `public/` is the site, `a
 - **Bulk check**, **QR scan**, **shareable verdict card** (PNG), **Hindi/Hinglish scam cues**.
 - **Community reports + stats** (Supabase free tier). Anonymous: only scam type, channel and state are stored. No link, number, name or IP. Writes go through one rate-limited function (5 per hour per network); the table cannot be read or written directly. Schema: [docs/schema.sql](docs/schema.sql).
 - **ML advisory row**: logistic regression on host features, held-out accuracy 84.6%, precision 89.6%, recall 76.6%. Benign data is top-ranked sites only, so it is advisory and never changes the verdict.
+- **Installable PWA** (manifest + service worker), verdict explainer and ML accuracy note on every result, "Report this scam" button.
 - **Chrome extension** (MV3) in `extension/`. Load unpacked. Not yet tested in a real browser.
 
 ## Parked
