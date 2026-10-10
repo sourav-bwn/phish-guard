@@ -2,6 +2,8 @@
 
 Paste a link you got on WhatsApp or SMS. PhishGuard tells you if it looks like phishing and explains why, in English and Bengali (বাংলা). It never opens the link.
 
+**Privacy note:** the link you check is looked up against outside reputation databases (PhishTank, plus Google Safe Browsing and URLhaus if keys are enabled). It is never opened or fetched. Links that look like they carry a token or secret (password reset, verify, magic-link, long random values) are held back and need a second click, with an on-device-only option. The API (`/api/check`) is rate limited per caller, best-effort per serverless instance.
+
 Built for **Hack for Social Cause** (MY Bharat, theme: Digital Safety & Cyber Fraud Awareness). 100% free stack, no card needed.
 
 ## What it checks
