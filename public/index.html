@@ -42,6 +42,12 @@
         <button id="go" type="submit"><span data-i18n="check">Check link</span></button>
       </div>
       <p class="err" id="err" role="alert" hidden></p>
+      <div class="tokwarn" id="tokwarn" role="alertdialog" aria-labelledby="tokt" hidden>
+        <strong id="tokt" data-i18n="tok_title">This link may carry a secret</strong>
+        <p data-i18n="tok_body"></p>
+        <div class="tokbtns"><button type="button" data-act="local" data-i18n="tok_local">Check on this device only</button><button type="button" class="ghost" data-act="any" data-i18n="tok_any">Look it up anyway</button><button type="button" class="ghost" data-act="cancel" data-i18n="tok_cancel">Cancel</button></div>
+      </div>
+      <p class="priv" data-i18n="priv">Privacy: the link is looked up in outside reputation databases (like PhishTank). It is never opened or fetched. Links with tokens are held back until you confirm.</p>
     </form>
     <div class="chips" data-panel="link" aria-label="Examples">
       <span data-i18n="try">Try:</span>

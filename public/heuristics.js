@@ -353,5 +353,30 @@
     return { ok: true, score, verdict, flags, status, from, replyTo: reply, domain: fd };
   }
 
-  return { analyze, analyzePhone, analyzeUPI, analyzeHeaders, analyzeMessage, extractLinks, parse, registrable, levenshtein, BRANDS, SHORTENERS };
+  // Does this link look like it carries a token or secret (reset, verify, magic-link, long random value)?
+  // Used before anything is sent to outside databases. Returns { risky, reasons[] }.
+  var SECRET_KEYS = /^(token|access_token|id_token|refresh_token|auth|authkey|auth_token|key|api_key|apikey|secret|sig|signature|session|sessionid|sid|code|otp|pin|password|passwd|pwd|reset|resettoken|verify|verification|magic|jwt|hash|ticket|nonce)$/i;
+  var SECRET_PATH = /(reset|verify|verification|confirm|activate|magic|invite|unsubscribe|password|passwd|recover|oauth|callback|auth)[-_/]?(password|link|token|email|account)?/i;
+  function secretInUrl(raw) {
+    var reasons = [];
+    var s = String(raw || '').trim();
+    if (!s) return { risky: false, reasons: reasons };
+    var u;
+    try { u = new URL(/^[a-z][a-z0-9+.-]*:\/\//i.test(s) ? s : 'http://' + s); } catch (e) { return { risky: false, reasons: reasons }; }
+    if (u.username || u.password) reasons.push('login');
+    var params = Array.from(u.searchParams.entries());
+    if (u.hash && /[#&?](access_token|id_token|token|code|key)=/i.test(u.hash)) reasons.push('fragment');
+    params.forEach(function (kv) {
+      var k = kv[0], v = kv[1];
+      if (SECRET_KEYS.test(k) && v.length >= 6) reasons.push('param:' + k.toLowerCase());
+      else if (v.length >= 24 && /^[A-Za-z0-9_\-+=./]+$/.test(v) && /[A-Za-z]/.test(v) && /\d/.test(v) && !/[-_.]{2,}/.test(v) && /[a-z]/.test(v) && /[A-Z0-9]/.test(v)) reasons.push('long:' + k.toLowerCase());
+    });
+    var segs = u.pathname.split('/').filter(Boolean);
+    var pathHit = SECRET_PATH.test(u.pathname) && segs.some(function (g) { return g.length >= 20 && /^[A-Za-z0-9_\-=]+$/.test(g) && /\d/.test(g) && /[A-Za-z]/.test(g); });
+    if (pathHit) reasons.push('path');
+    else if (segs.some(function (g) { return g.length >= 32 && /^[A-Za-z0-9_\-=]+$/.test(g) && /\d/.test(g) && /[A-Za-z]/.test(g); }) && SECRET_PATH.test(u.pathname)) reasons.push('path');
+    return { risky: reasons.length > 0, reasons: reasons };
+  }
+
+  return { secretInUrl, analyze, analyzePhone, analyzeUPI, analyzeHeaders, analyzeMessage, extractLinks, parse, registrable, levenshtein, BRANDS, SHORTENERS };
 });

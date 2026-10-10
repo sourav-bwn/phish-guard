@@ -1,4 +1,4 @@
-const C = 'pg-v1';
+const C = 'pg-v2';
 const SHELL = ['/', '/style.css', '/app.js', '/heuristics.js', '/ml.js', '/model.json', '/reports.js', '/favicon.svg'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== C).map(x => caches.delete(x)))).then(() => self.clients.claim())); });

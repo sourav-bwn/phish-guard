@@ -20,6 +20,7 @@
       num_label: 'Phone number or UPI ID', num_ph: '+91 98765 43210 or name@okaxis', num_check: 'Check', num_hint: 'Checks the format and warning signs only. There is no free public list of scam numbers or UPI IDs, so "no red flags" does not mean trusted.', num_bad: 'That is not a phone number or UPI ID.',
       mail_label: 'Raw email headers', mail_ph: 'Paste the full email headers (Show original / View source)', mail_check: 'Check headers', mail_bad: 'That does not look like email headers.',
       ml: 'Pattern model', ml_txt: '{p}% phishing-like', ml_note: 'Advisory only', subj_phone: 'Number', subj_upi: 'UPI ID', subj_mail: 'Sender',
+      tok_title: 'This link may carry a secret', tok_body: 'It looks like a password reset, login or token link. Checking it looks the address up in outside scam databases, and anyone who sees that address could use the token. Check it on this device only instead.', tok_local: 'Check on this device only', tok_any: 'Look it up anyway', tok_cancel: 'Cancel', rate_limited: 'Too many checks from your network. Showing the on-device result only. Try again in {s}s.', priv: 'Privacy: the link is looked up in outside reputation databases (like PhishTank). It is never opened or fetched. Links with tokens are held back until you confirm.',
       empty: 'Paste a link first.', invalid: "That doesn't look like a link.",
       v_phishing: 'Likely phishing', v_suspicious: 'Suspicious', v_safe: 'No red flags found',
       d_phishing: 'Do not open this link or enter any details.', d_suspicious: 'Be careful. Do not enter OTP, PIN, passwords or card details.', d_safe: "Nothing in the address looks wrong. That is not a guarantee.",
@@ -47,6 +48,7 @@
       num_label: 'ফোন নম্বর বা UPI আইডি', num_ph: '+91 98765 43210 বা name@okaxis', num_check: 'যাচাই', num_hint: 'শুধু ফরম্যাট ও সতর্কতা-চিহ্ন দেখা হয়। প্রতারক নম্বর বা UPI আইডির কোনো বিনামূল্যের সরকারি তালিকা নেই, তাই "বিপদ-সংকেত নেই" মানে ভরসাযোগ্য নয়।', num_bad: 'এটা ফোন নম্বর বা UPI আইডি নয়।',
       mail_label: 'ইমেইলের হেডার', mail_ph: 'পুরো ইমেইল হেডার পেস্ট করুন (Show original / View source)', mail_check: 'হেডার যাচাই', mail_bad: 'এটা ইমেইল হেডারের মতো নয়।',
       ml: 'প্যাটার্ন মডেল', ml_txt: '{p}% ফিশিং-ধাঁচের', ml_note: 'শুধু পরামর্শ', subj_phone: 'নম্বর', subj_upi: 'UPI আইডি', subj_mail: 'প্রেরক',
+      tok_title: 'এই লিংকে গোপন তথ্য থাকতে পারে', tok_body: 'এটি পাসওয়ার্ড রিসেট, লগইন বা টোকেন লিংকের মতো দেখাচ্ছে। যাচাই করলে ঠিকানাটি বাইরের স্ক্যাম ডেটাবেসে খোঁজা হয়, আর যে ঠিকানাটি দেখবে সে টোকেনটি কাজে লাগাতে পারে। তার বদলে শুধু এই ডিভাইসে যাচাই করুন।', tok_local: 'শুধু এই ডিভাইসে যাচাই', tok_any: 'তবুও খুঁজুন', tok_cancel: 'বাতিল', rate_limited: 'আপনার নেটওয়ার্ক থেকে অনেক বেশি যাচাই হয়েছে। শুধু ডিভাইসের ফল দেখানো হচ্ছে। {s} সেকেন্ড পরে চেষ্টা করুন।', priv: 'গোপনীয়তা: লিংকটি বাইরের রিপুটেশন ডেটাবেসে (যেমন PhishTank) খোঁজা হয়। এটি কখনও খোলা বা ফেচ করা হয় না। টোকেনযুক্ত লিংক আপনি নিশ্চিত না করা পর্যন্ত পাঠানো হয় না।',
       empty: 'আগে একটি লিংক পেস্ট করুন।', invalid: 'এটা লিংকের মতো দেখাচ্ছে না।',
       v_phishing: 'ফিশিং হওয়ার সম্ভাবনা বেশি', v_suspicious: 'সন্দেহজনক', v_safe: 'কোনো বিপদ-সংকেত পাওয়া যায়নি',
       d_phishing: 'এই লিংক খুলবেন না, কোনো তথ্যও দেবেন না।', d_suspicious: 'সাবধান। OTP, PIN, পাসওয়ার্ড বা কার্ডের তথ্য দেবেন না।', d_safe: 'ঠিকানায় সন্দেহজনক কিছু নেই। তবে এটা গ্যারান্টি নয়।',
@@ -318,27 +320,40 @@
     g.fillText(line.trim(), x, y); return y;
   }
 
-  async function run(raw) {
+  function hideTok() { const w = $('#tokwarn'); if (w) w.hidden = true; }
+  function showTok(val) {
+    const w = $('#tokwarn'); w.hidden = false;
+    w.querySelector('[data-act=local]').onclick = () => { hideTok(); run(val, 'local'); };
+    w.querySelector('[data-act=any]').onclick = () => { hideTok(); run(val, 'any'); };
+    w.querySelector('[data-act=cancel]').onclick = hideTok;
+    w.querySelector('[data-act=local]').focus();
+  }
+  async function run(raw, mode) {
     const err = $('#err'); err.hidden = true;
     const val = raw.trim();
     if (!val) { err.textContent = t('empty'); err.hidden = false; return; }
     const local = window.PhishHeuristics.analyze(val);
     if (!local.ok) { err.textContent = t('invalid'); err.hidden = false; return; }
+    if (!mode && window.PhishHeuristics.secretInUrl(val).risky) { showTok(val); return; }
     const btn = $('#go'); btn.disabled = true;
     const ml = await mlPredict(val);
     lastRun = { local, ext: null, ml };
     render(lastRun);
     $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    try {
+    if (mode === 'local') { lastRun = { local, ml, ext: [] }; }
+    else try {
       const r = await fetch('/api/check?url=' + encodeURIComponent(val));
       if (r.ok) { const j = await r.json(); lastRun = { local, ml, ext: j.external || [] }; }
-      else lastRun = { local, ml, ext: [] };
+      else {
+        lastRun = { local, ml, ext: [] };
+        if (r.status === 429) { err.textContent = t('rate_limited').replace('{s}', r.headers.get('retry-after') || '60'); err.hidden = false; }
+      }
     } catch (e) { lastRun = { local, ml, ext: [] }; }
     render(lastRun);
     btn.disabled = false;
   }
 
-  $('#form').addEventListener('submit', e => { e.preventDefault(); run($('#url').value); });
+  $('#form').addEventListener('submit', e => { e.preventDefault(); hideTok(); run($('#url').value); });
   document.querySelectorAll('.chip[data-example]').forEach(c => c.addEventListener('click', () => { $('#url').value = c.dataset.example; run(c.dataset.example); }));
   document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => { lang = b.dataset.lang; localStorage.setItem('pg-lang', lang); applyLang(); }));
   applyLang();
