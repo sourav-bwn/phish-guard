@@ -56,3 +56,27 @@ test('extra-letter typosquat is flagged', () => {
   assert.notStrictEqual(v('https://gooogle.com/login'), 'safe');
   assert.notStrictEqual(v('https://arnazon.in/deal'), 'safe');
 });
+
+const H2 = require('../public/heuristics.js');
+test('phone: foreign and invalid numbers', () => {
+  assert.notStrictEqual(H2.analyzePhone('+84 912 345 678').verdict, 'safe');
+  assert.strictEqual(H2.analyzePhone('+91 98765 43210').verdict, 'safe');
+  assert.notStrictEqual(H2.analyzePhone('+91 12345 67890').verdict, 'safe');
+});
+test('upi: official-sounding names and odd handles', () => {
+  assert.strictEqual(H2.analyzeUPI('ravi.kumar@oksbi').verdict, 'safe');
+  assert.strictEqual(H2.analyzeUPI('9876543210@ybl').verdict, 'safe');
+  assert.notStrictEqual(H2.analyzeUPI('sbi-refund-care@paytmx').verdict, 'safe');
+  assert.strictEqual(H2.analyzeUPI('nonsense').ok, false);
+});
+test('headers: failures and reply-to mismatch', () => {
+  const h = 'From: "HDFC Bank" <alerts@hdfc-secure.top>\nReply-To: <help@gmail.com>\nAuthentication-Results: mx.google.com; spf=fail smtp.mailfrom=hdfc-secure.top; dkim=none; dmarc=fail\nSubject: Update KYC';
+  const r = H2.analyzeHeaders(h);
+  assert.strictEqual(r.verdict, 'phishing');
+  assert.strictEqual(r.status.spf, 'fail');
+  const ok = H2.analyzeHeaders('From: Google <no-reply@accounts.google.com>\nAuthentication-Results: mx.google.com; spf=pass; dkim=pass; dmarc=pass');
+  assert.strictEqual(ok.verdict, 'safe');
+});
+test('hindi cues', () => {
+  assert.notStrictEqual(H2.analyzeMessage('आपका खाता आज बंद हो जाएगा, केवाईसी अपडेट करें').verdict, 'safe');
+});
