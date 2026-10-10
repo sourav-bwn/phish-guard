@@ -28,6 +28,9 @@
     <div class="tabs" role="tablist">
       <button type="button" role="tab" data-tab="link" aria-selected="true" data-i18n="t_link">Link</button>
       <button type="button" role="tab" data-tab="msg" aria-selected="false" data-i18n="t_msg">Message</button>
+      <button type="button" role="tab" data-tab="shot" aria-selected="false" data-i18n="t_shot">Screenshot</button>
+      <button type="button" role="tab" data-tab="num" aria-selected="false" data-i18n="t_num">Number / UPI</button>
+      <button type="button" role="tab" data-tab="mail" aria-selected="false" data-i18n="t_mail">Email</button>
       <button type="button" role="tab" data-tab="bulk" aria-selected="false" data-i18n="t_bulk">Bulk</button>
     </div>
     <form id="form" autocomplete="off" novalidate data-panel="link">
@@ -53,6 +56,27 @@
       <button type="button" class="chip" id="msgex" data-i18n="msgex">Try a sample scam SMS</button></div>
       <p class="err" id="msgerr" role="alert" hidden></p>
     </div>
+    <div id="shotpanel" data-panel="shot" hidden>
+      <p class="hint" data-i18n="shot_hint">Upload a screenshot of the SMS or WhatsApp chat. The text is read on your phone, the image is never uploaded.</p>
+      <div class="field"><button id="shotbtn" type="button" class="primary"><span data-i18n="shot_pick">Choose screenshot</span></button></div>
+      <input id="shotfile" type="file" accept="image/*" hidden>
+      <p class="hint" id="shotstatus" aria-live="polite" hidden></p>
+      <textarea id="shottext" rows="5" spellcheck="false" hidden></textarea>
+      <p class="err" id="shoterr" role="alert" hidden></p>
+    </div>
+    <div id="numpanel" data-panel="num" hidden>
+      <label class="sr" for="numin" data-i18n="num_label">Phone number or UPI ID</label>
+      <div class="field"><input id="numin" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" data-i18n-ph="num_ph" placeholder="+91 98765 43210 or name@okaxis">
+      <button id="numgo" type="button" class="primary"><span data-i18n="num_check">Check</span></button></div>
+      <p class="hint" data-i18n="num_hint">Checks the format and warning signs only. There is no free public list of scam numbers or UPI IDs, so "no red flags" does not mean trusted.</p>
+      <p class="err" id="numerr" role="alert" hidden></p>
+    </div>
+    <div id="mailpanel" data-panel="mail" hidden>
+      <label class="sr" for="mailin" data-i18n="mail_label">Raw email headers</label>
+      <textarea id="mailin" rows="7" spellcheck="false" data-i18n-ph="mail_ph" placeholder="Paste the full email headers (Show original / View source)"></textarea>
+      <div class="field"><button id="mailgo" type="button" class="primary"><span data-i18n="mail_check">Check headers</span></button></div>
+      <p class="err" id="mailerr" role="alert" hidden></p>
+    </div>
     <div id="bulkpanel" data-panel="bulk" hidden>
       <label class="sr" for="bulk" data-i18n="bulklabel">Links, one per line</label>
       <textarea id="bulk" rows="7" spellcheck="false" data-i18n-ph="bulkph" placeholder="One link per line (up to 50)"></textarea>
@@ -77,7 +101,7 @@
     <ul id="reasons" class="reasons"></ul>
     <h3 data-i18n="dbs">Scam databases</h3>
     <ul id="ext" class="ext"></ul>
-    <p class="actions"><button type="button" class="chip" id="printone" data-i18n="print">Print report</button></p>
+    <p class="actions"><button type="button" class="chip" id="sharebtn" data-i18n="share">Share verdict card</button><button type="button" class="chip" id="printone" data-i18n="print">Print report</button></p>
     <p class="fine" data-i18n="fine">No tool can promise a link is safe. If a message is rushing you about money, a bank, KYC or a prize, stop and call the company on its official number.</p>
   </section>
 
@@ -108,6 +132,7 @@
 </footer>
 
 <script src="heuristics.js"></script>
+<script src="ml.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

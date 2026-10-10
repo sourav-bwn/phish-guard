@@ -14,6 +14,11 @@
       col_link: 'Link', col_verdict: 'Verdict', col_score: 'Score', col_top: 'Main reason', links_found: 'Links in this message', msg_none: 'No link in this message, judged on wording only.',
       bulk_title: '{n} links checked: {p} phishing, {s} suspicious, {k} no red flags', bulk_empty: 'Paste at least one link.', msg_empty: 'Paste a message first.', qr_none: 'No QR code found in that image.', qr_fail: 'Could not read that image.', qr_found: 'QR contains:',
       sample: 'Dear customer, your SBI account will be blocked today. Update KYC immediately: http://sbi-kyc-update.xyz/login',
+      t_shot: 'Screenshot', t_num: 'Number / UPI', t_mail: 'Email', share: 'Share verdict card',
+      shot_hint: 'Upload a screenshot of the SMS or WhatsApp chat. The text is read on your phone, the image is never uploaded.', shot_pick: 'Choose screenshot', shot_load: 'Loading text reader ({p}%)...', shot_read: 'Reading text ({p}%)...', shot_none: 'No readable text found in that image.', shot_fail: 'Could not read that image.',
+      num_label: 'Phone number or UPI ID', num_ph: '+91 98765 43210 or name@okaxis', num_check: 'Check', num_hint: 'Checks the format and warning signs only. There is no free public list of scam numbers or UPI IDs, so "no red flags" does not mean trusted.', num_bad: 'That is not a phone number or UPI ID.',
+      mail_label: 'Raw email headers', mail_ph: 'Paste the full email headers (Show original / View source)', mail_check: 'Check headers', mail_bad: 'That does not look like email headers.',
+      ml: 'Pattern model', ml_txt: '{p}% phishing-like', ml_note: 'Advisory only', subj_phone: 'Number', subj_upi: 'UPI ID', subj_mail: 'Sender',
       empty: 'Paste a link first.', invalid: "That doesn't look like a link.",
       v_phishing: 'Likely phishing', v_suspicious: 'Suspicious', v_safe: 'No red flags found',
       d_phishing: 'Do not open this link or enter any details.', d_suspicious: 'Be careful. Do not enter OTP, PIN, passwords or card details.', d_safe: "Nothing in the address looks wrong. That is not a guarantee.",
@@ -35,6 +40,11 @@
       col_link: 'লিংক', col_verdict: 'ফল', col_score: 'স্কোর', col_top: 'প্রধান কারণ', links_found: 'এই মেসেজের লিংকগুলো', msg_none: 'মেসেজে কোনো লিংক নেই, শুধু ভাষা দেখে বিচার করা হয়েছে।',
       bulk_title: '{n}টি লিংক যাচাই: {p}টি ফিশিং, {s}টি সন্দেহজনক, {k}টিতে বিপদ-সংকেত নেই', bulk_empty: 'অন্তত একটি লিংক পেস্ট করুন।', msg_empty: 'আগে একটি মেসেজ পেস্ট করুন।', qr_none: 'ছবিতে কোনো QR কোড পাওয়া যায়নি।', qr_fail: 'ছবিটি পড়া গেল না।', qr_found: 'QR-এ আছে:',
       sample: 'প্রিয় গ্রাহক, আপনার SBI অ্যাকাউন্ট আজই বন্ধ হয়ে যাবে। এখনই KYC আপডেট করুন: http://sbi-kyc-update.xyz/login',
+      t_shot: 'স্ক্রিনশট', t_num: 'নম্বর / UPI', t_mail: 'ইমেইল', share: 'ভার্ডিক্ট কার্ড শেয়ার',
+      shot_hint: 'SMS বা WhatsApp চ্যাটের স্ক্রিনশট দিন। লেখা আপনার ফোনেই পড়া হয়, ছবি কোথাও আপলোড হয় না।', shot_pick: 'স্ক্রিনশট বেছে নিন', shot_load: 'লেখা পড়ার টুল লোড হচ্ছে ({p}%)...', shot_read: 'লেখা পড়া হচ্ছে ({p}%)...', shot_none: 'ছবিতে পড়ার মতো লেখা পাওয়া যায়নি।', shot_fail: 'ছবিটি পড়া গেল না।',
+      num_label: 'ফোন নম্বর বা UPI আইডি', num_ph: '+91 98765 43210 বা name@okaxis', num_check: 'যাচাই', num_hint: 'শুধু ফরম্যাট ও সতর্কতা-চিহ্ন দেখা হয়। প্রতারক নম্বর বা UPI আইডির কোনো বিনামূল্যের সরকারি তালিকা নেই, তাই "বিপদ-সংকেত নেই" মানে ভরসাযোগ্য নয়।', num_bad: 'এটা ফোন নম্বর বা UPI আইডি নয়।',
+      mail_label: 'ইমেইলের হেডার', mail_ph: 'পুরো ইমেইল হেডার পেস্ট করুন (Show original / View source)', mail_check: 'হেডার যাচাই', mail_bad: 'এটা ইমেইল হেডারের মতো নয়।',
+      ml: 'প্যাটার্ন মডেল', ml_txt: '{p}% ফিশিং-ধাঁচের', ml_note: 'শুধু পরামর্শ', subj_phone: 'নম্বর', subj_upi: 'UPI আইডি', subj_mail: 'প্রেরক',
       empty: 'আগে একটি লিংক পেস্ট করুন।', invalid: 'এটা লিংকের মতো দেখাচ্ছে না।',
       v_phishing: 'ফিশিং হওয়ার সম্ভাবনা বেশি', v_suspicious: 'সন্দেহজনক', v_safe: 'কোনো বিপদ-সংকেত পাওয়া যায়নি',
       d_phishing: 'এই লিংক খুলবেন না, কোনো তথ্যও দেবেন না।', d_suspicious: 'সাবধান। OTP, PIN, পাসওয়ার্ড বা কার্ডের তথ্য দেবেন না।', d_safe: 'ঠিকানায় সন্দেহজনক কিছু নেই। তবে এটা গ্যারান্টি নয়।',
@@ -80,6 +90,7 @@
 
   function render(run) {
     if (run.mode === 'msg') return renderMsg(run);
+    if (run.mode === 'simple') return renderSimple(run);
     $('#msgfound').hidden = true;
     const r = run.local, ext = run.ext;
     let verdict = r.verdict;
@@ -108,7 +119,7 @@
       else if (e.flagged) { cls = 'bad'; txt = t('db_flagged'); }
       else { cls = 'ok'; txt = t('db_clear'); }
       return '<li><span>' + esc(e.name) + '</span><span class="s ' + cls + '">' + txt + '</span></li>';
-    }).join('');
+    }).join('') + (run.ml ? '<li><span>' + t('ml') + ' <small>(' + t('ml_note') + ')</small></span><span class="s ' + (run.ml.probability > 0.7 ? 'bad' : '') + '">' + t('ml_txt').replace('{p}', Math.round(run.ml.probability * 100)) + '</span></li>' : '');
   }
 
 
@@ -203,6 +214,108 @@
     return new Promise((ok, no) => { if (window.jsQR) return ok(); const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js'; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc); });
   }
 
+  // ML advisory
+  let modelP = null;
+  function mlPredict(val) {
+    if (!window.PhishML) return Promise.resolve(null);
+    modelP = modelP || fetch('model.json').then(r => r.json()).catch(() => null);
+    return modelP.then(m => m ? window.PhishML.predict(m, val) : null);
+  }
+
+  // Simple results: phone, UPI, email headers
+  function renderSimple(run) {
+    const r = run.res, verdict = r.verdict;
+    const box = $('#result'); box.hidden = false; box.className = 'card result ' + verdict;
+    $('#msgfound').hidden = true;
+    $('#badge').textContent = verdict === 'safe' ? '✓' : verdict === 'suspicious' ? '!' : '✕';
+    $('#vtitle').textContent = t('v_' + verdict);
+    $('#vdesc').textContent = t('d_' + verdict);
+    $('#meterfill').style.width = Math.max(r.score, 4) + '%';
+    $('#hostline').textContent = t(run.subj) + ': ' + run.label;
+    $('#reasons').innerHTML = r.flags.length ? r.flags.map(f => '<li>' + esc(f[lang]) + '</li>').join('') : '<li>' + esc(t('none')) + '</li>';
+    $('#ext').innerHTML = run.status ? Object.keys(run.status).map(k => '<li><span>' + k.toUpperCase() + '</span><span class="s ' + (['pass'].includes(run.status[k]) ? 'ok' : run.status[k] ? 'bad' : '') + '">' + esc(run.status[k] || '-') + '</span></li>').join('') : '';
+  }
+  function showSimple(res, subj, label, status) {
+    lastRun = { mode: 'simple', res, subj, label, status }; render(lastRun);
+    $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  $('#numgo').addEventListener('click', () => {
+    $('#numerr').hidden = true;
+    const v = $('#numin').value.trim();
+    const isUpi = v.includes('@');
+    const r = isUpi ? window.PhishHeuristics.analyzeUPI(v) : window.PhishHeuristics.analyzePhone(v);
+    if (!r.ok) return showErr('#numerr', 'num_bad');
+    showSimple(r, isUpi ? 'subj_upi' : 'subj_phone', isUpi ? r.id : r.display);
+  });
+  $('#numin').addEventListener('keydown', e => { if (e.key === 'Enter') $('#numgo').click(); });
+  $('#mailgo').addEventListener('click', () => {
+    $('#mailerr').hidden = true;
+    const r = window.PhishHeuristics.analyzeHeaders($('#mailin').value);
+    if (!r.ok) return showErr('#mailerr', 'mail_bad');
+    showSimple(r, 'subj_mail', r.domain || r.from || '-', r.status);
+  });
+
+  // Screenshot OCR (Tesseract.js, runs in the browser)
+  function loadScript(src) { return new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = src; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc); }); }
+  $('#shotbtn').addEventListener('click', () => $('#shotfile').click());
+  $('#shotfile').addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    const st = $('#shotstatus'), btn = $('#shotbtn'); $('#shoterr').hidden = true;
+    btn.disabled = true; st.hidden = false; st.textContent = t('shot_load').replace('{p}', 0);
+    try {
+      if (!window.Tesseract) await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
+      const worker = await window.Tesseract.createWorker('eng+ben+hin', 1, { logger: m => {
+        if (m.status === 'recognizing text') st.textContent = t('shot_read').replace('{p}', Math.round(m.progress * 100));
+        else if (m.progress != null) st.textContent = t('shot_load').replace('{p}', Math.round(m.progress * 100));
+      } });
+      const { data } = await worker.recognize(f);
+      await worker.terminate();
+      const text = (data.text || '').trim().replace(/((?:https?:\/\/|www\.)\S*[-/.])\s*\n\s*(\S)/g, '$1$2');
+      st.hidden = true;
+      if (text.length < 8) { btn.disabled = false; return showErr('#shoterr', 'shot_none'); }
+      const ta = $('#shottext'); ta.hidden = false; ta.value = text;
+      const m = window.PhishHeuristics.analyzeMessage(text);
+      lastRun = { mode: 'msg', msg: m }; render(lastRun);
+      $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) { st.hidden = true; showErr('#shoterr', 'shot_fail'); }
+    btn.disabled = false;
+  });
+  $('#shottext').addEventListener('input', () => {
+    const m = window.PhishHeuristics.analyzeMessage($('#shottext').value);
+    if (m.ok) { lastRun = { mode: 'msg', msg: m }; render(lastRun); }
+  });
+
+  // Shareable verdict card (PNG)
+  $('#sharebtn').addEventListener('click', async () => {
+    const verdict = (($('#result').className.match(/(safe|suspicious|phishing)/) || [])[1]) || 'safe';
+    const col = { safe: '#4ade80', suspicious: '#fbbf24', phishing: '#f87171' }[verdict];
+    const reasons = Array.from(document.querySelectorAll('#reasons li')).slice(0, 3).map(li => li.textContent);
+    const subject = $('#hostline').textContent;
+    const W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const g = cv.getContext('2d'), font = 'system-ui, "Noto Sans Bengali", "Noto Sans Devanagari", sans-serif';
+    g.fillStyle = '#0b0f14'; g.fillRect(0, 0, W, H);
+    g.fillStyle = col; g.fillRect(0, 0, W, 18);
+    g.fillStyle = '#e7edf4'; g.font = '600 44px ' + font; g.fillText('PhishGuard', 70, 120);
+    g.fillStyle = col; g.beginPath(); g.arc(150, 330, 90, 0, 7); g.globalAlpha = .18; g.fill(); g.globalAlpha = 1;
+    g.font = '700 110px ' + font; g.textAlign = 'center'; g.fillText(verdict === 'safe' ? '✓' : verdict === 'suspicious' ? '!' : '✕', 150, 365); g.textAlign = 'left';
+    g.fillStyle = '#e7edf4'; g.font = '700 64px ' + font; wrap(g, $('#vtitle').textContent, 280, 320, W - 350, 76);
+    g.fillStyle = '#8b99aa'; g.font = '400 34px ' + font; wrap(g, subject, 70, 520, W - 140, 44);
+    g.fillStyle = '#e7edf4'; g.font = '400 38px ' + font;
+    let y = 650; reasons.forEach(r => { y = wrap(g, '• ' + r, 70, y, W - 140, 50) + 28; });
+    g.fillStyle = '#8b99aa'; g.font = '400 30px ' + font;
+    wrap(g, lang === 'bn' ? 'আগে যাচাই করুন, তারপর ক্লিক করুন। প্রতারিত হলে ১৯৩০ নম্বরে ফোন করুন।' : 'Check before you tap. Scammed? Call 1930.', 70, H - 150, W - 140, 42);
+    g.fillStyle = col; g.font = '600 32px ' + font; g.fillText(location.host, 70, H - 60);
+    const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+    const file = new File([blob], 'phishguard-verdict.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], text: location.origin }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; document.body.appendChild(a); a.click(); a.remove();
+  });
+  function wrap(g, text, x, y, maxW, lh) {
+    const words = String(text).split(/(\s+)/); let line = '';
+    for (const w of words) { const test = line + w; if (g.measureText(test).width > maxW && line) { g.fillText(line.trim(), x, y); y += lh; line = w.trimStart(); } else line = test; }
+    g.fillText(line.trim(), x, y); return y;
+  }
+
   async function run(raw) {
     const err = $('#err'); err.hidden = true;
     const val = raw.trim();
@@ -210,14 +323,15 @@
     const local = window.PhishHeuristics.analyze(val);
     if (!local.ok) { err.textContent = t('invalid'); err.hidden = false; return; }
     const btn = $('#go'); btn.disabled = true;
-    lastRun = { local, ext: null };
+    const ml = await mlPredict(val);
+    lastRun = { local, ext: null, ml };
     render(lastRun);
     $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     try {
       const r = await fetch('/api/check?url=' + encodeURIComponent(val));
-      if (r.ok) { const j = await r.json(); lastRun = { local, ext: j.external || [] }; }
-      else lastRun = { local, ext: [] };
-    } catch (e) { lastRun = { local, ext: [] }; }
+      if (r.ok) { const j = await r.json(); lastRun = { local, ml, ext: j.external || [] }; }
+      else lastRun = { local, ml, ext: [] };
+    } catch (e) { lastRun = { local, ml, ext: [] }; }
     render(lastRun);
     btn.disabled = false;
   }

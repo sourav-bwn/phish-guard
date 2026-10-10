@@ -258,5 +258,100 @@
     return { ok: true, score, verdict, cues, links, upis };
   }
 
-  return { analyze, analyzeMessage, extractLinks, parse, registrable, levenshtein, BRANDS, SHORTENERS };
+  // ---- Hindi cues (Devanagari + romanised) ----
+  CUES.push(
+    [/(आपका|आपके).{0,40}(खाता|अकाउंट|कार्ड|सिम|बिजली).{0,40}(बंद|ब्लॉक|कट|रद्द)|केवाईसी|के\s?वाई\s?सी|इनाम|लॉटरी|बधाई.{0,30}(जीत|इनाम)/, 24, 'Hindi scam wording (account block, KYC, prize, power cut)', 'হিন্দিতে প্রতারণার ভাষা (অ্যাকাউন্ট বন্ধ, KYC, পুরস্কার, বিদ্যুৎ কাটা)'],
+    [/(ओटीपी|पिन|सीवीवी|पासवर्ड).{0,20}(बताएं|भेजें|शेयर|दें)|(बताएं|भेजें|शेयर).{0,20}(ओटीपी|पिन)/, 30, 'Hindi: asks for OTP or PIN', 'হিন্দিতে OTP বা PIN চাইছে'],
+    [/(kyc|pan|aadhaar|aadhar).{0,30}(update|expire|band|verify|link)\s*(karo|kare|karein|kijiye|nahi)|(otp|pin)\s*(batao|bhejo|share\s*karo|dijiye)|bijli.{0,20}(kat|band)/i, 26, 'Hinglish: KYC/OTP/power-cut pressure', 'হিন্দি-ইংরেজি মেশানো: KYC/OTP/বিদ্যুৎ কাটার চাপ']
+  );
+
+  // ---- Phone number checker ----
+  const SCAM_CC = { '92': 'Pakistan', '84': 'Vietnam', '62': 'Indonesia', '60': 'Malaysia', '855': 'Cambodia', '856': 'Laos', '95': 'Myanmar', '234': 'Nigeria', '254': 'Kenya', '233': 'Ghana', '63': 'Philippines', '66': 'Thailand', '977': 'Nepal', '880': 'Bangladesh' };
+  function analyzePhone(input) {
+    const raw = String(input || '').trim();
+    const flags = [];
+    const add = (w, en, bn) => flags.push({ weight: w, en, bn });
+    let d = raw.replace(/[^\d+]/g, '');
+    if (d.replace(/\D/g, '').length < 5) return { ok: false, error: 'invalid' };
+    let national = null, cc = null;
+    if (d.startsWith('+')) d = d.slice(1); else if (d.startsWith('00')) d = d.slice(2);
+    else if (d.length === 12 && d.startsWith('91')) { /* 91XXXXXXXXXX */ }
+    else if (d.length === 11 && d.startsWith('0')) d = '91' + d.slice(1);
+    else if (d.length === 10) d = '91' + d;
+    if (d.startsWith('91') && d.length === 12) { cc = '91'; national = d.slice(2); }
+    else { cc = Object.keys(SCAM_CC).concat(['1', '44', '971', '65', '61']).sort((a, b) => b.length - a.length).find(c => d.startsWith(c)) || d.slice(0, 2); national = d.slice(cc.length); }
+    if (cc !== '91') {
+      if (SCAM_CC[cc]) add(32, 'Foreign number (+' + cc + ', ' + SCAM_CC[cc] + '). Scam calls and WhatsApp job or lottery offers often come from numbers like this.', 'বিদেশি নম্বর (+' + cc + ', ' + SCAM_CC[cc] + ')। প্রতারণার কল ও WhatsApp-এ চাকরি/লটারির অফার প্রায়ই এমন নম্বর থেকে আসে।');
+      else add(18, 'Foreign number (+' + cc + '). If a bank, courier or officer says they are calling from India, this does not match.', 'বিদেশি নম্বর (+' + cc + ')। ব্যাংক বা অফিসার ভারত থেকে ফোন করছে বললে এটা মেলে না।');
+    } else {
+      if (!/^[6-9]\d{9}$/.test(national)) add(30, 'Not a valid Indian mobile number (mobiles start with 6, 7, 8 or 9 and have 10 digits).', 'এটি বৈধ ভারতীয় মোবাইল নম্বর নয় (মোবাইল নম্বর ৬-৯ দিয়ে শুরু, ১০ অঙ্কের)।');
+      else {
+        if (/(\d)\1{5,}/.test(national) || /(?:0123|1234|2345|3456|4567|5678|6789|9876|8765|7654)/.test(national) && /(\d)\1{3,}/.test(national)) add(8, 'Looks like a "VIP" pattern number. Scammers buy these to look official, but so do honest people.', 'এটা "VIP" প্যাটার্নের নম্বর। প্রতারকরা এমন নম্বর কেনে, তবে সাধারণ মানুষও কেনে।');
+      }
+    }
+    if (/^1[4-9]\d/.test(d.replace(/^91/, '')) && d.replace(/^91/, '').length <= 10 && !/^[6-9]/.test(d.replace(/^91/, ''))) add(10, 'Numbers starting with 140 are telemarketing lines. Banks use official 1800 numbers or short sender IDs.', '140 দিয়ে শুরু নম্বর টেলিমার্কেটিং-এর। ব্যাংক সরকারি 1800 নম্বর বা নির্দিষ্ট সেন্ডার আইডি ব্যবহার করে।');
+    const score = Math.min(100, flags.reduce((a, f) => a + f.weight, 0));
+    const verdict = score >= 55 ? 'phishing' : score >= 20 ? 'suspicious' : 'safe';
+    flags.sort((a, b) => b.weight - a.weight);
+    return { ok: true, display: (cc === '91' ? '+91 ' + national : '+' + d), score, verdict, flags };
+  }
+
+  // ---- UPI ID checker ----
+  const UPI_HANDLES = new Set(['okaxis','okhdfcbank','okicici','oksbi','ybl','ibl','axl','paytm','apl','upi','sbi','icici','hdfcbank','pnb','barodampay','fbl','aubank','axisbank','kotak','yesbank','indus','idfcbank','postbank','cnrb','unionbank','boi','federal','rbl','ikwik','freecharge','jupiter','slice','airtel','jio','waicici','wahdfcbank','waaxis','wasbi','abfspay','yapl','ezetap','pingpay','naviaxis','okbizaxis','gpay','allbank','cboi','centralbank','dbs','dlb','equitas','hsbc','idbi','iob','jkb','kbl','kvb','lvb','mahb','obc','psb','sib','scb','tjsb','uboi','utbi','uco','vijb','ubi','ptsbi','pthdfc','ptyes','ptaxis','postbank']);
+  const UPI_BAD_NAME = /(refund|kyc|cashback|reward|lottery|prize|winner|helpdesk|customercare|care|support|official|helpline|claim|bonus|govt|police|electric|bijli|bank|sbi|hdfc|icici|paytm|rbi|income-?tax|verify)/i;
+  function analyzeUPI(input) {
+    const raw = String(input || '').trim().toLowerCase();
+    const m = raw.match(/^([a-z0-9._-]{2,64})@([a-z][a-z0-9]{1,30})$/);
+    if (!m) return { ok: false, error: 'invalid' };
+    const [, name, handle] = m;
+    const flags = [];
+    const add = (w, en, bn) => flags.push({ weight: w, en, bn });
+    if (!UPI_HANDLES.has(handle)) add(35, 'The handle "@' + handle + '" is not one I know. Real UPI IDs end in handles like @okaxis, @ybl, @paytm, @oksbi.', '"@' + handle + '" হ্যান্ডেলটি আমার পরিচিত নয়। আসল UPI আইডি @okaxis, @ybl, @paytm, @oksbi-র মতো হ্যান্ডেলে শেষ হয়।');
+    if (UPI_BAD_NAME.test(name)) add(35, 'The name part has words like refund, support, KYC, reward or a bank name. Scammers pick names that sound official; a real person or shop does not need to.', 'নামের অংশে refund, support, KYC, reward বা ব্যাংকের নাম আছে। প্রতারকরা সরকারি-সরকারি নাম বেছে নেয়।');
+    if (/^\d{10}$/.test(name)) { /* phone-number UPI is normal */ }
+    else if ((name.match(/\d/g) || []).length >= 6 && !/^\d+$/.test(name)) add(8, 'Many digits mixed into the name.', 'নামে অনেক সংখ্যা মেশানো।');
+    add(0, '', '');
+    const f2 = flags.filter(f => f.weight > 0);
+    const score = Math.min(100, f2.reduce((a, f) => a + f.weight, 0));
+    const verdict = score >= 55 ? 'phishing' : score >= 25 ? 'suspicious' : 'safe';
+    f2.sort((a, b) => b.weight - a.weight);
+    return { ok: true, id: name + '@' + handle, score, verdict, flags: f2 };
+  }
+
+  // ---- Email header analyzer ----
+  function unfold(h) { return String(h || '').replace(/\r?\n[ \t]+/g, ' '); }
+  function hdr(h, name) { const m = unfold(h).match(new RegExp('^' + name + ':\\s*(.*)$', 'im')); return m ? m[1].trim() : ''; }
+  function addrDomain(v) { const m = String(v || '').match(/@([a-z0-9.-]+\.[a-z]{2,})/i); return m ? m[1].toLowerCase() : ''; }
+  function analyzeHeaders(text) {
+    const h = String(text || '');
+    if (!/^[A-Za-z-]+:/m.test(h)) return { ok: false, error: 'invalid' };
+    const flags = [];
+    const add = (w, en, bn) => flags.push({ weight: w, en, bn });
+    const auth = unfold(h).match(/^Authentication-Results:.*$/gim) || [];
+    const all = auth.join(' ') + ' ' + hdr(h, 'Received-SPF');
+    const res = k => { const m = all.match(new RegExp('\\b' + k + '=(\\w+)', 'i')); return m ? m[1].toLowerCase() : null; };
+    const spf = res('spf') || (/^(pass|fail|softfail|neutral|none)/i.test(hdr(h, 'Received-SPF')) ? hdr(h, 'Received-SPF').split(/\s/)[0].toLowerCase() : null);
+    const dkim = res('dkim'), dmarc = res('dmarc');
+    const status = { spf, dkim, dmarc };
+    const bad = v => v && ['fail', 'softfail', 'permerror', 'temperror'].includes(v);
+    if (bad(spf)) add(30, 'SPF ' + spf + ': the sending server is not allowed to send for this domain.', 'SPF ' + spf + ': এই ডোমেইনের হয়ে মেইল পাঠানোর অনুমতি এই সার্ভারের নেই।');
+    if (bad(dkim)) add(30, 'DKIM ' + dkim + ': the message signature is missing or broken.', 'DKIM ' + dkim + ': মেসেজের ডিজিটাল সিগনেচার নেই বা ভাঙা।');
+    if (bad(dmarc)) add(35, 'DMARC ' + dmarc + ': the domain owner\'s own rules reject this mail.', 'DMARC ' + dmarc + ': ডোমেইনের মালিকের নিজের নিয়মেই এই মেইল গ্রহণযোগ্য নয়।');
+    if (!spf && !dkim && !dmarc) add(12, 'No SPF, DKIM or DMARC results found in these headers (they may be incomplete).', 'এই হেডারে SPF, DKIM বা DMARC-এর ফল পাওয়া যায়নি (হেডার অসম্পূর্ণ হতে পারে)।');
+    const from = hdr(h, 'From'), reply = hdr(h, 'Reply-To'), ret = hdr(h, 'Return-Path'), mid = hdr(h, 'Message-ID');
+    const fd = addrDomain(from), rd = addrDomain(reply), td = addrDomain(ret), md = addrDomain(mid);
+    const reg = d => d ? registrable(d) : '';
+    if (fd && rd && reg(fd) !== reg(rd)) add(30, 'Reply-To (' + rd + ') goes to a different domain than From (' + fd + '). Replies would reach someone else.', 'Reply-To (' + rd + ') আর From (' + fd + ') আলাদা ডোমেইন। উত্তর অন্য কারও কাছে যাবে।');
+    if (fd && td && reg(fd) !== reg(td)) add(10, 'Return-Path domain (' + td + ') differs from From (' + fd + '). Common with bulk senders, also with spoofing.', 'Return-Path (' + td + ') আর From (' + fd + ') আলাদা। বাল্ক সেন্ডারে এটা দেখা যায়, স্পুফিংয়েও।');
+    if (fd && md && reg(fd) !== reg(md) && !/(google|outlook|amazonses|sendgrid|mailchimp|mandrill)/.test(md)) add(8, 'Message-ID domain (' + md + ') does not match From (' + fd + ').', 'Message-ID ডোমেইন (' + md + ') From-এর সাথে মেলে না।');
+    const disp = from.replace(/<.*$/, '').replace(/"/g, '').trim().toLowerCase();
+    if (fd && disp) for (const b in BRANDS) { if (b.length >= 4 && disp.includes(b) && !isOfficial(reg(fd), fd)) { add(35, 'Display name says "' + disp + '" but the address is @' + fd + ', not an official ' + b.toUpperCase() + ' domain.', 'নামে "' + disp + '" লেখা, কিন্তু ঠিকানা @' + fd + ' - ' + b.toUpperCase() + '-এর সরকারি ডোমেইন নয়।'); break; } }
+    if (fd) { const d = analyze(fd); if (d.ok) d.flags.filter(f => ['lookalike', 'brand_abuse', 'punycode', 'risky_tld'].includes(f.id)).slice(0, 2).forEach(f => add(Math.round(f.weight * 0.8), 'Sender domain: ' + f.en, 'প্রেরকের ডোমেইন: ' + f.bn)); }
+    const score = Math.min(100, flags.reduce((a, f) => a + f.weight, 0));
+    const verdict = score >= 55 ? 'phishing' : score >= 22 ? 'suspicious' : 'safe';
+    flags.sort((a, b) => b.weight - a.weight);
+    return { ok: true, score, verdict, flags, status, from, replyTo: reply, domain: fd };
+  }
+
+  return { analyze, analyzePhone, analyzeUPI, analyzeHeaders, analyzeMessage, extractLinks, parse, registrable, levenshtein, BRANDS, SHORTENERS };
 });
