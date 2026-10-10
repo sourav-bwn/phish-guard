@@ -23,7 +23,7 @@ Public repo: https://github.com/sourav-bwn/phish-guard
 **1:30 Bengali (30s).** Toggle বাং. Same result in Bengali. "Most scams here are in Bengali. The answer should be too."
 **2:00 Whole message (45s).** Message tab, tap "Try a sample scam SMS". Show cues found plus the link. Then paste a normal message and show it stays "No red flags".
 **2:45 Bulk and QR (30s).** Bulk tab with four links, Download CSV, Print report. Scan a QR image.
-**3:15 Trust and limits (25s).** "It never opens the link, stores nothing, and says 'no red flags' not 'safe' because no tool can promise that."
+**3:15 Trust and limits (25s).** "It never opens the link, stores nothing, and says 'no red flags' not 'safe' because no tool can promise that." Be precise if asked: the link text is looked up in outside reputation databases (PhishTank), never opened or fetched. Links that look like they carry a token (password reset, verify, magic-link) trigger a warning with an on-device-only option.
 **3:40 Close (20s).** Awareness cards and 1930. Show repo and live link. "Free, open source, and ready for others to build on."
 
 Recording tips: record on the phone at normal speed, 1080p, voiceover in his own voice, subtitles in English if narrating in Bengali. Keep under 5 minutes.
