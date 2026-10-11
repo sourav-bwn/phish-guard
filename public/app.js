@@ -1,6 +1,7 @@
 (function () {
   const I18N = {
     en: {
+      report_title: 'Report through an official channel', report_intro: 'Suspected fraud by call, SMS or WhatsApp? Use Chakshu within 30 days. Lost money? Call 1930 immediately and file a complaint on the cybercrime portal, not Chakshu.', report_chakshu: 'Chakshu: suspected communication', report_call: 'Call 1930: money lost', report_portal: 'Cybercrime portal', report_label: 'Report text to review and copy', report_copy: 'Copy report text', report_copied: 'Copied', report_manual: 'Could not copy. Select the text and copy it manually.', report_note: 'Nothing is submitted automatically. Review the text, remove private details, then paste it into the official form. Add the sender, date/time and any evidence there. Never include OTPs, PINs or passwords. Token-link query strings are omitted here.', report_heading: 'PhishGuard check summary', report_checked: 'Checked', report_verdict: 'Automated verdict', report_reasons: 'Warning signs', report_time: 'Check time', report_disclaimer: 'This automated check is not proof of a crime or a guarantee of safety. Please investigate.', report_context: 'Add details in the official form: when/how received, sender, screenshots, and transaction reference/amount if money was lost.', report_community: 'Count in community (not an official complaint)', report_email: 'Email sender', report_qr: 'QR content',
       mlacc: 'Pattern model: 84.6% accurate on a held-out test of 24,000 hosts (precision 89.6%, recall 76.6%). It learned from public phishing lists vs top-ranked sites, so it can over-flag small legitimate sites. It never changes the verdict.', how: 'How this verdict was reached: warning signs add up to a score (55 or more is likely phishing, 22 or more is suspicious), and any scam-database hit also counts. "No red flags" means we found nothing, not that it is safe.', rep_btn: 'Report this scam',
       title: "Got a link you don't trust?", sub: "Paste it here before you tap it. We never open the link.", label: 'Link to check',
       ph: 'Paste the link here', check: 'Check link', try: 'Try:', why: 'Why', dbs: 'Scam databases',
@@ -29,6 +30,7 @@
       db_override: 'A scam database lists this link, so treat it as dangerous.'
     },
     bn: {
+      report_title: 'সরকারি মাধ্যমে রিপোর্ট করুন', report_intro: 'কল, SMS বা WhatsApp-এ সন্দেহজনক প্রতারণা? ৩০ দিনের মধ্যে Chakshu-তে জানান। টাকা হারিয়েছেন? এখনই 1930 নম্বরে ফোন করুন এবং সাইবার ক্রাইম পোর্টালে অভিযোগ করুন, Chakshu-তে নয়।', report_chakshu: 'Chakshu: সন্দেহজনক যোগাযোগ', report_call: '1930-তে ফোন: টাকা হারালে', report_portal: 'সাইবার ক্রাইম পোর্টাল', report_label: 'রিপোর্টের লেখা দেখে কপি করুন', report_copy: 'রিপোর্টের লেখা কপি', report_copied: 'কপি হয়েছে', report_manual: 'কপি করা যায়নি। লেখাটি বেছে নিজে কপি করুন।', report_note: 'কিছুই নিজে থেকে জমা হয় না। লেখা দেখে ব্যক্তিগত তথ্য সরিয়ে সরকারি ফর্মে পেস্ট করুন। সেখানে প্রেরক, তারিখ/সময় ও প্রমাণ দিন। OTP, PIN বা পাসওয়ার্ড দেবেন না। টোকেনযুক্ত লিংকের query string এখানে বাদ দেওয়া হয়।', report_heading: 'PhishGuard যাচাইয়ের সারাংশ', report_checked: 'যাচাই করা তথ্য', report_verdict: 'স্বয়ংক্রিয় রায়', report_reasons: 'সতর্কতার চিহ্ন', report_time: 'যাচাইয়ের সময়', report_disclaimer: 'এই স্বয়ংক্রিয় যাচাই অপরাধের প্রমাণ বা নিরাপত্তার গ্যারান্টি নয়। অনুগ্রহ করে তদন্ত করুন।', report_context: 'সরকারি ফর্মে দিন: কখন/কীভাবে পেয়েছেন, প্রেরক, স্ক্রিনশট, আর টাকা হারালে লেনদেনের নম্বর/পরিমাণ।', report_community: 'কমিউনিটিতে গণনা (সরকারি অভিযোগ নয়)', report_email: 'ইমেইলের প্রেরক', report_qr: 'QR-এর তথ্য',
       mlacc: 'প্যাটার্ন মডেল: ২৪,০০০ হোস্টের আলাদা পরীক্ষায় ৮৪.৬% সঠিক (precision ৮৯.৬%, recall ৭৬.৬%)। এটি শিখেছে প্রকাশ্য ফিশিং তালিকা আর শীর্ষ ওয়েবসাইট থেকে, তাই ছোট বৈধ সাইটকেও সন্দেহ করতে পারে। এটি রায় বদলায় না।', how: 'রায় কীভাবে এল: সতর্কতার চিহ্নগুলো মিলে একটি স্কোর হয় (৫৫ বা বেশি হলে সম্ভবত ফিশিং, ২২ বা বেশি হলে সন্দেহজনক), আর স্ক্যাম ডেটাবেসে মিললেও গোনা হয়। "কোনো লাল সংকেত নেই" মানে কিছু পাইনি, নিরাপদ বলছি না।', rep_btn: 'এই প্রতারণা রিপোর্ট করুন',
       title: 'সন্দেহজনক লিংক পেয়েছেন?', sub: 'ক্লিক করার আগে এখানে পেস্ট করুন। আমরা লিংকটি খুলি না।', label: 'যাচাই করার লিংক',
       ph: 'লিংকটি এখানে পেস্ট করুন', check: 'লিংক যাচাই করুন', try: 'চেষ্টা করুন:', why: 'কারণ', dbs: 'প্রতারণার ডেটাবেস',
@@ -93,6 +95,7 @@
   function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
   function render(run) {
+    renderOfficial(run);
     if (run.mode === 'msg') return renderMsg(run);
     if (run.mode === 'simple') return renderSimple(run);
     $('#msgfound').hidden = true;
@@ -143,6 +146,66 @@
     $('#msglinks').innerHTML = m.links.length ? m.links.map(l => '<li><span class="lk">' + esc(l.input) + '</span><span class="pill ' + l.verdict + '">' + t('v_' + l.verdict) + '</span></li>').join('') : '<li><span>' + esc(t('msg_none')) + '</span></li>';
     $('#ext').innerHTML = '';
   }
+
+  // Official reporting is a local hand-off only. Checked content is never added
+  // to the outgoing URL, sent to a portal or submitted to Community here.
+  const reportStyle = document.createElement('style');
+  reportStyle.textContent = '.official-report{margin-top:22px;border-top:1px solid var(--line);padding-top:4px}.official-report .actions{margin:12px 0}.official-report a.chip{display:inline-flex;align-items:center;text-decoration:none;min-height:44px;border-radius:var(--r);padding:10px 14px;max-width:100%;overflow-wrap:anywhere}.official-report label{display:block;color:var(--mut);font-size:14px;margin:16px 0 6px}.official-report textarea{font-size:14px;min-height:180px}.official-report .hint{margin:10px 0}.official-report [role=status]{margin-left:8px}.official-report h3{line-height:1.5}@media(max-width:480px){.official-report a.chip{width:100%}.official-report .primary{width:100%}}';
+  document.head.appendChild(reportStyle);
+  function reportInput(value) {
+    // Strip query/hash from reset/login-token links, even inside pasted messages.
+    const text = String(value || '');
+    if (!/\s/.test(text) && window.PhishHeuristics.secretInUrl(text).risky) return text.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
+    return text.replace(/(?:https?:\/\/|www\.)[^\s<>]+/gi, url => {
+      if (!window.PhishHeuristics.secretInUrl(url).risky) return url;
+      return url.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
+    });
+  }
+  function reportSummary(run) {
+    const r = run.msg || run.res || run.local;
+    let verdict = r.verdict;
+    if (run.ext && run.ext.some(e => e.flagged && e.level !== 'warn')) verdict = 'phishing';
+    else if (verdict === 'safe' && run.ext && run.ext.some(e => e.flagged)) verdict = 'suspicious';
+    const label = run.mode === 'msg' ? t('t_msg') : run.mode === 'simple' ? t(run.subj) : run.source === 'qr' ? t('report_qr') : t('t_link');
+    const flags = r.cues || r.flags || [];
+    const reasons = flags.map(f => f[lang]);
+    if (run.msg) run.msg.links.forEach(l => l.flags.forEach(f => reasons.push(l.host + ': ' + f[lang])));
+    if (run.ext) run.ext.filter(e => e.flagged).forEach(e => reasons.push(e.name + ': ' + t('db_flagged')));
+    return [t('report_checked') + ' (' + label + '): ' + reportInput(run.input || run.label),
+      t('report_verdict') + ': ' + t('v_' + verdict),
+      t('report_reasons') + ': ' + (reasons.length ? reasons.join('; ') : t('none')),
+      t('report_time') + ': ' + run.checkedAt].join('\n');
+  }
+  function renderOfficial(run, target = '#result') {
+    const parent = $(target);
+    let section = parent.querySelector('.official-report');
+    if (!section) {
+      section = document.createElement('section'); section.className = 'official-report';
+      const prefix = target === '#result' ? 'official' : 'bulk-official';
+      section.innerHTML = '<h3></h3><p class="hint intro"></p><div class="actions"><a class="chip chakshu" href="https://www.sancharsaathi.gov.in/sfc/" target="_blank" rel="noopener noreferrer"></a><a class="chip helpline" href="tel:1930"></a><a class="chip portal" href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer"></a></div><label for="' + prefix + '-text"></label><textarea id="' + prefix + '-text" rows="8" spellcheck="false"></textarea><p class="hint note"></p><div class="actions"><button class="primary copy-report" type="button"></button><span role="status" aria-live="polite"></span></div>';
+      parent.appendChild(section);
+      section.querySelector('.copy-report').addEventListener('click', async () => {
+        const field = section.querySelector('textarea'), status = section.querySelector('[role=status]');
+        try {
+          if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('clipboard unavailable');
+          await navigator.clipboard.writeText(field.value); status.textContent = t('report_copied');
+        } catch (e) {
+          field.focus(); field.select(); status.textContent = t('report_manual');
+        }
+      });
+    }
+    [['h3','report_title'],['.intro','report_intro'],['.chakshu','report_chakshu'],['.helpline','report_call'],['.portal','report_portal'],['label','report_label'],['.note','report_note'],['.copy-report','report_copy']].forEach(([sel,key]) => { section.querySelector(sel).textContent = t(key); });
+    const report = [t('report_heading'), t('report_disclaimer'), '', run.mode === 'bulk'
+      ? run.rows.filter(x => x.r.ok).map(x => reportSummary({ local: x.r, input: x.input, checkedAt: x.checkedAt })).join('\n\n')
+      : reportSummary(run), '', t('report_context')].join('\n');
+    const field = section.querySelector('textarea');
+    // Async reputation updates must not erase the user's edits.
+    if (field.value === (field.dataset.generated || '') || section.dataset.lang !== lang || section._run !== (run.mode === 'bulk' ? run.rows : run.checkedAt)) field.value = report;
+    field.dataset.generated = report; section.dataset.lang = lang; section._run = run.mode === 'bulk' ? run.rows : run.checkedAt;
+    section.querySelector('[role=status]').textContent = '';
+    const communityButton = $('#reportbtn'); if (communityButton) communityButton.textContent = t('report_community');
+  }
+
   function showErr(id, k) { const e = $(id); e.textContent = t(k); e.hidden = false; }
   function setTab(tab) {
     document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === tab)));
@@ -154,7 +217,7 @@
     $('#msgerr').hidden = true;
     const m = window.PhishHeuristics.analyzeMessage($('#msg').value);
     if (!m.ok) return showErr('#msgerr', 'msg_empty');
-    lastRun = { mode: 'msg', msg: m }; render(lastRun);
+    lastRun = { mode: 'msg', msg: m, input: $('#msg').value, checkedAt: new Date().toISOString() }; render(lastRun);
     $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
   $('#msgex').addEventListener('click', () => { $('#msg').value = t('sample'); $('#msggo').click(); });
@@ -169,7 +232,7 @@
     $('#bulkerr').hidden = true;
     const lines = bulkInput($('#bulk').value);
     if (!lines.length) return showErr('#bulkerr', 'bulk_empty');
-    bulkRows = lines.map(l => ({ input: l, r: window.PhishHeuristics.analyze(l) }));
+    bulkRows = lines.map(l => ({ input: l, r: window.PhishHeuristics.analyze(l), checkedAt: new Date().toISOString() }));
     renderBulk(); $('#bulkresult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
   function renderBulk() {
@@ -178,6 +241,7 @@
     bulkRows.forEach(x => { if (x.r.ok) c[x.r.verdict]++; });
     $('#bulkresult').hidden = false;
     $('#bulktitle').textContent = t('bulk_title').replace('{n}', bulkRows.length).replace('{p}', c.phishing).replace('{s}', c.suspicious).replace('{k}', c.safe);
+    renderOfficial({ mode: 'bulk', rows: bulkRows }, '#bulkresult');
     $('#bulktable tbody').innerHTML = bulkRows.map((x, i) => x.r.ok
       ? '<tr><td>' + (i + 1) + '</td><td class="l">' + esc(x.input) + '</td><td><span class="pill ' + x.r.verdict + '">' + t('v_' + x.r.verdict) + '</span></td><td>' + x.r.score + '</td><td>' + esc(x.r.flags[0] ? x.r.flags[0][lang] : '-') + '</td></tr>'
       : '<tr><td>' + (i + 1) + '</td><td class="l">' + esc(x.input) + '</td><td colspan="3">' + esc(t('invalid')) + '</td></tr>').join('');
@@ -211,7 +275,7 @@
         if (q) text = q.data;
       }
       if (!text) return showErr('#err', 'qr_none');
-      $('#url').value = text; run(text);
+      $('#url').value = text; run(text, undefined, 'qr');
     } catch (err) { showErr('#err', 'qr_fail'); }
   });
   function loadJsQR() {
@@ -240,7 +304,7 @@
     $('#ext').innerHTML = run.status ? Object.keys(run.status).map(k => '<li><span>' + k.toUpperCase() + '</span><span class="s ' + (['pass'].includes(run.status[k]) ? 'ok' : run.status[k] ? 'bad' : '') + '">' + esc(run.status[k] || '-') + '</span></li>').join('') : '';
   }
   function showSimple(res, subj, label, status) {
-    lastRun = { mode: 'simple', res, subj, label, status }; render(lastRun);
+    lastRun = { mode: 'simple', res, subj, label, status, checkedAt: new Date().toISOString() }; render(lastRun);
     $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
   $('#numgo').addEventListener('click', () => {
@@ -279,14 +343,14 @@
       if (text.length < 8) { btn.disabled = false; return showErr('#shoterr', 'shot_none'); }
       const ta = $('#shottext'); ta.hidden = false; ta.value = text;
       const m = window.PhishHeuristics.analyzeMessage(text);
-      lastRun = { mode: 'msg', msg: m }; render(lastRun);
+      lastRun = { mode: 'msg', msg: m, input: text, checkedAt: new Date().toISOString() }; render(lastRun);
       $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } catch (err) { st.hidden = true; showErr('#shoterr', 'shot_fail'); }
     btn.disabled = false;
   });
   $('#shottext').addEventListener('input', () => {
     const m = window.PhishHeuristics.analyzeMessage($('#shottext').value);
-    if (m.ok) { lastRun = { mode: 'msg', msg: m }; render(lastRun); }
+    if (m.ok) { lastRun = { mode: 'msg', msg: m, input: $('#shottext').value, checkedAt: new Date().toISOString() }; render(lastRun); }
   });
 
   // Shareable verdict card (PNG)
@@ -321,34 +385,36 @@
   }
 
   function hideTok() { const w = $('#tokwarn'); if (w) w.hidden = true; }
-  function showTok(val) {
+  function showTok(val, source) {
     const w = $('#tokwarn'); w.hidden = false;
-    w.querySelector('[data-act=local]').onclick = () => { hideTok(); run(val, 'local'); };
-    w.querySelector('[data-act=any]').onclick = () => { hideTok(); run(val, 'any'); };
+    w.querySelector('[data-act=local]').onclick = () => { hideTok(); run(val, 'local', source); };
+    w.querySelector('[data-act=any]').onclick = () => { hideTok(); run(val, 'any', source); };
     w.querySelector('[data-act=cancel]').onclick = hideTok;
     w.querySelector('[data-act=local]').focus();
   }
-  async function run(raw, mode) {
+  async function run(raw, mode, source) {
     const err = $('#err'); err.hidden = true;
     const val = raw.trim();
     if (!val) { err.textContent = t('empty'); err.hidden = false; return; }
     const local = window.PhishHeuristics.analyze(val);
     if (!local.ok) { err.textContent = t('invalid'); err.hidden = false; return; }
-    if (!mode && window.PhishHeuristics.secretInUrl(val).risky) { showTok(val); return; }
+    if (!mode && window.PhishHeuristics.secretInUrl(val).risky) { showTok(val, source); return; }
+    const checkedAt = new Date().toISOString();
+    const context = { input: val, source, checkedAt };
     const btn = $('#go'); btn.disabled = true;
     const ml = await mlPredict(val);
-    lastRun = { local, ext: null, ml };
+    lastRun = { ...context, local, ext: null, ml };
     render(lastRun);
     $('#result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    if (mode === 'local') { lastRun = { local, ml, ext: [] }; }
+    if (mode === 'local') { lastRun = { ...context, local, ml, ext: [] }; }
     else try {
       const r = await fetch('/api/check?url=' + encodeURIComponent(val));
-      if (r.ok) { const j = await r.json(); lastRun = { local, ml, ext: j.external || [] }; }
+      if (r.ok) { const j = await r.json(); lastRun = { ...context, local, ml, ext: j.external || [] }; }
       else {
-        lastRun = { local, ml, ext: [] };
+        lastRun = { ...context, local, ml, ext: [] };
         if (r.status === 429) { err.textContent = t('rate_limited').replace('{s}', r.headers.get('retry-after') || '60'); err.hidden = false; }
       }
-    } catch (e) { lastRun = { local, ml, ext: [] }; }
+    } catch (e) { lastRun = { ...context, local, ml, ext: [] }; }
     render(lastRun);
     btn.disabled = false;
   }
