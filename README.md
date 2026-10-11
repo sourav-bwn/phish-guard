@@ -26,6 +26,16 @@ Built for **Hack for Social Cause** (MY Bharat, theme: Digital Safety & Cyber Fr
 
 If a key is missing the row shows "not configured" and the heuristic verdict still works. A database hit upgrades the verdict to phishing.
 
+
+## Architecture
+
+Static front end, one serverless API, and Supabase for Community reports. Free stack: GitHub + Vercel + Supabase, no card needed.
+
+- **Browser (`public/`)**: `heuristics.js` scores links and whole messages on-device (works offline), `ml.js` adds the advisory ML row from `model.json`, and `app.js` renders the UI. Screenshot OCR (Tesseract.js) and QR decoding also run in the browser; images never leave the device.
+- **API (`api/check.js` -> `lib/handler.js`)**: a Vercel serverless function. It re-runs the same heuristics server-side and, for single links, calls the outside reputation services in `lib/external.js` (PhishTank, urlscan.io, Google Safe Browsing, URLhaus, plus RDAP for domain age). It sends only the link text to those services; the suspicious page is never fetched. `lib/ratelimit.js` is a small in-memory sliding-window limiter per caller IP per warm instance (20 single-link checks/min, 60 text or bulk checks/min, plus a shared cap on outside lookups), so it is best-effort across serverless instances, not a hard guarantee.
+- **Community reports (`public/reports.js` + Supabase Postgres)**: opt-in and anonymous. The browser calls two Postgres functions, `submit_report` and `get_stats`; row-level security blocks direct table access, so reports can only be written through the rate-limited function and only aggregates can be read. To enforce 5 reports per hour per network, `submit_report` stores a hash of the caller's network address salted with the current day in `report_limits` and deletes rows older than one day; the address itself is never stored. Schema: [docs/schema.sql](docs/schema.sql).
+- **Chrome extension (`extension/`)**: MV3, reuses the same on-device heuristics.
+
 ## API
 
 Free, no key, CORS open. Base: `https://phish-guard-seven-pi.vercel.app/api/check`
@@ -58,7 +68,7 @@ Deploy free on Vercel: import the repo, no build step. `public/` is the site, `a
 - **Number / UPI checker**: format and warning-sign checks only. India has no public list of scam numbers or UPI IDs (Chakshu has no public API), so "no red flags" is not "trusted".
 - **Email header analyzer**: SPF/DKIM/DMARC results, From/Reply-To/Return-Path mismatch.
 - **Bulk check**, **QR scan**, **shareable verdict card** (PNG), **Hindi/Hinglish scam cues**.
-- **Community reports + stats** (Supabase free tier). Anonymous: only scam type, channel and state are stored. No link, number, name or IP. Writes go through one rate-limited function (5 per hour per network); the table cannot be read or written directly. Schema: [docs/schema.sql](docs/schema.sql).
+- **Community reports + stats** (Supabase free tier). Opt-in and anonymous: the reports table stores only scam type, channel and state - no link, number, name or IP address. Writes go through one rate-limited function (5 reports per hour per network); the table cannot be read or written directly. To enforce the limit, the function keeps a hash of the caller's network address, salted with the current day, in a separate table and deletes it after one day; the address itself is never stored. Schema: [docs/schema.sql](docs/schema.sql).
 - **ML advisory row**: logistic regression on host features, held-out accuracy 84.6%, precision 89.6%, recall 76.6%. Benign data is top-ranked sites only, so it is advisory and never changes the verdict.
 - **Installable PWA** (manifest + service worker), verdict explainer and ML accuracy note on every result, "Report this scam" button.
 - **Chrome extension** (MV3) in `extension/`. Load unpacked. Not yet tested in a real browser.
