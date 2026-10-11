@@ -155,7 +155,7 @@
   function reportInput(value) {
     // Strip query/hash from reset/login-token links, even inside pasted messages.
     const text = String(value || '');
-    if (!/\s/.test(text) && window.PhishHeuristics.secretInUrl(text).risky) return text.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
+    if (!/\s/.test(text) && /[?#]/.test(text) && window.PhishHeuristics.secretInUrl(text).risky) return text.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
     return text.replace(/(?:https?:\/\/|www\.)[^\s<>]+/gi, url => {
       if (!window.PhishHeuristics.secretInUrl(url).risky) return url;
       return url.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
