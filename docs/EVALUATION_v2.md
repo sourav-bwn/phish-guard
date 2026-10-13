@@ -16,13 +16,13 @@ Same 20 OpenPhish links (seed 20261013, feed fetched 2026-10-13 16:58 UTC) and t
 | 9 | globalterdaftar.com/m/index/ | Plain domain, 262 days old; no signal | No |
 | 10 | start-io-trezo.b12sites.com | Ordinary free website-builder host (weight 12 only) | No. Weak rule, left alone on purpose |
 
-Classes: 5 free-host or temporary-address patterns (4 fixed by general rules, plus the long-label case), 1 brand-in-path (fixed), 4 plain domains with no rule signal, 1 weak free-builder rule.
+Classes (10 links): 3 temporary-address hosts (links 2, 6, 7), 1 free host with a very long random name (link 5), 1 brand name only in the path of a free-hosted page (link 3), 4 plain-looking domains with no rule signal (links 1, 4, 8, 9), 1 ordinary free website-builder page (link 10). Links 2, 3, 5, 6, 7 were fixed; 1, 4, 8, 9, 10 were not.
 
 ## Rule changes (public/heuristics.js, see rules_v2.patch)
 - dyn_dns (weight 24): host is a subdomain of a dynamic-DNS or free temporary-address service (list of 15 providers). Not triggered by the provider's own www site.
 - brand_in_path (weight 30): a brand name (5+ letters) appears in the path of a page on a free host, and the host is not official.
 - long_label (weight 12): any one label of the host is 30+ characters.
-- 3 new tests; all 22 tests pass.
+- 1 new test covering all three signals; all 22 tests pass.
 
 ## Results
 | | Old (b1afead) | New (rules v2) |
@@ -43,4 +43,4 @@ Classes: 5 free-host or temporary-address patterns (4 fixed by general rules, pl
 - The 4 strict "Likely phishing" results did not change.
 
 ## Live verification
-After rules v2 were merged (commit 14b1329) and deployed, all 47 links were re-run against the live app (https://phish-guard-seven-pi.vercel.app/api/check) on 13 Oct 2026 at about 23:08-23:12 IST. Result: 20 phishing = 4 Likely phishing, 11 Suspicious, 5 No red flags; 27 benign = 27 No red flags. This matches the replay exactly. Per-link results: eval_rerun_live_rules_v2.json. Safe Browsing and URLhaus still not configured.
+After rules v2 were merged (commit 14b1329) and deployed, all 47 links were re-run against the live app (https://phish-guard-seven-pi.vercel.app/api/check) on 13 Oct 2026 at about 23:08-23:12 IST. Result: 20 phishing = 4 Likely phishing, 11 Suspicious, 5 No red flags; 27 benign = 27 No red flags. This matches the replay exactly. Per-link results: docs/eval_rerun_v2.json. Safe Browsing and URLhaus still not configured.
