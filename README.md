@@ -1,6 +1,6 @@
 # PhishGuard
 
-Paste a link you got on WhatsApp or SMS. PhishGuard tells you if it looks like phishing and explains why, in English and Bengali (বাংলা). It never opens the link.
+Paste a link you got on WhatsApp or SMS. PhishGuard tells you if it looks like phishing and explains why, in English, Bengali (বাংলা) and Hindi (हिंदी). It never opens the link.
 
 **Privacy note:** the link you check is looked up against outside reputation databases (PhishTank, plus Google Safe Browsing and URLhaus if keys are enabled). It is never opened or fetched. Links that look like they carry a token or secret (password reset, verify, magic-link, long random values) are held back and need a second click, with an on-device-only option. The API (`/api/check`) is rate limited per caller, best-effort per serverless instance.
 
@@ -47,7 +47,7 @@ POST /api/check   {"text": "Dear customer, your SBI account will be blocked... h
 POST /api/check   {"urls": ["a.com", "b.xyz/login"]}      # up to 50
 ```
 
-Single link returns `verdict` (`safe|suspicious|phishing`), `score` 0-100, `reasons[]` (English and Bengali), and `external[]` (database checks plus domain age from RDAP). `text` extracts every link, scores them and adds scam-wording cues (English, Bengali, Hinglish).
+Single link returns `verdict` (`safe|suspicious|phishing`), `score` 0-100, `reasons[]` (English, Bengali and Hindi), and `external[]` (database checks plus domain age from RDAP). `text` extracts every link, scores them and adds scam-wording cues (English, Bengali, Hindi, Hinglish).
 
 ```
 curl -s https://phish-guard-seven-pi.vercel.app/api/check -d '{"url":"http://paypa1.com/signin"}' -H 'content-type: application/json'
