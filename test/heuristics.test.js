@@ -114,3 +114,12 @@ test('handler: 429 with retry-after once a caller passes the cap, no ip means no
   const ok = await handleCheck({ urls: ['http://paypa1.com'] }, {}, { ip: '203.0.113.10' }); assert.strictEqual(ok.status, 200);
   const none = await handleCheck({ urls: ['http://paypa1.com'] }, {}); assert.strictEqual(none.status, 200);
 });
+test('rules v2: dynamic-DNS host, free host with brand in path, long random label', () => {
+  const ids = u => analyze(u).flags.map(f => f.id);
+  assert.ok(ids('https://bururoha.duckdns.org/jewo/').includes('dyn_dns'));
+  assert.notStrictEqual(analyze('https://bururoha.duckdns.org/jewo/').verdict, 'safe');
+  assert.strictEqual(analyze('https://www.duckdns.org/').verdict, 'safe');
+  assert.ok(ids('https://someone.github.io/netflix').includes('brand_in_path'));
+  assert.strictEqual(analyze('https://someone.github.io/portfolio').verdict, 'safe');
+  assert.ok(ids('https://euloginpdf092300239090390932002300i32i2i3i0.cloud-storage-0935784.workers.dev/').includes('long_label'));
+});
