@@ -6,6 +6,8 @@
   const SHORTENERS = new Set(['bit.ly','bitly.com','tinyurl.com','t.co','goo.gl','is.gd','cutt.ly','rb.gy','shorturl.at','tiny.cc','ow.ly','rebrand.ly','s.id','t.ly','lnkd.in','buff.ly','v.gd','shorte.st','bl.ink','clck.ru','qr.ae','tr.im','soo.gd','x.co']);
   const RISKY_TLDS = new Set(['tk','ml','ga','cf','gq','xyz','top','click','link','icu','buzz','rest','cyou','sbs','cfd','work','support','zip','mov','vip','monster','quest','fit','loan','win','bid','men','date','party','review','country','stream','download','racing','cam','surf','uno']);
   const FREE_HOSTS = ['pages.dev','web.app','firebaseapp.com','blogspot.com','weebly.com','wixsite.com','netlify.app','vercel.app','github.io','glitch.me','000webhostapp.com','ngrok.io','ngrok-free.app','workers.dev','herokuapp.com','onrender.com','repl.co','godaddysites.com','webflow.io','framer.app','carrd.co'];
+  // Dynamic-DNS and free-subdomain services. Real brands and banks do not live here, so a page here gets a higher weight than ordinary free hosting.
+  const DYN_DNS = ['duckdns.org','cloud-ip.cc','ddns.net','no-ip.org','no-ip.com','hopto.org','zapto.org','serveo.net','loca.lt','trycloudflare.com','myftp.org','servehttp.com','sytes.net','dynu.net','freeddns.org'];
   const MULTI_SUFFIX = new Set(['co.in','org.in','net.in','gov.in','nic.in','ac.in','edu.in','res.in','gen.in','firm.in','ind.in','co.uk','org.uk','ac.uk','gov.uk','com.au','net.au','org.au','co.nz','co.za','com.br','com.bd','com.pk','com.np','co.jp','com.sg','com.my','com.cn','com.hk','com.tr','co.id']);
   // brand -> official registrable domains
   const BRANDS = {
@@ -160,6 +162,9 @@
     if (/\.apk(\?|$)/.test(u.pathname.toLowerCase())) add('apk', 40, 'The link downloads an APK app file. Fake "bank" or "KYC" apps sideloaded this way can read your SMS and empty your account.', BN.apk, HI.apk);
     if (/(^|[?&=])(https?%3a%2f%2f|https?:\/\/)/i.test(u.search) || /url=|redirect=|redir=|next=|dest=/i.test(u.search) && /https?(%3a|:)/i.test(u.search)) add('redirect_param', 15, 'Another link is hidden inside this one (a redirect). Scammers use this to borrow a trusted name.', BN.redirect_param, HI.redirect_param);
     const onFree = FREE_HOSTS.find(d => host === d || host.endsWith('.' + d));
+    const onDyn = DYN_DNS.find(d => host.endsWith('.' + d) && host !== 'www.' + d);
+    if (onDyn && !onFree) add('dyn_dns', 24, 'The page is on a free temporary-address service (' + onDyn + '). Real banks and shops do not use these, but throwaway scam pages do.', 'সাইটটি একটি বিনামূল্যের অস্থায়ী ঠিকানা সার্ভিসে (' + onDyn + ') - আসল ব্যাংক বা দোকান এটা ব্যবহার করে না, কিন্তু প্রতারণার পাতা করে।', 'साइट एक मुफ्त अस्थायी पता सेवा (' + onDyn + ') पर है - असली बैंक या दुकानें ऐसा नहीं करतीं, पर ठगी के पेज करते हैं।', { extra: onDyn });
+    if (labels.some(l => l.length >= 30)) add('long_label', 12, 'One part of the address is very long and random-looking. Real sites use short, readable names.', 'ঠিকানার একটি অংশ খুব লম্বা ও এলোমেলো - আসল সাইটে ছোট, পড়ার মতো নাম থাকে।', 'पते का एक हिस्सा बहुत लंबा और बेतरतीब है - असली साइटों के नाम छोटे और पढ़ने लायक होते हैं।');
     if (onFree) add('free_host', 12, 'The page is on a free hosting service (' + onFree + '). Anyone can publish a page there, including scammers.', BN.free_host, HI.free_host, { extra: onFree });
 
     // Brand impersonation
@@ -184,6 +189,12 @@
         }
       }
       if (!brandHit && regLabel !== regLabel.replace(/[01345$]/g, '') && false) {}
+    }
+    // Brand name only in the path of a free-hosted page (for example something.github.io/netflix): anyone can publish there under any path.
+    if (!brandHit && !official && onFree) {
+      const pathTokens = fullLower.split(/[^a-z0-9]+/);
+      const pb = Object.keys(BRANDS).find(b => b.length >= 5 && pathTokens.includes(b));
+      if (pb) { const nice = pb.toUpperCase(); add('brand_in_path', 30, 'The address path mentions "' + nice + '" but the page sits on a free hosting service, not on the real ' + nice + ' site (' + BRANDS[pb][0] + ').', '\u09a0\u09bf\u0995\u09be\u09a8\u09be\u09b0 \u09aa\u09be\u09a5\u09c7 "' + nice + '" \u09a8\u09be\u09ae \u0986\u099b\u09c7, \u0995\u09bf\u09a8\u09cd\u09a4\u09c1 \u09aa\u09be\u09a4\u09be\u099f\u09bf \u09ac\u09bf\u09a8\u09be\u09ae\u09c2\u09b2\u09cd\u09af\u09c7\u09b0 \u09b9\u09cb\u09b8\u09cd\u099f\u09bf\u0982\u09af\u09bc\u09c7, \u0986\u09b8\u09b2 ' + nice + ' \u09b8\u09be\u0987\u099f\u09c7 \u09a8\u09af\u09bc (' + BRANDS[pb][0] + ')\u0964', 'पते के पथ में "' + nice + '" नाम है, पर पेज मुफ्त होस्टिंग पर है, असली ' + nice + ' साइट पर नहीं (' + BRANDS[pb][0] + ')।'); }
     }
     if (brandHit) {
       const nice = brandHit.brand.toUpperCase();
