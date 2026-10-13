@@ -64,6 +64,23 @@
     bad_scheme: 'এই লিংক ব্রাউজারে কোড চালাতে চায় - খুবই বিপজ্জনক।',
     digits_in_label: 'ডোমেইনের নামে অনেক সংখ্যা মেশানো আছে।'
   };
+  const HI = {
+    no_https: 'लिंक HTTPS इस्तेमाल नहीं करता - आपकी जानकारी सुरक्षित नहीं है।',
+    ip_host: 'वेबसाइट के नाम की जगह सीधा IP पता इस्तेमाल हुआ है - असली बैंक या कंपनी ऐसा नहीं करती।',
+    at_sign: 'लिंक में "@" चिह्न है - असली पता छिपाने की चाल हो सकती है।',
+    punycode: 'डोमेन में खास (punycode) अक्षर हैं - दिखने में असली जैसा, पर अलग साइट हो सकती है।',
+    shortener: 'यह एक छोटा (short) लिंक है - क्लिक किए बिना असली मंजिल पता नहीं चलती।',
+    risky_tld: 'यह डोमेन-अंत (TLD) धोखाधड़ी वाली साइटों में बहुत देखा जाता है।',
+    many_subdomains: 'डोमेन में कई सबडोमेन हैं - असली नाम बीच में छिपा हो सकता है।',
+    long_url: 'लिंक असामान्य रूप से लंबा है।',
+    many_hyphens: 'डोमेन में कई हाइफन (-) हैं - नकली साइटों में यह आम है।',
+    odd_port: 'लिंक में असामान्य पोर्ट नंबर है।',
+    free_host: 'साइट मुफ्त होस्टिंग सेवा पर बनी है - ठग अक्सर ऐसी सेवाएं इस्तेमाल करते हैं।',
+    apk: 'लिंक एक APK ऐप डाउनलोड करता है - Play Store के बाहर का ऐप फोन को नुकसान पहुंचा सकता है।',
+    redirect_param: 'लिंक के अंदर एक और लिंक छिपा है (रिडायरेक्ट)।',
+    bad_scheme: 'यह लिंक ब्राउज़र में कोड चलाना चाहता है - बेहद खतरनाक।',
+    digits_in_label: 'डोमेन के नाम में कई अंक मिले हुए हैं।'
+  };
 
   function levenshtein(a, b) {
     const m = a.length, n = b.length;
@@ -112,9 +129,9 @@
     const p = parse(input);
     if (!p) return { ok: false, error: 'invalid' };
     const flags = [];
-    const add = (id, weight, en, bn, extra) => flags.push(Object.assign({ id, weight, en, bn }, extra || {}));
+    const add = (id, weight, en, bn, hi, extra) => flags.push(Object.assign({ id, weight, en, bn, hi }, extra || {}));
     if (p.bad) {
-      add('bad_scheme', 90, 'This link tries to run code in your browser instead of opening a website. Never open it.', BN.bad_scheme);
+      add('bad_scheme', 90, 'This link tries to run code in your browser instead of opening a website. Never open it.', BN.bad_scheme, HI.bad_scheme);
       return finish({ host: '', flags });
     }
     const u = p.url;
@@ -126,24 +143,24 @@
     const hostFlat = host.replace(/[.-]/g, '');
     const official = isOfficial(reg, host);
 
-    if (u.protocol === 'http:' && !p.assumedScheme) add('no_https', 12, 'The link does not use HTTPS, so anything you type can be intercepted.', BN.no_https);
+    if (u.protocol === 'http:' && !p.assumedScheme) add('no_https', 12, 'The link does not use HTTPS, so anything you type can be intercepted.', BN.no_https, HI.no_https);
     if (u.protocol === 'http:' && p.assumedScheme) { /* user typed no scheme; do not penalise */ }
-    if (isIPv4Like(host) || host.startsWith('[')) add('ip_host', 35, 'The link uses a raw IP address instead of a website name. Real banks and shops do not do this.', BN.ip_host);
-    if (u.username || u.password || /@/.test(String(input).split('?')[0].replace(/^[a-z]+:\/\//i, '').split('/')[0])) add('at_sign', 30, 'The link contains an "@" sign, a trick to hide the real destination.', BN.at_sign);
-    if (labels.some(l => l.startsWith('xn--'))) add('punycode', 50, 'The domain uses special look-alike characters (punycode). It may look like a real site but is a different one.', BN.punycode);
-    if (SHORTENERS.has(host) || SHORTENERS.has(reg)) add('shortener', 25, 'This is a shortened link. You cannot tell where it leads until you click, so scammers love them.', BN.shortener);
-    if (RISKY_TLDS.has(tld) && !isIPv4Like(host)) add('risky_tld', 18, 'The ".' + tld + '" ending is very common on scam and throwaway websites.', BN.risky_tld);
+    if (isIPv4Like(host) || host.startsWith('[')) add('ip_host', 35, 'The link uses a raw IP address instead of a website name. Real banks and shops do not do this.', BN.ip_host, HI.ip_host);
+    if (u.username || u.password || /@/.test(String(input).split('?')[0].replace(/^[a-z]+:\/\//i, '').split('/')[0])) add('at_sign', 30, 'The link contains an "@" sign, a trick to hide the real destination.', BN.at_sign, HI.at_sign);
+    if (labels.some(l => l.startsWith('xn--'))) add('punycode', 50, 'The domain uses special look-alike characters (punycode). It may look like a real site but is a different one.', BN.punycode, HI.punycode);
+    if (SHORTENERS.has(host) || SHORTENERS.has(reg)) add('shortener', 25, 'This is a shortened link. You cannot tell where it leads until you click, so scammers love them.', BN.shortener, HI.shortener);
+    if (RISKY_TLDS.has(tld) && !isIPv4Like(host)) add('risky_tld', 18, 'The ".' + tld + '" ending is very common on scam and throwaway websites.', BN.risky_tld, HI.risky_tld);
     const subCount = labels.length - registrable(host).split('.').length;
-    if (subCount >= 3) add('many_subdomains', 20, 'The address has many sub-parts (' + labels.length + ' levels). The real site name is the part just before the ending, and it may be hidden.', BN.many_subdomains);
-    if ((host.replace(/xn--/g, '').match(/-/g) || []).length >= 3) add('many_hyphens', 14, 'The domain has lots of hyphens, a common pattern in fake sites.', BN.many_hyphens);
+    if (subCount >= 3) add('many_subdomains', 20, 'The address has many sub-parts (' + labels.length + ' levels). The real site name is the part just before the ending, and it may be hidden.', BN.many_subdomains, HI.many_subdomains);
+    if ((host.replace(/xn--/g, '').match(/-/g) || []).length >= 3) add('many_hyphens', 14, 'The domain has lots of hyphens, a common pattern in fake sites.', BN.many_hyphens, HI.many_hyphens);
     const regLabel = reg.split('.')[0];
-    if ((regLabel.match(/\d/g) || []).length >= 3 && !isIPv4Like(host)) add('digits_in_label', 10, 'The site name is mixed with many digits.', BN.digits_in_label);
-    if (u.port && !['80', '443'].includes(u.port)) add('odd_port', 12, 'The link uses an unusual port number (' + u.port + ').', BN.odd_port);
-    if ((u.href.length > 120)) add('long_url', 8, 'The link is unusually long.', BN.long_url);
-    if (/\.apk(\?|$)/.test(u.pathname.toLowerCase())) add('apk', 40, 'The link downloads an APK app file. Fake "bank" or "KYC" apps sideloaded this way can read your SMS and empty your account.', BN.apk);
-    if (/(^|[?&=])(https?%3a%2f%2f|https?:\/\/)/i.test(u.search) || /url=|redirect=|redir=|next=|dest=/i.test(u.search) && /https?(%3a|:)/i.test(u.search)) add('redirect_param', 15, 'Another link is hidden inside this one (a redirect). Scammers use this to borrow a trusted name.', BN.redirect_param);
+    if ((regLabel.match(/\d/g) || []).length >= 3 && !isIPv4Like(host)) add('digits_in_label', 10, 'The site name is mixed with many digits.', BN.digits_in_label, HI.digits_in_label);
+    if (u.port && !['80', '443'].includes(u.port)) add('odd_port', 12, 'The link uses an unusual port number (' + u.port + ').', BN.odd_port, HI.odd_port);
+    if ((u.href.length > 120)) add('long_url', 8, 'The link is unusually long.', BN.long_url, HI.long_url);
+    if (/\.apk(\?|$)/.test(u.pathname.toLowerCase())) add('apk', 40, 'The link downloads an APK app file. Fake "bank" or "KYC" apps sideloaded this way can read your SMS and empty your account.', BN.apk, HI.apk);
+    if (/(^|[?&=])(https?%3a%2f%2f|https?:\/\/)/i.test(u.search) || /url=|redirect=|redir=|next=|dest=/i.test(u.search) && /https?(%3a|:)/i.test(u.search)) add('redirect_param', 15, 'Another link is hidden inside this one (a redirect). Scammers use this to borrow a trusted name.', BN.redirect_param, HI.redirect_param);
     const onFree = FREE_HOSTS.find(d => host === d || host.endsWith('.' + d));
-    if (onFree) add('free_host', 12, 'The page is on a free hosting service (' + onFree + '). Anyone can publish a page there, including scammers.', BN.free_host, { extra: onFree });
+    if (onFree) add('free_host', 12, 'The page is on a free hosting service (' + onFree + '). Anyone can publish a page there, including scammers.', BN.free_host, HI.free_host, { extra: onFree });
 
     // Brand impersonation
     let brandHit = null;
@@ -171,8 +188,8 @@
     if (brandHit) {
       const nice = brandHit.brand.toUpperCase();
       const official1 = BRANDS[brandHit.brand][0];
-      if (brandHit.kind === 'typo') add('lookalike', 56, 'The domain "' + reg + '" looks like ' + nice + ' (' + official1 + ') with small spelling changes. This is a classic look-alike trick.', 'ডোমেইন "' + reg + '" দেখতে ' + nice + ' (' + official1 + ')-এর মতো, কিন্তু বানানে সামান্য বদল - এটা নকল সাইটের পরিচিত কৌশল।', { brand: nice });
-      else add('brand_abuse', 38, 'The address mentions "' + nice + '" but the site is not run by ' + nice + '. The real one is ' + official1 + '.', 'ঠিকানায় "' + nice + '" নাম আছে, কিন্তু সাইটটি ' + nice + '-এর নয়। আসল সাইট: ' + official1 + '।', { brand: nice });
+      if (brandHit.kind === 'typo') add('lookalike', 56, 'The domain "' + reg + '" looks like ' + nice + ' (' + official1 + ') with small spelling changes. This is a classic look-alike trick.', 'ডোমেইন "' + reg + '" দেখতে ' + nice + ' (' + official1 + ')-এর মতো, কিন্তু বানানে সামান্য বদল - এটা নকল সাইটের পরিচিত কৌশল।', 'डोमेन "' + reg + '" दिखने में ' + nice + ' (' + official1 + ') जैसा है, पर वर्तनी में छोटा बदलाव है - नकली साइट की जानी-मानी चाल।', { brand: nice });
+      else add('brand_abuse', 38, 'The address mentions "' + nice + '" but the site is not run by ' + nice + '. The real one is ' + official1 + '.', 'ঠিকানায় "' + nice + '" নাম আছে, কিন্তু সাইটটি ' + nice + '-এর নয়। আসল সাইট: ' + official1 + '।', 'पते में "' + nice + '" नाम है, पर साइट ' + nice + ' की नहीं है। असली साइट: ' + official1 + '।', { brand: nice });
     }
     // Keywords in host and path
     const hostKw = [], pathKw = [];
@@ -185,10 +202,10 @@
       const strong = kwAll.filter(([k]) => STRONG_KW.has(k)).length;
       const weight = Math.min(30, strong * 12 + (kwAll.length - strong) * 5 + (hostKw.length ? 4 : 0));
       const names = kwAll.slice(0, 4).map(x => '"' + x[1] + '"').join(', ');
-      add('keywords', weight, 'The link uses pressure or account words like ' + names + '. Scam messages lean on these.', 'লিংকে ' + names + ' জাতীয় শব্দ আছে - প্রতারণার মেসেজে এগুলো খুব দেখা যায়।');
+      add('keywords', weight, 'The link uses pressure or account words like ' + names + '. Scam messages lean on these.', 'লিংকে ' + names + ' জাতীয় শব্দ আছে - প্রতারণার মেসেজে এগুলো খুব দেখা যায়।', 'लिंक में ' + names + ' जैसे शब्द हैं - धोखाधड़ी वाले मैसेज में ये बहुत मिलते हैं।');
     }
     // Combination boosts
-    if (brandHit && flags.some(f => ['keywords', 'risky_tld', 'free_host', 'no_https'].includes(f.id))) add('combo', 12, 'A brand name together with other warning signs makes impersonation very likely.', 'ব্র্যান্ডের নামের সাথে আরও সন্দেহজনক লক্ষণ থাকায় নকল হওয়ার সম্ভাবনা অনেক বেশি।');
+    if (brandHit && flags.some(f => ['keywords', 'risky_tld', 'free_host', 'no_https'].includes(f.id))) add('combo', 12, 'A brand name together with other warning signs makes impersonation very likely.', 'ব্র্যান্ডের নামের সাথে আরও সন্দেহজনক লক্ষণ থাকায় নকল হওয়ার সম্ভাবনা অনেক বেশি।', 'ब्रांड नाम के साथ अन्य चेतावनी संकेत भी हैं, इसलिए नकली होने की संभावना बहुत ज्यादा है।');
     if (official) {
       for (const f of flags) if (['keywords','brand_abuse'].includes(f.id)) f.weight = 0;
     }
@@ -208,20 +225,20 @@
 
   // ---- Whole-message analysis ----
   const CUES = [
-    [/(account|a\/c|card|sim|number).{0,40}(block|blocked|suspend|suspended|deactivat|closed|freeze|frozen|expire)/i, 22, 'Threatens to block or close your account', 'অ্যাকাউন্ট বা কার্ড বন্ধ করে দেওয়ার হুমকি'],
-    [/(update|complete|verify|re-?verify).{0,25}\bkyc\b|\bkyc\b.{0,30}(update|expire|pending|incomplete|verify)/i, 28, 'Asks you to update or verify KYC', 'KYC আপডেট বা যাচাই করতে বলছে'],
-    [/(share|send|tell|enter|give).{0,20}(otp|pin|cvv|password|passcode)/i, 30, 'Asks for your OTP, PIN, CVV or password. No bank ever does.', 'OTP, PIN, CVV বা পাসওয়ার্ড চাইছে। কোনো ব্যাংক এটা চায় না।'],
-    [/(won|win|winner|lucky|selected|prize|lottery|jackpot|kbc)/i, 18, 'Claims you won a prize or were selected', 'আপনি পুরস্কার জিতেছেন বলে দাবি করছে'],
-    [/(refund|cashback|reward|bonus).{0,40}(claim|click|link|credit|receive)|claim.{0,20}(refund|reward|cashback|bonus)/i, 18, 'Offers a refund, cashback or reward if you click', 'ক্লিক করলে রিফান্ড, ক্যাশব্যাক বা রিওয়ার্ডের লোভ দেখাচ্ছে'],
-    [/(power|electricity|connection|supply).{0,40}(disconnect|cut|off|tonight|today)|(disconnect|cut).{0,40}(power|electricity)/i, 24, 'Electricity disconnection threat', 'বিদ্যুৎ সংযোগ কেটে দেওয়ার হুমকি'],
-    [/(urgent|immediately|within\s+\d+\s*(hour|hr|min)|today\s+only|last\s+date|act\s+now|expires?\s+(today|soon|in))/i, 12, 'Creates urgency', 'তাড়াহুড়ো করানোর চেষ্টা'],
-    [/(pay|deposit|send).{0,25}(small|nominal|registration|processing|redelivery|customs)\s*(fee|charge|amount)/i, 22, 'Asks for a small fee before you get something', 'কিছু পাওয়ার আগে সামান্য ফি চাইছে'],
-    [/(download|install).{0,30}(apk|app).{0,30}(claim|reward|kyc|verify|update)|\.apk/i, 25, 'Pushes you to install an app outside Play Store', 'প্লে স্টোরের বাইরের অ্যাপ ইনস্টল করতে বলছে'],
-    [/(part[- ]?time|work from home|earn).{0,40}(₹|rs\.?|inr)?\s*\d{3,6}.{0,20}(per|daily|day|hour)/i, 20, 'Too-good-to-be-true job offer', 'অবিশ্বাস্য আয়ের চাকরির প্রস্তাব'],
-    [/(aapka|apka|aapke).{0,30}(account|khata|card).{0,20}(band|block)|turant|abhi\s+click|inaam|lottery\s+lagi/i, 20, 'Hinglish pressure phrases typical of scam SMS', 'হিন্দি-ইংরেজি মেশানো প্রতারণা-মেসেজের ধাঁচ'],
-    [/(আপনার|আপনি).{0,40}(অ্যাকাউন্ট|একাউন্ট|কার্ড|সংযোগ).{0,40}(বন্ধ|ব্লক|কেটে)|কেওয়াইসি|কে ?ওয়াই ?সি|পুরস্কার|লটারি|বিদ্যুৎ.{0,30}(কেটে|বিচ্ছিন্ন)/, 24, 'Bengali scam wording (account block, KYC, prize, power cut)', 'বাংলায় প্রতারণার ভাষা (অ্যাকাউন্ট বন্ধ, KYC, পুরস্কার, বিদ্যুৎ কাটা)'],
-    [/(?:dear|respected)\s+(customer|user|sir|madam|account\s*holder)|প্রিয় গ্রাহক/i, 8, 'Generic greeting instead of your name', 'আপনার নাম নয়, সাধারণ সম্বোধন'],
-    [/(?:call|whatsapp|contact).{0,25}(\+?91[\s-]?)?[6-9]\d{9}/i, 10, 'Asks you to call or WhatsApp a mobile number', 'একটি মোবাইল নম্বরে ফোন বা WhatsApp করতে বলছে']
+    [/(account|a\/c|card|sim|number).{0,40}(block|blocked|suspend|suspended|deactivat|closed|freeze|frozen|expire)/i, 22, 'Threatens to block or close your account', 'অ্যাকাউন্ট বা কার্ড বন্ধ করে দেওয়ার হুমকি', 'अकाउंट या कार्ड बंद करने की धमकी'],
+    [/(update|complete|verify|re-?verify).{0,25}\bkyc\b|\bkyc\b.{0,30}(update|expire|pending|incomplete|verify)/i, 28, 'Asks you to update or verify KYC', 'KYC আপডেট বা যাচাই করতে বলছে', 'KYC अपडेट या वेरीफाई करने को कह रहा है'],
+    [/(share|send|tell|enter|give).{0,20}(otp|pin|cvv|password|passcode)/i, 30, 'Asks for your OTP, PIN, CVV or password. No bank ever does.', 'OTP, PIN, CVV বা পাসওয়ার্ড চাইছে। কোনো ব্যাংক এটা চায় না।', 'OTP, PIN, CVV या पासवर्ड मांग रहा है। कोई बैंक ऐसा नहीं करता।'],
+    [/(won|win|winner|lucky|selected|prize|lottery|jackpot|kbc)/i, 18, 'Claims you won a prize or were selected', 'আপনি পুরস্কার জিতেছেন বলে দাবি করছে', 'आपने इनाम जीता है या आपका चयन हुआ, ऐसा दावा'],
+    [/(refund|cashback|reward|bonus).{0,40}(claim|click|link|credit|receive)|claim.{0,20}(refund|reward|cashback|bonus)/i, 18, 'Offers a refund, cashback or reward if you click', 'ক্লিক করলে রিফান্ড, ক্যাশব্যাক বা রিওয়ার্ডের লোভ দেখাচ্ছে', 'क्लिक करने पर रिफंड, कैशबैक या रिवॉर्ड का लालच'],
+    [/(power|electricity|connection|supply).{0,40}(disconnect|cut|off|tonight|today)|(disconnect|cut).{0,40}(power|electricity)/i, 24, 'Electricity disconnection threat', 'বিদ্যুৎ সংযোগ কেটে দেওয়ার হুমকি', 'बिजली काटने की धमकी'],
+    [/(urgent|immediately|within\s+\d+\s*(hour|hr|min)|today\s+only|last\s+date|act\s+now|expires?\s+(today|soon|in))/i, 12, 'Creates urgency', 'তাড়াহুড়ো করানোর চেষ্টা', 'जल्दबाजी पैदा कर रहा है'],
+    [/(pay|deposit|send).{0,25}(small|nominal|registration|processing|redelivery|customs)\s*(fee|charge|amount)/i, 22, 'Asks for a small fee before you get something', 'কিছু পাওয়ার আগে সামান্য ফি চাইছে', 'कुछ पाने से पहले छोटी फीस मांग रहा है'],
+    [/(download|install).{0,30}(apk|app).{0,30}(claim|reward|kyc|verify|update)|\.apk/i, 25, 'Pushes you to install an app outside Play Store', 'প্লে স্টোরের বাইরের অ্যাপ ইনস্টল করতে বলছে', 'Play Store के बाहर का ऐप इंस्टॉल करने को कह रहा है'],
+    [/(part[- ]?time|work from home|earn).{0,40}(₹|rs\.?|inr)?\s*\d{3,6}.{0,20}(per|daily|day|hour)/i, 20, 'Too-good-to-be-true job offer', 'অবিশ্বাস্য আয়ের চাকরির প্রস্তাব', 'संदिग्ध रूप से आकर्षक कमाई वाला नौकरी का ऑफर'],
+    [/(aapka|apka|aapke).{0,30}(account|khata|card).{0,20}(band|block)|turant|abhi\s+click|inaam|lottery\s+lagi/i, 20, 'Hinglish pressure phrases typical of scam SMS', 'হিন্দি-ইংরেজি মেশানো প্রতারণা-মেসেজের ধাঁচ', 'हिंदी-अंग्रेज़ी मिश्रित धोखाधड़ी-मैसेज की बोली'],
+    [/(আপনার|আপনি).{0,40}(অ্যাকাউন্ট|একাউন্ট|কার্ড|সংযোগ).{0,40}(বন্ধ|ব্লক|কেটে)|কেওয়াইসি|কে ?ওয়াই ?সি|পুরস্কার|লটারি|বিদ্যুৎ.{0,30}(কেটে|বিচ্ছিন্ন)/, 24, 'Bengali scam wording (account block, KYC, prize, power cut)', 'বাংলায় প্রতারণার ভাষা (অ্যাকাউন্ট বন্ধ, KYC, পুরস্কার, বিদ্যুৎ কাটা)', 'बंगाली में धोखाधड़ी की भाषा (अकाउंट बंद, KYC, इनाम, बिजली कट)'],
+    [/(?:dear|respected)\s+(customer|user|sir|madam|account\s*holder)|প্রিয় গ্রাহক/i, 8, 'Generic greeting instead of your name', 'আপনার নাম নয়, সাধারণ সম্বোধন', 'आपका नाम नहीं, आम अभिवादन'],
+    [/(?:call|whatsapp|contact).{0,25}(\+?91[\s-]?)?[6-9]\d{9}/i, 10, 'Asks you to call or WhatsApp a mobile number', 'একটি মোবাইল নম্বরে ফোন বা WhatsApp করতে বলছে', 'किसी मोबाइल नंबर पर कॉल या WhatsApp करने को कह रहा है']
   ];
   const URL_RE = /(?:https?:\/\/|www\.)[^\s<>"'()]+|(?<![@\w.-])[a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)*\.(?:com|in|co\.in|net|org|xyz|top|click|link|icu|buzz|cyou|sbs|cfd|vip|work|live|info|site|online|shop|store|app|apk|me|ly|gl|co|io|tk|ml|ga|cf|gq|zip|mov)\b(?:\/[^\s<>"'()]*)?/gi;
   const UPI_RE = /\b[a-z0-9._-]{2,}@(?:ok(?:axis|hdfcbank|icici|sbi)|ybl|ibl|axl|paytm|upi|apl|sbi|icici|hdfcbank|pnb|barodampay|fbl|aubank)\b/gi;
@@ -246,9 +263,9 @@
     if (!t) return { ok: false, error: 'empty' };
     const links = extractLinks(t).map(l => Object.assign({ input: l }, analyze(l))).filter(r => r.ok);
     const cues = [];
-    for (const [re, w, en, bn] of CUES) if (re.test(t)) cues.push({ id: 'cue', weight: w, en, bn });
+    for (const [re, w, en, bn, hi] of CUES) if (re.test(t)) cues.push({ id: 'cue', weight: w, en, bn, hi });
     const upis = Array.from(new Set((t.match(UPI_RE) || []).map(x => x.toLowerCase())));
-    if (upis.length) cues.push({ id: 'upi', weight: 10, en: 'Contains a UPI ID (' + upis.slice(0, 2).join(', ') + '). Never pay someone just because a message told you to.', bn: 'UPI আইডি আছে (' + upis.slice(0, 2).join(', ') + ')। মেসেজে বলা হয়েছে বলেই কাউকে টাকা পাঠাবেন না।' });
+    if (upis.length) cues.push({ id: 'upi', weight: 10, en: 'Contains a UPI ID (' + upis.slice(0, 2).join(', ') + '). Never pay someone just because a message told you to.', bn: 'UPI আইডি আছে (' + upis.slice(0, 2).join(', ') + ')। মেসেজে বলা হয়েছে বলেই কাউকে টাকা পাঠাবেন না।', hi: 'UPI ID है (' + upis.slice(0, 2).join(', ') + ')। सिर्फ मैसेज में कहा गया, इसीलिए कभी पैसे न भेजें।' });
     const cueScore = cues.reduce((s, c) => s + c.weight, 0);
     const worstLink = links.reduce((m, l) => Math.max(m, l.score), 0);
     let score = Math.min(100, Math.round(worstLink * 0.8 + cueScore * (links.length ? 1 : 0.9)));
@@ -260,9 +277,9 @@
 
   // ---- Hindi cues (Devanagari + romanised) ----
   CUES.push(
-    [/(आपका|आपके).{0,40}(खाता|अकाउंट|कार्ड|सिम|बिजली).{0,40}(बंद|ब्लॉक|कट|रद्द)|केवाईसी|के\s?वाई\s?सी|इनाम|लॉटरी|बधाई.{0,30}(जीत|इनाम)/, 24, 'Hindi scam wording (account block, KYC, prize, power cut)', 'হিন্দিতে প্রতারণার ভাষা (অ্যাকাউন্ট বন্ধ, KYC, পুরস্কার, বিদ্যুৎ কাটা)'],
-    [/(ओटीपी|पिन|सीवीवी|पासवर्ड).{0,20}(बताएं|भेजें|शेयर|दें)|(बताएं|भेजें|शेयर).{0,20}(ओटीपी|पिन)/, 30, 'Hindi: asks for OTP or PIN', 'হিন্দিতে OTP বা PIN চাইছে'],
-    [/(kyc|pan|aadhaar|aadhar).{0,30}(update|expire|band|verify|link)\s*(karo|kare|karein|kijiye|nahi)|(otp|pin)\s*(batao|bhejo|share\s*karo|dijiye)|bijli.{0,20}(kat|band)/i, 26, 'Hinglish: KYC/OTP/power-cut pressure', 'হিন্দি-ইংরেজি মেশানো: KYC/OTP/বিদ্যুৎ কাটার চাপ']
+    [/(आपका|आपके).{0,40}(खाता|अकाउंट|कार्ड|सिम|बिजली).{0,40}(बंद|ब्लॉक|कट|रद्द)|केवाईसी|के\s?वाई\s?सी|इनाम|लॉटरी|बधाई.{0,30}(जीत|इनाम)/, 24, 'Hindi scam wording (account block, KYC, prize, power cut)', 'হিন্দিতে প্রতারণার ভাষা (অ্যাকাউন্ট বন্ধ, KYC, পুরস্কার, বিদ্যুৎ কাটা)', 'हिंदी में धोखाधड़ी की भाषा (अकाउंट बंद, KYC, इनाम, बिजली कट)'],
+    [/(ओटीपी|पिन|सीवीवी|पासवर्ड).{0,20}(बताएं|भेजें|शेयर|दें)|(बताएं|भेजें|शेयर).{0,20}(ओटीपी|पिन)/, 30, 'Hindi: asks for OTP or PIN', 'হিন্দিতে OTP বা PIN চাইছে', 'हिंदी में OTP या PIN मांग रहा है'],
+    [/(kyc|pan|aadhaar|aadhar).{0,30}(update|expire|band|verify|link)\s*(karo|kare|karein|kijiye|nahi)|(otp|pin)\s*(batao|bhejo|share\s*karo|dijiye)|bijli.{0,20}(kat|band)/i, 26, 'Hinglish: KYC/OTP/power-cut pressure', 'হিন্দি-ইংরেজি মেশানো: KYC/OTP/বিদ্যুৎ কাটার চাপ', 'हिंग्लिश: KYC/OTP/बिजली कटौती का दबाव']
   );
 
   // ---- Phone number checker ----
@@ -270,7 +287,7 @@
   function analyzePhone(input) {
     const raw = String(input || '').trim();
     const flags = [];
-    const add = (w, en, bn) => flags.push({ weight: w, en, bn });
+    const add = (w, en, bn, hi) => flags.push({ weight: w, en, bn, hi });
     let d = raw.replace(/[^\d+]/g, '');
     if (d.replace(/\D/g, '').length < 5) return { ok: false, error: 'invalid' };
     let national = null, cc = null;
@@ -281,15 +298,15 @@
     if (d.startsWith('91') && d.length === 12) { cc = '91'; national = d.slice(2); }
     else { cc = Object.keys(SCAM_CC).concat(['1', '44', '971', '65', '61']).sort((a, b) => b.length - a.length).find(c => d.startsWith(c)) || d.slice(0, 2); national = d.slice(cc.length); }
     if (cc !== '91') {
-      if (SCAM_CC[cc]) add(32, 'Foreign number (+' + cc + ', ' + SCAM_CC[cc] + '). Scam calls and WhatsApp job or lottery offers often come from numbers like this.', 'বিদেশি নম্বর (+' + cc + ', ' + SCAM_CC[cc] + ')। প্রতারণার কল ও WhatsApp-এ চাকরি/লটারির অফার প্রায়ই এমন নম্বর থেকে আসে।');
-      else add(18, 'Foreign number (+' + cc + '). If a bank, courier or officer says they are calling from India, this does not match.', 'বিদেশি নম্বর (+' + cc + ')। ব্যাংক বা অফিসার ভারত থেকে ফোন করছে বললে এটা মেলে না।');
+      if (SCAM_CC[cc]) add(32, 'Foreign number (+' + cc + ', ' + SCAM_CC[cc] + '). Scam calls and WhatsApp job or lottery offers often come from numbers like this.', 'বিদেশি নম্বর (+' + cc + ', ' + SCAM_CC[cc] + ')। প্রতারণার কল ও WhatsApp-এ চাকরি/লটারির অফার প্রায়ই এমন নম্বর থেকে আসে।', 'विदेशी नंबर (+' + cc + ', ' + SCAM_CC[cc] + ')। धोखाधड़ी वाले कॉल और WhatsApp नौकरी/लॉटरी ऑफर अक्सर ऐसे नंबरों से आते हैं।');
+      else add(18, 'Foreign number (+' + cc + '). If a bank, courier or officer says they are calling from India, this does not match.', 'বিদেশি নম্বর (+' + cc + ')। ব্যাংক বা অফিসার ভারত থেকে ফোন করছে বললে এটা মেলে না।', 'विदेशी नंबर (+' + cc + ')। अगर बैंक या अफसर भारत से कॉल करने का दावा करे, तो यह मेल नहीं खाता।');
     } else {
-      if (!/^[6-9]\d{9}$/.test(national)) add(30, 'Not a valid Indian mobile number (mobiles start with 6, 7, 8 or 9 and have 10 digits).', 'এটি বৈধ ভারতীয় মোবাইল নম্বর নয় (মোবাইল নম্বর ৬-৯ দিয়ে শুরু, ১০ অঙ্কের)।');
+      if (!/^[6-9]\d{9}$/.test(national)) add(30, 'Not a valid Indian mobile number (mobiles start with 6, 7, 8 or 9 and have 10 digits).', 'এটি বৈধ ভারতীয় মোবাইল নম্বর নয় (মোবাইল নম্বর ৬-৯ দিয়ে শুরু, ১০ অঙ্কের)।', 'यह मान्य भारतीय मोबाइल नंबर नहीं है (मोबाइल नंबर 6-9 से शुरू होकर 10 अंकों का होता है)।');
       else {
-        if (/(\d)\1{5,}/.test(national) || /(?:0123|1234|2345|3456|4567|5678|6789|9876|8765|7654)/.test(national) && /(\d)\1{3,}/.test(national)) add(8, 'Looks like a "VIP" pattern number. Scammers buy these to look official, but so do honest people.', 'এটা "VIP" প্যাটার্নের নম্বর। প্রতারকরা এমন নম্বর কেনে, তবে সাধারণ মানুষও কেনে।');
+        if (/(\d)\1{5,}/.test(national) || /(?:0123|1234|2345|3456|4567|5678|6789|9876|8765|7654)/.test(national) && /(\d)\1{3,}/.test(national)) add(8, 'Looks like a "VIP" pattern number. Scammers buy these to look official, but so do honest people.', 'এটা "VIP" প্যাটার্নের নম্বর। প্রতারকরা এমন নম্বর কেনে, তবে সাধারণ মানুষও কেনে।', 'यह "VIP" पैटर्न का नंबर लगता है। ठग ऐसे नंबर खरीदते हैं, पर आम लोग भी।');
       }
     }
-    if (/^1[4-9]\d/.test(d.replace(/^91/, '')) && d.replace(/^91/, '').length <= 10 && !/^[6-9]/.test(d.replace(/^91/, ''))) add(10, 'Numbers starting with 140 are telemarketing lines. Banks use official 1800 numbers or short sender IDs.', '140 দিয়ে শুরু নম্বর টেলিমার্কেটিং-এর। ব্যাংক সরকারি 1800 নম্বর বা নির্দিষ্ট সেন্ডার আইডি ব্যবহার করে।');
+    if (/^1[4-9]\d/.test(d.replace(/^91/, '')) && d.replace(/^91/, '').length <= 10 && !/^[6-9]/.test(d.replace(/^91/, ''))) add(10, 'Numbers starting with 140 are telemarketing lines. Banks use official 1800 numbers or short sender IDs.', '140 দিয়ে শুরু নম্বর টেলিমার্কেটিং-এর। ব্যাংক সরকারি 1800 নম্বর বা নির্দিষ্ট সেন্ডার আইডি ব্যবহার করে।', '140 से शुरू नंबर टेलीमार्केटिंग के होते हैं। बैंक आधिकारिक 1800 नंबर या तय सेंडर ID इस्तेमाल करते हैं।');
     const score = Math.min(100, flags.reduce((a, f) => a + f.weight, 0));
     const verdict = score >= 55 ? 'phishing' : score >= 20 ? 'suspicious' : 'safe';
     flags.sort((a, b) => b.weight - a.weight);
@@ -305,12 +322,12 @@
     if (!m) return { ok: false, error: 'invalid' };
     const [, name, handle] = m;
     const flags = [];
-    const add = (w, en, bn) => flags.push({ weight: w, en, bn });
-    if (!UPI_HANDLES.has(handle)) add(35, 'The handle "@' + handle + '" is not one I know. Real UPI IDs end in handles like @okaxis, @ybl, @paytm, @oksbi.', '"@' + handle + '" হ্যান্ডেলটি আমার পরিচিত নয়। আসল UPI আইডি @okaxis, @ybl, @paytm, @oksbi-র মতো হ্যান্ডেলে শেষ হয়।');
-    if (UPI_BAD_NAME.test(name)) add(35, 'The name part has words like refund, support, KYC, reward or a bank name. Scammers pick names that sound official; a real person or shop does not need to.', 'নামের অংশে refund, support, KYC, reward বা ব্যাংকের নাম আছে। প্রতারকরা সরকারি-সরকারি নাম বেছে নেয়।');
+    const add = (w, en, bn, hi) => flags.push({ weight: w, en, bn, hi });
+    if (!UPI_HANDLES.has(handle)) add(35, 'The handle "@' + handle + '" is not one I know. Real UPI IDs end in handles like @okaxis, @ybl, @paytm, @oksbi.', '"@' + handle + '" হ্যান্ডেলটি আমার পরিচিত নয়। আসল UPI আইডি @okaxis, @ybl, @paytm, @oksbi-র মতো হ্যান্ডেলে শেষ হয়।', '"@' + handle + '" हैंडल मुझे जाना-पहचाना नहीं लगता। असली UPI ID @okaxis, @ybl, @paytm, @oksbi जैसे हैंडल में खत्म होती हैं।');
+    if (UPI_BAD_NAME.test(name)) add(35, 'The name part has words like refund, support, KYC, reward or a bank name. Scammers pick names that sound official; a real person or shop does not need to.', 'নামের অংশে refund, support, KYC, reward বা ব্যাংকের নাম আছে। প্রতারকরা সরকারি-সরকারি নাম বেছে নেয়।', 'नाम वाले हिस्से में refund, support, KYC, reward या बैंक का नाम है। ठग सरकारी-सा लगने वाला नाम चुनते हैं।');
     if (/^\d{10}$/.test(name)) { /* phone-number UPI is normal */ }
-    else if ((name.match(/\d/g) || []).length >= 6 && !/^\d+$/.test(name)) add(8, 'Many digits mixed into the name.', 'নামে অনেক সংখ্যা মেশানো।');
-    add(0, '', '');
+    else if ((name.match(/\d/g) || []).length >= 6 && !/^\d+$/.test(name)) add(8, 'Many digits mixed into the name.', 'নামে অনেক সংখ্যা মেশানো।', 'नाम में कई अंक मिले हुए हैं।');
+    add(0, '', '', '');
     const f2 = flags.filter(f => f.weight > 0);
     const score = Math.min(100, f2.reduce((a, f) => a + f.weight, 0));
     const verdict = score >= 55 ? 'phishing' : score >= 25 ? 'suspicious' : 'safe';
@@ -326,7 +343,7 @@
     const h = String(text || '');
     if (!/^[A-Za-z-]+:/m.test(h)) return { ok: false, error: 'invalid' };
     const flags = [];
-    const add = (w, en, bn) => flags.push({ weight: w, en, bn });
+    const add = (w, en, bn, hi) => flags.push({ weight: w, en, bn, hi });
     const auth = unfold(h).match(/^Authentication-Results:.*$/gim) || [];
     const all = auth.join(' ') + ' ' + hdr(h, 'Received-SPF');
     const res = k => { const m = all.match(new RegExp('\\b' + k + '=(\\w+)', 'i')); return m ? m[1].toLowerCase() : null; };
@@ -334,19 +351,19 @@
     const dkim = res('dkim'), dmarc = res('dmarc');
     const status = { spf, dkim, dmarc };
     const bad = v => v && ['fail', 'softfail', 'permerror', 'temperror'].includes(v);
-    if (bad(spf)) add(30, 'SPF ' + spf + ': the sending server is not allowed to send for this domain.', 'SPF ' + spf + ': এই ডোমেইনের হয়ে মেইল পাঠানোর অনুমতি এই সার্ভারের নেই।');
-    if (bad(dkim)) add(30, 'DKIM ' + dkim + ': the message signature is missing or broken.', 'DKIM ' + dkim + ': মেসেজের ডিজিটাল সিগনেচার নেই বা ভাঙা।');
-    if (bad(dmarc)) add(35, 'DMARC ' + dmarc + ': the domain owner\'s own rules reject this mail.', 'DMARC ' + dmarc + ': ডোমেইনের মালিকের নিজের নিয়মেই এই মেইল গ্রহণযোগ্য নয়।');
-    if (!spf && !dkim && !dmarc) add(12, 'No SPF, DKIM or DMARC results found in these headers (they may be incomplete).', 'এই হেডারে SPF, DKIM বা DMARC-এর ফল পাওয়া যায়নি (হেডার অসম্পূর্ণ হতে পারে)।');
+    if (bad(spf)) add(30, 'SPF ' + spf + ': the sending server is not allowed to send for this domain.', 'SPF ' + spf + ': এই ডোমেইনের হয়ে মেইল পাঠানোর অনুমতি এই সার্ভারের নেই।', 'SPF ' + spf + ': भेजने वाले सर्वर को इस डोमेन के लिए मेल भेजने की अनुमति नहीं है।');
+    if (bad(dkim)) add(30, 'DKIM ' + dkim + ': the message signature is missing or broken.', 'DKIM ' + dkim + ': মেসেজের ডিজিটাল সিগনেচার নেই বা ভাঙা।', 'DKIM ' + dkim + ': मैसेज का डिजिटल सिग्नेचर मौजूद नहीं या टूटा हुआ है।');
+    if (bad(dmarc)) add(35, 'DMARC ' + dmarc + ': the domain owner\'s own rules reject this mail.', 'DMARC ' + dmarc + ': ডোমেইনের মালিকের নিজের নিয়মেই এই মেইল গ্রহণযোগ্য নয়।', 'DMARC ' + dmarc + ': डोमेन मालिक के अपने नियम ही इस मेल को अस्वीकार करते हैं।');
+    if (!spf && !dkim && !dmarc) add(12, 'No SPF, DKIM or DMARC results found in these headers (they may be incomplete).', 'এই হেডারে SPF, DKIM বা DMARC-এর ফল পাওয়া যায়নি (হেডার অসম্পূর্ণ হতে পারে)।', 'इन हेडर में SPF, DKIM या DMARC का कोई नतीजा नहीं मिला (हेडर अधूरे हो सकते हैं)।');
     const from = hdr(h, 'From'), reply = hdr(h, 'Reply-To'), ret = hdr(h, 'Return-Path'), mid = hdr(h, 'Message-ID');
     const fd = addrDomain(from), rd = addrDomain(reply), td = addrDomain(ret), md = addrDomain(mid);
     const reg = d => d ? registrable(d) : '';
-    if (fd && rd && reg(fd) !== reg(rd)) add(30, 'Reply-To (' + rd + ') goes to a different domain than From (' + fd + '). Replies would reach someone else.', 'Reply-To (' + rd + ') আর From (' + fd + ') আলাদা ডোমেইন। উত্তর অন্য কারও কাছে যাবে।');
-    if (fd && td && reg(fd) !== reg(td)) add(10, 'Return-Path domain (' + td + ') differs from From (' + fd + '). Common with bulk senders, also with spoofing.', 'Return-Path (' + td + ') আর From (' + fd + ') আলাদা। বাল্ক সেন্ডারে এটা দেখা যায়, স্পুফিংয়েও।');
-    if (fd && md && reg(fd) !== reg(md) && !/(google|outlook|amazonses|sendgrid|mailchimp|mandrill)/.test(md)) add(8, 'Message-ID domain (' + md + ') does not match From (' + fd + ').', 'Message-ID ডোমেইন (' + md + ') From-এর সাথে মেলে না।');
+    if (fd && rd && reg(fd) !== reg(rd)) add(30, 'Reply-To (' + rd + ') goes to a different domain than From (' + fd + '). Replies would reach someone else.', 'Reply-To (' + rd + ') আর From (' + fd + ') আলাদা ডোমেইন। উত্তর অন্য কারও কাছে যাবে।', 'Reply-To (' + rd + ') और From (' + fd + ') अलग डोमेन हैं। जवाब किसी और के पास जाएगा।');
+    if (fd && td && reg(fd) !== reg(td)) add(10, 'Return-Path domain (' + td + ') differs from From (' + fd + '). Common with bulk senders, also with spoofing.', 'Return-Path (' + td + ') আর From (' + fd + ') আলাদা। বাল্ক সেন্ডারে এটা দেখা যায়, স্পুফিংয়েও।', 'Return-Path (' + td + ') और From (' + fd + ') अलग हैं। बल्क सेंडर में यह आम है, स्पूफिंग में भी।');
+    if (fd && md && reg(fd) !== reg(md) && !/(google|outlook|amazonses|sendgrid|mailchimp|mandrill)/.test(md)) add(8, 'Message-ID domain (' + md + ') does not match From (' + fd + ').', 'Message-ID ডোমেইন (' + md + ') From-এর সাথে মেলে না।', 'Message-ID डोमेन (' + md + ') From से मेल नहीं खाता।');
     const disp = from.replace(/<.*$/, '').replace(/"/g, '').trim().toLowerCase();
-    if (fd && disp) for (const b in BRANDS) { if (b.length >= 4 && disp.includes(b) && !isOfficial(reg(fd), fd)) { add(35, 'Display name says "' + disp + '" but the address is @' + fd + ', not an official ' + b.toUpperCase() + ' domain.', 'নামে "' + disp + '" লেখা, কিন্তু ঠিকানা @' + fd + ' - ' + b.toUpperCase() + '-এর সরকারি ডোমেইন নয়।'); break; } }
-    if (fd) { const d = analyze(fd); if (d.ok) d.flags.filter(f => ['lookalike', 'brand_abuse', 'punycode', 'risky_tld'].includes(f.id)).slice(0, 2).forEach(f => add(Math.round(f.weight * 0.8), 'Sender domain: ' + f.en, 'প্রেরকের ডোমেইন: ' + f.bn)); }
+    if (fd && disp) for (const b in BRANDS) { if (b.length >= 4 && disp.includes(b) && !isOfficial(reg(fd), fd)) { add(35, 'Display name says "' + disp + '" but the address is @' + fd + ', not an official ' + b.toUpperCase() + ' domain.', 'নামে "' + disp + '" লেখা, কিন্তু ঠিকানা @' + fd + ' - ' + b.toUpperCase() + '-এর সরকারি ডোমেইন নয়।', 'नाम में "' + disp + '" लिखा है, पर पता @' + fd + ' है - ' + b.toUpperCase() + ' का आधिकारिक डोमेन नहीं।'); break; } }
+    if (fd) { const d = analyze(fd); if (d.ok) d.flags.filter(f => ['lookalike', 'brand_abuse', 'punycode', 'risky_tld'].includes(f.id)).slice(0, 2).forEach(f => add(Math.round(f.weight * 0.8), 'Sender domain: ' + f.en, 'প্রেরকের ডোমেইন: ' + f.bn, 'भेजने वाले का डोमेन: ' + f.hi)); }
     const score = Math.min(100, flags.reduce((a, f) => a + f.weight, 0));
     const verdict = score >= 55 ? 'phishing' : score >= 22 ? 'suspicious' : 'safe';
     flags.sort((a, b) => b.weight - a.weight);
