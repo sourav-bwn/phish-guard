@@ -57,31 +57,69 @@
       host: 'সাইট', none: 'ঠিকানায় কোনো সতর্কতা-চিহ্ন নেই।', official: 'এটি {b}-এর আসল ঠিকানা।',
       db_flagged: 'চিহ্নিত', db_clear: 'তালিকায় নেই', db_skip: 'চালু নেই', db_err: 'পাওয়া যায়নি', db_wait: 'যাচাই চলছে...',
       db_override: 'একটি প্রতারণা-ডেটাবেসে এই লিংক আছে, তাই এটিকে বিপজ্জনক ধরুন।'
+    },
+    hi: {
+      report_title: 'आधिकारिक माध्यम से रिपोर्ट करें', report_intro: 'कॉल, SMS या WhatsApp से धोखाधड़ी का शक? 30 दिनों के भीतर Chakshu पर बताएं। पैसे गए? तुरंत 1930 पर कॉल करें और साइबर क्राइम पोर्टल पर शिकायत दर्ज करें, Chakshu पर नहीं।', report_chakshu: 'Chakshu: संदिग्ध संपर्क', report_call: '1930 पर कॉल: पैसा गया हो तो', report_portal: 'साइबर क्राइम पोर्टल', report_label: 'रिपोर्ट का टेक्स्ट देखकर कॉपी करें', report_copy: 'रिपोर्ट टेक्स्ट कॉपी करें', report_copied: 'कॉपी हो गया', report_manual: 'कॉपी नहीं हो पाया। टेक्स्ट चुनकर खुद कॉपी करें।', report_note: 'कुछ भी अपने आप सबमिट नहीं होता। टेक्स्ट देखें, निजी जानकारी हटाएं, फिर आधिकारिक फॉर्म में पेस्ट करें। वहां भेजने वाला, तारीख/समय और सबूत जोड़ें। OTP, PIN या पासवर्ड कभी न डालें। टोकन वाले लिंक की query string यहां हटा दी जाती है।', report_heading: 'PhishGuard जांच का सार', report_checked: 'जांचा गया', report_verdict: 'स्वचालित नतीजा', report_reasons: 'चेतावनी के संकेत', report_time: 'जांच का समय', report_disclaimer: 'यह स्वचालित जांच अपराध का सबूत या सुरक्षा की गारंटी नहीं है। कृपया जांच करें।', report_context: 'आधिकारिक फॉर्म में जोड़ें: कब/कैसे मिला, भेजने वाला, स्क्रीनशॉट, और पैसा गया हो तो लेनदेन संदर्भ/राशि।', report_community: 'कम्युनिटी में गिनें (आधिकारिक शिकायत नहीं)', report_email: 'ईमेल भेजने वाला', report_qr: 'QR की सामग्री',
+      mlacc: 'पैटर्न मॉडल: 24,000 होस्ट की अलग परीक्षा में 84.6% सही (precision 89.6%, recall 76.6%)। इसने सार्वजनिक फ़िशिंग सूचियों और शीर्ष साइटों से सीखा है, इसलिए छोटी असली साइटों को भी शक की नजर से देख सकता है। यह नतीजा कभी नहीं बदलता।', how: 'नतीजा कैसे बना: चेतावनी संकेत मिलकर स्कोर बनाते हैं (55 या ज्यादा = संभावित फ़िशिंग, 22 या ज्यादा = संदिग्ध), और स्कैम डेटाबेस में मिलना भी गिना जाता है। "कोई खतरे का संकेत नहीं" का मतलब कुछ नहीं मिला, सुरक्षित होने की गारंटी नहीं।', rep_btn: 'इस धोखाधड़ी की रिपोर्ट करें',
+      title: 'कोई लिंक मिला जिस पर शक है?', sub: 'टैप करने से पहले यहां पेस्ट करें। हम लिंक कभी नहीं खोलते।', label: 'जांचने के लिए लिंक',
+      ph: 'लिंक यहां पेस्ट करें', check: 'लिंक जांचें', try: 'आज़माएं:', why: 'क्यों', dbs: 'स्कैम डेटाबेस',
+      fine: 'कोई भी टूल लिंक सुरक्षित होने का वादा नहीं कर सकता। अगर कोई मैसेज पैसे, बैंक, KYC या इनाम के नाम पर जल्दबाजी करा रहा है, तो रुकें और कंपनी के आधिकारिक नंबर पर कॉल करके पूछें।',
+      pat: 'भारत में चल रही धोखाधड़ियां', help: 'क्लिक या पेमेंट कर दिया?',
+      h1: 'तुरंत <a href="tel:1930">1930</a> (राष्ट्रीय साइबर क्राइम हेल्पलाइन) पर कॉल करें। जितनी जल्दी रिपोर्ट करेंगे, पैसा रुकने की संभावना उतनी ज्यादा।',
+      h2: '<a href="https://cybercrime.gov.in" rel="noopener" target="_blank">cybercrime.gov.in</a> पर शिकायत दर्ज करें।',
+      h3: 'बैंक को कॉल करके कार्ड या UPI ब्लॉक कराएं, और उस पेज पर डाले पासवर्ड बदल दें।',
+      foot: 'मुफ्त और ओपन सोर्स। Hack for Social Cause - डिजिटल सुरक्षा और साइबर धोखाधड़ी जागरूकता के लिए बनाया गया।',
+      t_link: 'लिंक', t_msg: 'मैसेज', t_bulk: 'एक साथ', qr: 'QR इमेज स्कैन करें', msglabel: 'जांचने के लिए मैसेज', msgph: 'पूरा SMS या WhatsApp मैसेज पेस्ट करें', check_msg: 'मैसेज जांचें', msgex: 'नमूना धोखाधड़ी SMS आज़माएं',
+      bulklabel: 'लिंक, हर लाइन में एक', bulkph: 'हर लाइन में एक लिंक (अधिकतम 50)', check_bulk: 'सब जांचें', csvin: '.txt / .csv लोड करें', csv: 'CSV डाउनलोड', print: 'रिपोर्ट प्रिंट करें',
+      col_link: 'लिंक', col_verdict: 'नतीजा', col_score: 'स्कोर', col_top: 'मुख्य कारण', links_found: 'इस मैसेज के लिंक', msg_none: 'मैसेज में कोई लिंक नहीं, सिर्फ भाषा के आधार पर निर्णय।',
+      bulk_title: '{n} लिंक जांचे: {p} फ़िशिंग, {s} संदिग्ध, {k} में खतरे का संकेत नहीं', bulk_empty: 'कम से कम एक लिंक पेस्ट करें।', msg_empty: 'पहले एक मैसेज पेस्ट करें।', qr_none: 'उस इमेज में कोई QR कोड नहीं मिला।', qr_fail: 'वह इमेज पढ़ी नहीं जा सकी।', qr_found: 'QR में है:',
+      sample: 'प्रिय ग्राहक, आपका SBI खाता आज बंद हो जाएगा। तुरंत KYC अपडेट करें: http://sbi-kyc-update.xyz/login',
+      t_shot: 'स्क्रीनशॉट', t_num: 'नंबर / UPI', t_mail: 'ईमेल', share: 'वर्डिक्ट कार्ड शेयर करें',
+      shot_hint: 'SMS या WhatsApp चैट का स्क्रीनशॉट अपलोड करें। टेक्स्ट आपके फोन पर ही पढ़ा जाता है, इमेज कभी अपलोड नहीं होती।', shot_pick: 'स्क्रीनशॉट चुनें', shot_load: 'टेक्स्ट पढ़ने का टूल लोड हो रहा ({p}%)...', shot_read: 'टेक्स्ट पढ़ा जा रहा ({p}%)...', shot_none: 'इमेज में पढ़ने लायक टेक्स्ट नहीं मिला।', shot_fail: 'वह इमेज पढ़ी नहीं जा सकी।',
+      num_label: 'फोन नंबर या UPI ID', num_ph: '+91 98765 43210 या name@okaxis', num_check: 'जांचें', num_hint: 'सिर्फ फॉर्मैट और चेतावनी संकेत जांचे जाते हैं। ठग नंबरों या UPI ID की कोई मुफ्त सार्वजनिक सूची नहीं है, इसलिए "कोई खतरे का संकेत नहीं" का मतलब भरोसेमंद नहीं।', num_bad: 'यह फोन नंबर या UPI ID नहीं है।',
+      mail_label: 'ईमेल के कच्चे हेडर', mail_ph: 'पूरे ईमेल हेडर पेस्ट करें (Show original / View source)', mail_check: 'हेडर जांचें', mail_bad: 'यह ईमेल हेडर जैसा नहीं लगता।',
+      ml: 'पैटर्न मॉडल', ml_txt: '{p}% फ़िशिंग जैसा', ml_note: 'सिर्फ सलाह', subj_phone: 'नंबर', subj_upi: 'UPI ID', subj_mail: 'भेजने वाला',
+      tok_title: 'इस लिंक में कोई राज़ हो सकता है', tok_body: 'यह पासवर्ड रीसेट, लॉगिन या टोकन लिंक जैसा लगता है। जांचने पर पता बाहरी स्कैम डेटाबेस में खोजा जाता है, और जो भी वह पता देखे वह टोकन इस्तेमाल कर सकता है। इसके बजाय सिर्फ इस डिवाइस पर जांचें।', tok_local: 'सिर्फ इस डिवाइस पर जांचें', tok_any: 'फिर भी खोजें', tok_cancel: 'रद्द करें', rate_limited: 'आपके नेटवर्क से बहुत ज्यादा जांचें हुई हैं। सिर्फ डिवाइस का नतीजा दिखाया जा रहा है। {s} सेकंड बाद कोशिश करें।', priv: 'निजता: लिंक बाहरी रेपुटेशन डेटाबेस (जैसे PhishTank) में खोजा जाता है। इसे कभी खोला या फेच नहीं किया जाता। टोकन वाले लिंक आपकी पुष्टि के बिना नहीं भेजे जाते।',
+      empty: 'पहले एक लिंक पेस्ट करें।', invalid: 'यह लिंक जैसा नहीं लगता।',
+      v_phishing: 'संभावित फ़िशिंग', v_suspicious: 'संदिग्ध', v_safe: 'कोई खतरे का संकेत नहीं मिला',
+      d_phishing: 'यह लिंक न खोलें और कोई जानकारी न डालें।', d_suspicious: 'सावधान रहें। OTP, PIN, पासवर्ड या कार्ड की जानकारी न दें।', d_safe: 'पते में कुछ गलत नहीं दिखता। पर यह गारंटी नहीं है।',
+      host: 'साइट', none: 'पते में कोई चेतावनी संकेत नहीं।', official: 'यह {b} का असली पता है।',
+      db_flagged: 'चिह्नित', db_clear: 'सूची में नहीं', db_skip: 'सेट नहीं', db_err: 'उपलब्ध नहीं', db_wait: 'जांच हो रही...',
+      db_override: 'एक स्कैम डेटाबेस में यह लिंक है, इसलिए इसे खतरनाक मानें।'
     }
   };
   const PATTERNS = [
     { en: ['"Your KYC has expired"', 'SMS or WhatsApp says your bank account will be blocked today unless you update KYC through a link or app.', 'Banks never ask you to update KYC through a link in a message. Visit the branch or the official app.'],
-      bn: ['"আপনার KYC শেষ হয়ে গেছে"', 'SMS বা WhatsApp-এ বলা হয় আজই KYC আপডেট না করলে ব্যাংক অ্যাকাউন্ট বন্ধ হবে, সঙ্গে একটি লিংক বা অ্যাপ।', 'ব্যাংক কখনও মেসেজের লিংকে KYC আপডেট করতে বলে না। শাখায় যান বা সরকারি অ্যাপ ব্যবহার করুন।'] },
+      bn: ['"আপনার KYC শেষ হয়ে গেছে"', 'SMS বা WhatsApp-এ বলা হয় আজই KYC আপডেট না করলে ব্যাংক অ্যাকাউন্ট বন্ধ হবে, সঙ্গে একটি লিংক বা অ্যাপ।', 'ব্যাংক কখনও মেসেজের লিংকে KYC আপডেট করতে বলে না। শাখায় যান বা সরকারি অ্যাপ ব্যবহার করুন।'],
+      hi: ['"आपका KYC खत्म हो गया"', 'SMS या WhatsApp में कहा जाता है कि आज KYC अपडेट न किया तो बैंक खाता बंद हो जाएगा, साथ में एक लिंक या ऐप।', 'बैंक कभी मैसेज के लिंक से KYC अपडेट नहीं कराते। शाखा जाएं या आधिकारिक ऐप इस्तेमाल करें।'] },
     { en: ['UPI "collect" request', 'Someone says they sent you money by mistake or you won a refund, then asks you to approve a request or enter your PIN.', 'You never enter a PIN to receive money. A PIN is only for sending.'],
-      bn: ['UPI "কালেক্ট" রিকোয়েস্ট', 'কেউ বলে ভুল করে টাকা পাঠিয়েছে বা রিফান্ড পাবেন, তারপর রিকোয়েস্ট অ্যাপ্রুভ করতে বা PIN দিতে বলে।', 'টাকা পেতে কখনও PIN লাগে না। PIN শুধু টাকা পাঠানোর সময় লাগে।'] },
+      bn: ['UPI "কালেক্ট" রিকোয়েস্ট', 'কেউ বলে ভুল করে টাকা পাঠিয়েছে বা রিফান্ড পাবেন, তারপর রিকোয়েস্ট অ্যাপ্রুভ করতে বা PIN দিতে বলে।', 'টাকা পেতে কখনও PIN লাগে না। PIN শুধু টাকা পাঠানোর সময় লাগে।'],
+      hi: ['UPI "कलेक्ट" रिक्वेस्ट', 'कोई कहता है गलती से पैसे भेज दिए या रिफंड मिलेगा, फिर रिक्वेस्ट अप्रूव करने या PIN डालने को कहता है।', 'पैसे पाने के लिए कभी PIN नहीं लगता। PIN सिर्फ पैसे भेजने के लिए होता है।'] },
     { en: ['Electricity bill disconnection', 'A message says your power will be cut tonight unless you pay or call a number. The "officer" then makes you install a screen-sharing app.', 'Check your bill on the official supplier website or app. Never install an app a caller asks for.'],
-      bn: ['বিদ্যুৎ বিল কেটে দেওয়ার হুমকি', 'মেসেজে বলা হয় আজ রাতে বিদ্যুৎ কেটে দেওয়া হবে, টাকা দিন বা এই নম্বরে ফোন করুন। তারপর "অফিসার" স্ক্রিন-শেয়ারিং অ্যাপ ইনস্টল করতে বলে।', 'সরকারি ওয়েবসাইট বা অ্যাপে বিল দেখুন। ফোনে বলা কোনো অ্যাপ কখনও ইনস্টল করবেন না।'] },
+      bn: ['বিদ্যুৎ বিল কেটে দেওয়ার হুমকি', 'মেসেজে বলা হয় আজ রাতে বিদ্যুৎ কেটে দেওয়া হবে, টাকা দিন বা এই নম্বরে ফোন করুন। তারপর "অফিসার" স্ক্রিন-শেয়ারিং অ্যাপ ইনস্টল করতে বলে।', 'সরকারি ওয়েবসাইট বা অ্যাপে বিল দেখুন। ফোনে বলা কোনো অ্যাপ কখনও ইনস্টল করবেন না।'],
+      hi: ['बिजली बिल काटने की धमकी', 'मैसेज में कहा जाता है आज रात बिजली कट जाएगी, पैसे दें या इस नंबर पर कॉल करें। फिर "अफसर" स्क्रीन-शेयरिंग ऐप इंस्टॉल कराता है।', 'बिल आधिकारिक वेबसाइट या ऐप पर देखें। कॉल करने वाले के कहने पर कोई ऐप कभी इंस्टॉल न करें।'] },
     { en: ['Fake bank APK', 'A WhatsApp message sends a file like "SBI_Reward.apk" to claim points or cashback.', 'Install apps only from Google Play. These files can read your SMS and OTPs.'],
-      bn: ['নকল ব্যাংক APK', 'WhatsApp-এ "SBI_Reward.apk" জাতীয় ফাইল পাঠিয়ে পয়েন্ট বা ক্যাশব্যাক নিতে বলা হয়।', 'অ্যাপ শুধু Google Play থেকে নিন। এই ফাইলগুলো আপনার SMS ও OTP পড়ে নিতে পারে।'] },
+      bn: ['নকল ব্যাংক APK', 'WhatsApp-এ "SBI_Reward.apk" জাতীয় ফাইল পাঠিয়ে পয়েন্ট বা ক্যাশব্যাক নিতে বলা হয়।', 'অ্যাপ শুধু Google Play থেকে নিন। এই ফাইলগুলো আপনার SMS ও OTP পড়ে নিতে পারে।'],
+      hi: ['नकली बैंक APK', 'WhatsApp पर "SBI_Reward.apk" जैसी फाइल भेजकर पॉइंट या कैशबैक लेने को कहा जाता है।', 'ऐप सिर्फ Google Play से लें। ऐसी फाइलें आपके SMS और OTP पढ़ सकती हैं।'] },
     { en: ['Lottery and "KBC" prizes', 'You "won" a prize, car or lakhs of rupees, and must pay a small fee first.', 'Real prizes do not ask for money in advance. If you did not enter, you did not win.'],
-      bn: ['লটারি ও "KBC" পুরস্কার', 'আপনি নাকি গাড়ি বা লক্ষ টাকা জিতেছেন, কিন্তু আগে সামান্য ফি দিতে হবে।', 'আসল পুরস্কারে আগাম টাকা চায় না। আপনি অংশ না নিলে জেতার প্রশ্নই নেই।'] },
+      bn: ['লটারি ও "KBC" পুরস্কার', 'আপনি নাকি গাড়ি বা লক্ষ টাকা জিতেছেন, কিন্তু আগে সামান্য ফি দিতে হবে।', 'আসল পুরস্কারে আগাম টাকা চায় না। আপনি অংশ না নিলে জেতার প্রশ্নই নেই।'],
+      hi: ['लॉटरी और "KBC" इनाम', 'आपने कथित तौर पर गाड़ी या लाखों रुपये जीते, पर पहले छोटी फीस देनी होगी।', 'असली इनाम पहले पैसे नहीं मांगता। जिसमें भाग ही न लिया हों, वह जीत ही नहीं सकते।'] },
     { en: ['Part-time job and task scams', 'A WhatsApp or Telegram "recruiter" offers easy money for liking videos or rating products, then asks you to deposit money to continue.', 'A real job never asks you to pay to work.'],
-      bn: ['পার্ট-টাইম চাকরি ও টাস্ক প্রতারণা', 'WhatsApp বা Telegram-এ "রিক্রুটার" ভিডিও লাইক বা প্রোডাক্ট রেটিং করে সহজে আয়ের কথা বলে, পরে কাজ চালাতে টাকা জমা দিতে বলে।', 'আসল চাকরিতে কাজ করতে টাকা দিতে হয় না।'] },
+      bn: ['পার্ট-টাইম চাকরি ও টাস্ক প্রতারণা', 'WhatsApp বা Telegram-এ "রিক্রুটার" ভিডিও লাইক বা প্রোডাক্ট রেটিং করে সহজে আয়ের কথা বলে, পরে কাজ চালাতে টাকা জমা দিতে বলে।', 'আসল চাকরিতে কাজ করতে টাকা দিতে হয় না।'],
+      hi: ['पार्ट-टाइम नौकरी और टास्क ठगी', 'WhatsApp या Telegram का "रिक्रूटर" वीडियो लाइक या प्रोडक्ट रेटिंग से आसान कमाई का वादा करता है, फिर काम जारी रखने के लिए पैसे जमा करने को कहता है।', 'असली नौकरी में काम करने के लिए पैसे नहीं देने पड़ते।'] },
     { en: ['Fake courier or India Post notice', 'Your parcel is "held" and you must pay a small redelivery fee on a link.', 'Check tracking on the courier\'s own app or site. A small fee is a way to get your card details.'],
-      bn: ['নকল কুরিয়ার বা ইন্ডিয়া পোস্ট নোটিশ', 'আপনার পার্সেল "আটকে আছে", লিংকে সামান্য রিডেলিভারি ফি দিতে হবে।', 'কুরিয়ারের নিজস্ব অ্যাপ বা সাইটে ট্র্যাক করুন। ছোট ফি আসলে কার্ডের তথ্য নেওয়ার ফাঁদ।'] },
+      bn: ['নকল কুরিয়ার বা ইন্ডিয়া পোস্ট নোটিশ', 'আপনার পার্সেল "আটকে আছে", লিংকে সামান্য রিডেলিভারি ফি দিতে হবে।', 'কুরিয়ারের নিজস্ব অ্যাপ বা সাইটে ট্র্যাক করুন। ছোট ফি আসলে কার্ডের তথ্য নেওয়ার ফাঁদ।'],
+      hi: ['नकली कूरियर या इंडिया पोस्ट नोटिस', 'आपका पार्सल "अटका" है और लिंक पर छोटी रीडिलीवरी फीस देनी होगी।', 'कूरियर के अपने ऐप या साइट पर ट्रैक करें। छोटी फीस असल में कार्ड की जानकारी लेने की चाल है।'] },
     { en: ['QR code to "receive" money', 'A buyer on a marketplace asks you to scan a QR code to receive payment.', 'Scanning a QR always sends money out. Receiving never needs a scan.'],
-      bn: ['টাকা "পেতে" QR কোড স্ক্যান', 'অনলাইনে ক্রেতা বলে পেমেন্ট পেতে QR কোড স্ক্যান করুন।', 'QR স্ক্যান করলে সবসময় টাকা বেরিয়ে যায়। টাকা পেতে স্ক্যান লাগে না।'] }
+      bn: ['টাকা "পেতে" QR কোড স্ক্যান', 'অনলাইনে ক্রেতা বলে পেমেন্ট পেতে QR কোড স্ক্যান করুন।', 'QR স্ক্যান করলে সবসময় টাকা বেরিয়ে যায়। টাকা পেতে স্ক্যান লাগে না।'],
+      hi: ['पैसे "पाने" के लिए QR कोड', 'ऑनलाइन खरीदार कहता है पेमेंट पाने के लिए QR कोड स्कैन करें।', 'QR स्कैन करने से पैसे हमेशा जाते हैं। पैसे पाने के लिए स्कैन की जरूरत नहीं होती।'] }
   ];
 
   const $ = (s) => document.querySelector(s);
-  let lang = localStorage.getItem('pg-lang') || ((navigator.language || '').toLowerCase().startsWith('bn') ? 'bn' : 'en');
+  let lang = localStorage.getItem('pg-lang') || ((navigator.language || '').toLowerCase().startsWith('bn') ? 'bn' : (navigator.language || '').toLowerCase().startsWith('hi') ? 'hi' : 'en');
   let lastRun = null;
   const t = (k) => I18N[lang][k];
+  const tokOmitted = () => lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : lang === 'hi' ? ' [query/टोकन हटा दिया गया]' : ' [query/token omitted]';
 
   function applyLang() {
     document.documentElement.lang = lang;
@@ -155,10 +193,10 @@
   function reportInput(value) {
     // Strip query/hash from reset/login-token links, even inside pasted messages.
     const text = String(value || '');
-    if (!/\s/.test(text) && /[?#]/.test(text) && window.PhishHeuristics.secretInUrl(text).risky) return text.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
+    if (!/\s/.test(text) && /[?#]/.test(text) && window.PhishHeuristics.secretInUrl(text).risky) return text.split(/[?#]/)[0] + tokOmitted();
     return text.replace(/(?:https?:\/\/|www\.)[^\s<>]+/gi, url => {
       if (!window.PhishHeuristics.secretInUrl(url).risky) return url;
-      return url.split(/[?#]/)[0] + (lang === 'bn' ? ' [query/টোকেন বাদ দেওয়া হয়েছে]' : ' [query/token omitted]');
+      return url.split(/[?#]/)[0] + tokOmitted();
     });
   }
   function reportSummary(run) {
@@ -371,7 +409,7 @@
     g.fillStyle = '#e7edf4'; g.font = '400 38px ' + font;
     let y = 650; reasons.forEach(r => { y = wrap(g, '• ' + r, 70, y, W - 140, 50) + 28; });
     g.fillStyle = '#8b99aa'; g.font = '400 30px ' + font;
-    wrap(g, lang === 'bn' ? 'আগে যাচাই করুন, তারপর ক্লিক করুন। প্রতারিত হলে ১৯৩০ নম্বরে ফোন করুন।' : 'Check before you tap. Scammed? Call 1930.', 70, H - 150, W - 140, 42);
+    wrap(g, lang === 'bn' ? 'আগে যাচাই করুন, তারপর ক্লিক করুন। প্রতারিত হলে ১৯৩০ নম্বরে ফোন করুন।' : lang === 'hi' ? 'पहले जांचें, फिर क्लिक करें। धोखाधड़ी हो तो 1930 पर कॉल करें।' : 'Check before you tap. Scammed? Call 1930.', 70, H - 150, W - 140, 42);
     g.fillStyle = col; g.font = '600 32px ' + font; g.fillText(location.host, 70, H - 60);
     const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
     const file = new File([blob], 'phishguard-verdict.png', { type: 'image/png' });
