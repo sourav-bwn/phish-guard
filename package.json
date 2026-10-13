@@ -1,7 +1,7 @@
 {
   "name": "phish-guard",
   "version": "1.0.0",
-  "description": "Free phishing link checker with Bengali and English verdicts. Built for Hack for Social Cause - Digital Safety & Cyber Fraud Awareness.",
+  "description": "Free phishing link checker with English, Bengali and Hindi verdicts. Built for Hack for Social Cause - Digital Safety & Cyber Fraud Awareness.",
   "license": "MIT",
   "scripts": { "start": "node dev/server.js", "test": "node --test test/heuristics.test.js" },
   "engines": { "node": ">=18" }
