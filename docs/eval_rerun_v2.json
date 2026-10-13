@@ -1,0 +1,1799 @@
+[
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://facebook-secure-my-account.brothersexpeditions.com/",
+  "old": "phishing",
+  "old_score": 78,
+  "verdict": "phishing",
+  "score": 78,
+  "ids": [
+   "brand_abuse",
+   "many_hyphens",
+   "keywords",
+   "combo"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://signin.broker/E.1r9Pm7B5urLoFB8?/AMMEGA/?trk_event=dd_viewmorecta_click&allow_app_redirect=1",
+  "old": "safe",
+  "old_score": 9,
+  "verdict": "safe",
+  "score": 9,
+  "ids": [
+   "keywords"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://rovuzut.cloud-ip.cc/litilu/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "suspicious",
+  "score": 24,
+  "ids": [
+   "dyn_dns"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "http://www.guiasdobemestastore-11.vercel.app/",
+  "old": "suspicious",
+  "old_score": 24,
+  "verdict": "suspicious",
+  "score": 24,
+  "ids": [
+   "no_https",
+   "free_host"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://rodrigosilvaanalyst.github.io/netflix",
+  "old": "safe",
+  "old_score": 12,
+  "verdict": "suspicious",
+  "score": 42,
+  "ids": [
+   "brand_in_path",
+   "free_host"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "error",
+    null
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "http://instagram-followers-boost.vercel.app/",
+  "old": "phishing",
+  "old_score": 74,
+  "verdict": "phishing",
+  "score": 74,
+  "ids": [
+   "brand_abuse",
+   "no_https",
+   "free_host",
+   "combo"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://zumope.cloud-ip.cc/vofa/",
+  "old": "phishing",
+  "old_score": 0,
+  "verdict": "phishing",
+  "score": 24,
+  "ids": [
+   "dyn_dns"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    true
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://byktp5a34gp-kpnldmja-0k9h6c-byk83c.pages.dev/",
+  "old": "suspicious",
+  "old_score": 26,
+  "verdict": "suspicious",
+  "score": 38,
+  "ids": [
+   "many_hyphens",
+   "long_label",
+   "free_host"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://www.bet-facebook.blogspot.com/",
+  "old": "phishing",
+  "old_score": 62,
+  "verdict": "phishing",
+  "score": 62,
+  "ids": [
+   "brand_abuse",
+   "free_host",
+   "combo"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "http://xhrmw53hwu-vznqb81fyn-5g3g0g-bm755c.pages.dev/",
+  "old": "suspicious",
+  "old_score": 38,
+  "verdict": "suspicious",
+  "score": 50,
+  "ids": [
+   "many_hyphens",
+   "no_https",
+   "long_label",
+   "free_host"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "http://aar-direct.com/",
+  "old": "safe",
+  "old_score": 12,
+  "verdict": "safe",
+  "score": 12,
+  "ids": [
+   "no_https"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://euloginpdf092300239090390932002300i32i2i3i0.cloud-storage-0935784.workers.dev/",
+  "old": "safe",
+  "old_score": 21,
+  "verdict": "suspicious",
+  "score": 33,
+  "ids": [
+   "long_label",
+   "free_host",
+   "keywords"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://bururoha.duckdns.org/jewo/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "suspicious",
+  "score": 24,
+  "ids": [
+   "dyn_dns"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://forecizi.cloud-ip.cc/femi/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "suspicious",
+  "score": 24,
+  "ids": [
+   "dyn_dns"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://sp20ct-kelram-biz-zorsik-denval.pages.dev/",
+  "old": "suspicious",
+  "old_score": 26,
+  "verdict": "suspicious",
+  "score": 38,
+  "ids": [
+   "many_hyphens",
+   "long_label",
+   "free_host"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://www.roblox.rw/games/6403373529/UPDATE-Slap-Battles?privateServerLinkCode=26929681602416594851717026767969",
+  "old": "suspicious",
+  "old_score": 5,
+  "verdict": "suspicious",
+  "score": 5,
+  "ids": [
+   "keywords"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    true
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "http://xvqmr53hwu-kzptb81fyn-7i5g2g-pm755c.pages.dev/",
+  "old": "suspicious",
+  "old_score": 38,
+  "verdict": "suspicious",
+  "score": 50,
+  "ids": [
+   "many_hyphens",
+   "no_https",
+   "long_label",
+   "free_host"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://gestorweb.cl/web/www/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "error",
+    null
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://globalterdaftar.com/m/index/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "error",
+    null
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "phish",
+  "group": "phish",
+  "url": "https://start-io-trezo.b12sites.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.google.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.wikipedia.org/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.amazon.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.flipkart.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.irctc.co.in/nget/train-search",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.onlinesbi.sbi/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.hdfcbank.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.github.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.bbc.com/news",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "major",
+  "url": "https://www.thehindu.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.mha.gov.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.cbse.gov.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.presidencyuniversity.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.indianmuseumkolkata.org/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.bengalurumetro.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://nitdgp.ac.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.victoriamemorial-cal.org/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.iiests.ac.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.rkmvu.ac.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.nationallibrary.gov.in/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "small",
+  "url": "https://www.sahapedia.org/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "hard",
+  "url": "https://myaadhaar.uidai.gov.in/verifyAadhaar",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "hard",
+  "url": "https://www.incometax.gov.in/iec/foportal/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "hard",
+  "url": "https://www.npci.org.in/what-we-do/upi/product-overview",
+  "old": "safe",
+  "old_score": 5,
+  "verdict": "safe",
+  "score": 5,
+  "ids": [
+   "keywords"
+  ],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "hard",
+  "url": "https://www.epfindia.gov.in/site_en/index.php",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "hard",
+  "url": "https://paytm.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ },
+ {
+  "label": "benign",
+  "group": "hard",
+  "url": "https://www.phonepe.com/",
+  "old": "safe",
+  "old_score": 0,
+  "verdict": "safe",
+  "score": 0,
+  "ids": [],
+  "ext": [
+   [
+    "Google Safe Browsing",
+    "skipped",
+    null
+   ],
+   [
+    "PhishTank",
+    "ok",
+    false
+   ],
+   [
+    "urlscan.io",
+    "ok",
+    false
+   ],
+   [
+    "URLhaus",
+    "skipped",
+    null
+   ],
+   [
+    "Domain age (RDAP)",
+    "ok",
+    false
+   ]
+  ]
+ }
+]
