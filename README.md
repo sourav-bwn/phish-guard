@@ -53,14 +53,30 @@ Single link returns `verdict` (`safe|suspicious|phishing`), `score` 0-100, `reas
 curl -s https://phish-guard-seven-pi.vercel.app/api/check -d '{"url":"http://paypa1.com/signin"}' -H 'content-type: application/json'
 ```
 
-## Run it
+## Setup and run
 
-```
+Requires Node.js 18+ and Git. There are no npm package dependencies to install.
+
+```sh
+git clone https://github.com/sourav-bwn/phish-guard.git
+cd phish-guard
 npm start        # http://localhost:3000
 npm test         # heuristics unit tests
 ```
 
+`PORT` optionally changes the local server port (default 3000). The local server reads exported environment variables; it does not automatically load `.env` files. The four reputation keys are optional and are listed above. Set them in your shell or Vercel Project Settings, never in committed source. For example, `export GOOGLE_SAFE_BROWSING_KEY=...` enables that lookup when a valid key is supplied. No key is needed to run on-device rules. In the documented October 13 evaluations, Safe Browsing and URLhaus were not configured.
+
+Community reports use a separate Supabase project: apply [docs/schema.sql](docs/schema.sql) and set your project's URL and publishable key in `public/reports.js`. Never use a service-role secret in browser code. URL checking does not require setting up community reports.
+
 Deploy free on Vercel: import the repo, no build step. `public/` is the site, `api/check.js` is the serverless function. Add the env vars above in Project Settings if you want them.
+
+## Submission documentation and test data
+
+- [Technical design and architecture diagrams](docs/TECHNICAL_DESIGN.md): trust zones, data flow, failure handling and limits.
+- [Automated test cases](test/heuristics.test.js): run `npm test` (22 tests at this revision).
+- [Baseline evaluation](docs/EVALUATION.md) and [rules-v2 evaluation](docs/EVALUATION_v2.md): methodology, results and caveats.
+- [Baseline sample rows](docs/eval_results.csv) and [v2 rerun JSON](docs/eval_rerun_v2.json): known malicious URLs are inert test data, **do not open them**.
+- [MIT license](LICENSE).
 
 ## More features
 
