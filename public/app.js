@@ -284,7 +284,13 @@
       ? '<tr><td>' + (i + 1) + '</td><td class="l">' + esc(x.input) + '</td><td><span class="pill ' + x.r.verdict + '">' + t('v_' + x.r.verdict) + '</span></td><td>' + x.r.score + '</td><td>' + esc(x.r.flags[0] ? x.r.flags[0][lang] : '-') + '</td></tr>'
       : '<tr><td>' + (i + 1) + '</td><td class="l">' + esc(x.input) + '</td><td colspan="3">' + esc(t('invalid')) + '</td></tr>').join('');
   }
-  function csvCell(v) { v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  // Spreadsheet formula injection guard: cells that start with = + - @ or a
+  // tab/CR would run as formulas when the export is opened in Excel/Sheets.
+  function csvCell(v) {
+    v = String(v == null ? '' : v);
+    if (/^[=+\-@\t\r]/.test(v)) v = "'" + v;
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  }
   $('#csvbtn').addEventListener('click', () => {
     const rows = [['link', 'verdict', 'score', 'domain', 'reasons']].concat(bulkRows.map(x => x.r.ok ? [x.input, x.r.verdict, x.r.score, x.r.host, x.r.flags.map(f => f.en).join(' | ')] : [x.input, 'invalid', '', '', '']));
     const blob = new Blob(['\ufeff' + rows.map(r => r.map(csvCell).join(',')).join('\n')], { type: 'text/csv' });
